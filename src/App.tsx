@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Navbar from './components/navigation/Navbar';
+import About from './components/pages/About';
+import Projects from './components/pages/Projects';
 
 function App() {
+  const [navigation, setNavigation] = useState<React.ReactNode>(<About/>)
+  const handleNavigation = (event : React.MouseEvent<HTMLButtonElement>) =>{
+    event.preventDefault()
+    let componentToRender;
+
+  switch (event.currentTarget.id) {
+    case "":
+    case "about":
+      componentToRender = <About />;
+      break;
+    case "projects":
+      componentToRender = <Projects />;
+      break;
+    default:
+      componentToRender = null;
+  }
+    setNavigation(componentToRender)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar handleNavigation={handleNavigation}/>
+      {navigation}
+    </>
   );
 }
 
