@@ -4,6 +4,9 @@ import Navbar from './components/navigation/Navbar';
 import About from './components/pages/About';
 import Projects from './components/pages/Projects';
 
+// Variables for the canvas fade effect
+const RefreshInterval = 30;
+const FadeAmount = 1-1/50;
 
 function App() {
   useEffect(()=>{
@@ -18,19 +21,18 @@ function App() {
     const interval = setInterval(()=>{
       const w = canvas.width;
       const h = canvas.height;
-      const fadeAmount = 1-1/50;
       const imageData = ctx.getImageData(0, 0, w, h);
       for (let x = 0; x < w; x++) {
         for (let y = 0; y < h; y++) {
           const i = (x + y * w) * 4;
-          imageData.data[i] = Math.floor(imageData.data[i]*fadeAmount);
-          imageData.data[i + 1] = Math.floor(imageData.data[i + 1]*fadeAmount);
-          imageData.data[i + 2] = Math.floor(imageData.data[i + 2]*fadeAmount);
+          imageData.data[i] = Math.floor(imageData.data[i]*FadeAmount);
+          imageData.data[i + 1] = Math.floor(imageData.data[i + 1]*FadeAmount);
+          imageData.data[i + 2] = Math.floor(imageData.data[i + 2]*FadeAmount);
           imageData.data[i + 3] = 255;
         }
       }
       ctx.putImageData(imageData, 0, 0);
-    }, 30)
+    }, RefreshInterval)
     return ()=>{
       document.removeEventListener("mousemove", handleMouseMove)
       window.removeEventListener("resize", handleCanvasSize)
@@ -45,7 +47,6 @@ const handleCanvasSize = ()=>{
   canvas.width = window.innerWidth
 }
 
-// let count = 10;
 const handleMouseMove = (event: MouseEvent )=>{
   const canvas = document.getElementById("canvas") as HTMLCanvasElement
   const x = event.pageX
@@ -61,15 +62,6 @@ const handleMouseMove = (event: MouseEvent )=>{
   ctx.fillStyle = grd;
   ctx.fillRect(0,0,canvas.width,canvas.height);
   ctx.restore();
-
-  // Fade the canvas back to black
-
-
-    // ctx.globalCompositeOperation = 'hard-light';
-    // ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-    // ctx.fillRect(0, 0, canvas.width, canvas.height);
-    // ctx.globalCompositeOperation = 'source-over'
-  // }
 }
 
   const [navigation, setNavigation] = useState<React.ReactNode>(<About/>)
@@ -95,7 +87,7 @@ const handleMouseMove = (event: MouseEvent )=>{
     <div className='relative'>
       <Navbar handleNavigation={handleNavigation}/>
       {navigation}
-      <canvas id="canvas" className=' absolute top-0 z-1'></canvas>
+      <canvas id="canvas" className='absolute top-0 z-1'></canvas>
     </div>
   );
 }
