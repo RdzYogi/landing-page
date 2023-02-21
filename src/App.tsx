@@ -3,14 +3,32 @@ import './App.css';
 import Navbar from './components/navigation/Navbar';
 import About from './components/pages/About';
 import Projects from './components/pages/Projects';
+import anime from 'animejs/lib/anime.es.js';
+import { Circle } from './components/helpers/CircleClass';
+
+
 
 // Variables for the canvas fade effect
 const RefreshInterval = 30;
 const FadeAmount = 1-1/50;
 
+
 function App() {
+  const animations:any =[]
+  anime({
+    duration: Infinity,
+    update: function() {
+      animations.forEach(function(anim: any) {
+        anim.animatables.forEach(function(animatable: any) {
+          animatable.target.draw();
+        });
+      });
+    }
+  });
+
   useEffect(()=>{
     document.addEventListener("mousemove", handleMouseMove)
+    document.addEventListener("click", handleMouseClick)
     window.addEventListener("resize", handleCanvasSize)
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
     if (canvas === null) return
@@ -33,36 +51,80 @@ function App() {
       }
       ctx.putImageData(imageData, 0, 0);
     }, RefreshInterval)
+
+    // Explosions
     return ()=>{
       document.removeEventListener("mousemove", handleMouseMove)
+      document.removeEventListener("click", handleMouseClick)
       window.removeEventListener("resize", handleCanvasSize)
       clearInterval(interval)
     }
   }, [])
 
-const handleCanvasSize = ()=>{
-  const canvas = document.getElementById("canvas") as HTMLCanvasElement
-  if (canvas === null) return
-  canvas.height = window.innerHeight
-  canvas.width = window.innerWidth
-}
-
-const handleMouseMove = (event: MouseEvent )=>{
+  function removeAnimation(animation:any) {
+    var index = animations.indexOf(animation);
+    if (index > -1) animations.splice(index, 1);
+  }
+const handleMouseClick = (event: MouseEvent )=>{
+  event.preventDefault()
+  const currentColor = "#555"
   const canvas = document.getElementById("canvas") as HTMLCanvasElement
   const x = event.pageX
   const y = event.pageY
+  const animationDuration = 900
   if (canvas === null) return
-  const ctx = canvas.getContext("2d", { willReadFrequently: true })
+  const rippleSize = Math.min(200, (canvas.width * .4))
+  const ctx = canvas.getContext("2d")
   if (ctx === null) return
-  var grd = ctx.createRadialGradient(150, 150, 10, 150, 150, 150);
-  grd.addColorStop(0, "#555");
-  grd.addColorStop(0.8, "rgba(10,10,10,0)");
-  ctx.save()
-  ctx.translate(x-150,y-150);
-  ctx.fillStyle = grd;
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.restore();
+  const ripple = new Circle({
+    ctx: ctx,
+    x: x,
+    y: y,
+    r: 0,
+    fill: currentColor,
+      stroke: {
+        width: 1,
+        color: currentColor
+      },
+      opacity: 1
+  });
+
+  var rippleAnimation = anime({
+    targets: ripple ,
+    r: rippleSize,
+    opacity: 0,
+    easing: "easeOutExpo",
+    duration: animationDuration,
+    complete: removeAnimation
+  });
+  animations.push(rippleAnimation);
+  // console.log(animations)
 }
+
+
+  const handleCanvasSize = ()=>{
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement
+    if (canvas === null) return
+    canvas.height = window.innerHeight
+    canvas.width = window.innerWidth
+  }
+
+  const handleMouseMove = (event: MouseEvent )=>{
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement
+    const x = event.pageX
+    const y = event.pageY
+    if (canvas === null) return
+    const ctx = canvas.getContext("2d", { willReadFrequently: true })
+    if (ctx === null) return
+    var grd = ctx.createRadialGradient(150, 150, 10, 150, 150, 150);
+    grd.addColorStop(0, "#555");
+    grd.addColorStop(0.8, "rgba(10,10,10,0)");
+    ctx.save()
+    ctx.translate(x-150,y-150);
+    ctx.fillStyle = grd;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.restore();
+  }
 
   const [navigation, setNavigation] = useState<React.ReactNode>(<About/>)
   const handleNavigation = (event : React.MouseEvent<HTMLButtonElement>) =>{
