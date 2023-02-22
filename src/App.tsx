@@ -19,7 +19,7 @@ function App() {
   const animations:any =[]
   function removeAnimation(animation:any) {
     const index = animations.indexOf(animation);
-    console.log(animations)
+    // console.log(animations)
     animations.splice(index, 1);
   }
 
