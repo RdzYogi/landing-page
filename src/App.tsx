@@ -9,10 +9,10 @@ import { Circle } from './components/helpers/CircleClass';
 
 
 // Variables for the canvas fade effect
-const RefreshInterval = 30;
+const RefreshInterval = 10;
 const FadeAmount = 1-1/50;
 const ExplosionsColors = ["#545454", "#424242", "#4A4A4A", "#333333", "#404040"]
-const animationDuration = 400
+const animationDuration = 500
 
 
 function App() {
@@ -39,6 +39,7 @@ function App() {
         animations.forEach(function(anim: any) {
           anim.animatables.forEach(function(animatable: any) {
             if (anim.completed !== true) {
+              // console.log("draw trigger", anim.progress)
               animatable.target.draw();
             }
           });
@@ -49,6 +50,8 @@ function App() {
       const w = canvas.width;
       const h = canvas.height;
       const imageData = ctx.getImageData(0, 0, w, h);
+      // const d = new Date();
+      // console.log("Start fade frame: ", d.getMilliseconds(), "ms")
       for (let x = 0; x < w; x++) {
         for (let y = 0; y < h; y++) {
           const i = (x + y * w) * 4;
@@ -59,6 +62,8 @@ function App() {
         }
       }
       ctx.putImageData(imageData, 0, 0);
+      // const d2 = new Date();
+      // console.log("End fade frame: ", d2.getMilliseconds(), "ms")
     }, RefreshInterval)
 
     // Explosions
@@ -89,27 +94,30 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   const rippleSize = Math.min(200, (canvas.width * .4))
   const ctx = canvas.getContext("2d")
   if (ctx === null) return
+  // console.log(ctx.getImageData(0, 0,canvas.width, canvas.height))
   const ripple = new Circle({
     ctx: ctx,
     x: x,
     y: y,
     r: 0,
     fill: currentColor,
-      stroke: {
-        width: 1,
-        color: currentColor
-      },
-      opacity: 1
+    stroke: {
+      width: 1,
+      color: currentColor
+    },
+    opacity: 1
   });
 
   const rippleAnimation = anime({
     targets: ripple ,
     r: rippleSize,
     opacity: 0,
-    easing: "easeOutExpo",
+    // easing: "easeOutExpo",
+    easing: "easeOutQuad",
     duration: animationDuration,
     complete: removeAnimation
   });
+  // console.log(rippleAnimation)
   animations.push(rippleAnimation);
 }
 

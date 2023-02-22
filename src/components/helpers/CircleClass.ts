@@ -8,7 +8,7 @@ type CircleOptions = {
     width: number;
     color: string;
   };
-  opacity?: number;
+  opacity: number;
 }
 
 export class Circle {
@@ -21,7 +21,7 @@ export class Circle {
     width: number;
     color: string;
   };
-  opacity?: number;
+  opacity: number;
 
   constructor(opts: CircleOptions) {
     this.ctx = opts.ctx;
@@ -34,7 +34,10 @@ export class Circle {
   }
 
   draw() {
-    this.ctx.globalAlpha = this.opacity || 1;
+    this.ctx.globalAlpha = 0.1 ;
+    // console.log(this.opacity)
+    // const d = new Date();
+    // console.log("draw radius", this.r,"at:",d.getSeconds(), d.getMilliseconds());
     this.ctx.beginPath();
     this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
     if (this.stroke) {
