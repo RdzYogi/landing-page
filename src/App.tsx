@@ -11,22 +11,17 @@ import { Circle } from './components/helpers/CircleClass';
 // Variables for the canvas fade effect
 const RefreshInterval = 30;
 const FadeAmount = 1-1/50;
-// ["#222", "#333", "#444", "#555", "#666"]
 const ExplosionsColors = ["#545454", "#424242", "#4A4A4A", "#333333", "#404040"]
+const animationDuration = 900
 
 
 function App() {
   const animations:any =[]
-  anime({
-    duration: Infinity,
-    update: function() {
-      animations.forEach(function(anim: any) {
-        anim.animatables.forEach(function(animatable: any) {
-          animatable.target.draw();
-        });
-      });
-    }
-  });
+  function removeAnimation(animation:any) {
+    const index = animations.indexOf(animation);
+    console.log(animations)
+    animations.splice(index, 1);
+  }
 
   useEffect(()=>{
     document.addEventListener("mousemove", handleMouseMove)
@@ -39,6 +34,16 @@ function App() {
     canvas.width = window.innerWidth
     const ctx = canvas.getContext("2d", { willReadFrequently: true })
     if (ctx === null) return
+    anime({
+      duration: Infinity,
+      update: function() {
+        animations.forEach(function(anim: any) {
+          anim.animatables.forEach(function(animatable: any) {
+            animatable.target.draw();
+          });
+        });
+      }
+    })
     const interval = setInterval(()=>{
       const w = canvas.width;
       const h = canvas.height;
@@ -65,10 +70,6 @@ function App() {
     }
   }, [])
 
-  function removeAnimation(animation:any) {
-    var index = animations.indexOf(animation);
-    if (index > -1) animations.splice(index, 1);
-  }
 const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   event.preventDefault()
   const currentColor = ExplosionsColors[Math.floor(Math.random() * ExplosionsColors.length)];
@@ -82,7 +83,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     x = event.pageX
     y = event.pageY
   }
-  const animationDuration = 900
+
   if (canvas === null) return
   const rippleSize = Math.min(200, (canvas.width * .4))
   const ctx = canvas.getContext("2d")
@@ -109,7 +110,6 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     complete: removeAnimation
   });
   animations.push(rippleAnimation);
-  // console.log(animations)
 }
 
 
