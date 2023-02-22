@@ -11,6 +11,8 @@ import { Circle } from './components/helpers/CircleClass';
 // Variables for the canvas fade effect
 const RefreshInterval = 30;
 const FadeAmount = 1-1/50;
+// ["#222", "#333", "#444", "#555", "#666"]
+const ExplosionsColors = ["#545454", "#424242", "#4A4A4A", "#333333", "#404040"]
 
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
   useEffect(()=>{
     document.addEventListener("mousemove", handleMouseMove)
     document.addEventListener("click", handleMouseClick)
+    document.addEventListener("touchstart", handleMouseClick)
     window.addEventListener("resize", handleCanvasSize)
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
     if (canvas === null) return
@@ -56,6 +59,7 @@ function App() {
     return ()=>{
       document.removeEventListener("mousemove", handleMouseMove)
       document.removeEventListener("click", handleMouseClick)
+      document.removeEventListener("touchstart", handleMouseClick)
       window.removeEventListener("resize", handleCanvasSize)
       clearInterval(interval)
     }
@@ -65,12 +69,19 @@ function App() {
     var index = animations.indexOf(animation);
     if (index > -1) animations.splice(index, 1);
   }
-const handleMouseClick = (event: MouseEvent )=>{
+const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   event.preventDefault()
-  const currentColor = "#555"
+  const currentColor = ExplosionsColors[Math.floor(Math.random() * ExplosionsColors.length)];
   const canvas = document.getElementById("canvas") as HTMLCanvasElement
-  const x = event.pageX
-  const y = event.pageY
+  let x = 0
+  let y = 0
+  if (event instanceof TouchEvent) {
+    x = event.touches[0].pageX
+    y = event.touches[0].pageY
+  } else {
+    x = event.pageX
+    y = event.pageY
+  }
   const animationDuration = 900
   if (canvas === null) return
   const rippleSize = Math.min(200, (canvas.width * .4))
