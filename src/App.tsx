@@ -12,14 +12,13 @@ import { Circle } from './components/helpers/CircleClass';
 const RefreshInterval = 30;
 const FadeAmount = 1-1/50;
 const ExplosionsColors = ["#545454", "#424242", "#4A4A4A", "#333333", "#404040"]
-const animationDuration = 900
+const animationDuration = 400
 
 
 function App() {
   const animations:any =[]
   function removeAnimation(animation:any) {
     const index = animations.indexOf(animation);
-    // console.log(animations)
     animations.splice(index, 1);
   }
 
@@ -39,7 +38,9 @@ function App() {
       update: function() {
         animations.forEach(function(anim: any) {
           anim.animatables.forEach(function(animatable: any) {
-            animatable.target.draw();
+            if (anim.completed !== true) {
+              animatable.target.draw();
+            }
           });
         });
       }
@@ -68,10 +69,10 @@ function App() {
       window.removeEventListener("resize", handleCanvasSize)
       clearInterval(interval)
     }
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
-  event.preventDefault()
+  // event.preventDefault()
   const currentColor = ExplosionsColors[Math.floor(Math.random() * ExplosionsColors.length)];
   const canvas = document.getElementById("canvas") as HTMLCanvasElement
   let x = 0
@@ -101,7 +102,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
       opacity: 1
   });
 
-  var rippleAnimation = anime({
+  const rippleAnimation = anime({
     targets: ripple ,
     r: rippleSize,
     opacity: 0,
@@ -111,7 +112,6 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   });
   animations.push(rippleAnimation);
 }
-
 
   const handleCanvasSize = ()=>{
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
