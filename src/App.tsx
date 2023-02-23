@@ -15,10 +15,8 @@ const timeOutForRender = 30
 let render = true
 const RefreshInterval = 15;
 const FadeAmount = 0.005;
-const animationDuration = 500
+const animationDuration = 1000
 
-const minRippleSize = 100
-const maxRippleSize = 150
 
 
 function App() {
@@ -77,7 +75,7 @@ function App() {
 
 const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   // event.preventDefault()
-  const currentColor = "rgba(60,60,60,0.8)"
+
   const canvas = document.getElementById("canvas") as HTMLCanvasElement
   let x = 0
   let y = 0
@@ -91,35 +89,55 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
 
   if (canvas === null) return
 
-  const rippleRandomSize = Math.floor(Math.random() * (maxRippleSize - minRippleSize) + minRippleSize)
-  const rippleSize = Math.min(rippleRandomSize, (canvas.width * .4))
-  const ctx = canvas.getContext("2d")
-  if (ctx === null) return
-  // console.log(ctx.getImageData(0, 0,canvas.width, canvas.height))
-  const ripple = new Circle({
-    ctx: ctx,
-    x: x,
-    y: y,
-    r: 0,
-    fill: currentColor,
-    stroke: {
-      width: 1,
-      color: currentColor
-    },
-    opacity: 1
-  });
+  const numberOfSparks = Math.floor(Math.random() * 4) + 5
+  for (let index = 0; index < numberOfSparks; index++) {
+    const colorPalette = ["rgba(60,60,60,0.1)", "rgba(25,25,25,0.1)", "rgba(40,40,40,0.1)", "rgba(80,80,80,0.1)", "rgba(100,100,100,0.1)"]
+    const currentColor = colorPalette[Math.floor(Math.random() * colorPalette.length)]
+    const getNewDestination = ()=>{
+      let newDestinationX = 1
+      let newDestinationY = 1
+      while (Math.sqrt(newDestinationX * newDestinationX + newDestinationY * newDestinationY) > 100 || Math.sqrt(newDestinationX * newDestinationX + newDestinationY * newDestinationY) < 20 ) {
+        // console.log("in while")
+        newDestinationX = (Math.random() * 100) * (Math.random() >= 0.5 ? 1 : -1)
+        newDestinationY = (Math.random() * 100) * (Math.random() >= 0.5 ? 1 : -1)
+      }
+      return {destinationX: newDestinationX, destinationY: newDestinationY}
+      }
 
-  const rippleAnimation = anime({
-    targets: ripple ,
-    r: rippleSize,
-    opacity: 0,
-    // easing: "easeOutExpo",
-    easing: "easeOutCubic",
-    duration: animationDuration,
-    complete: removeAnimation
-  });
-  // console.log(rippleAnimation)
-  animations.push(rippleAnimation);
+
+    const {destinationX, destinationY} = getNewDestination()
+
+    const ctx = canvas.getContext("2d")
+    if (ctx === null) return
+    const ripple = new Circle({
+      ctx: ctx,
+      x: x,
+      y: y,
+      dx: 0,
+      dy: 0,
+      fill: currentColor,
+      stroke: {
+        width: 1,
+        color: currentColor
+      },
+      opacity: 1
+    });
+
+    const rippleAnimation = anime({
+      targets: ripple ,
+      dx: destinationX,
+      dy: destinationY,
+      opacity: 0,
+      // easing: "easeOutExpo",
+      easing: "easeOutCirc",
+      duration: animationDuration,
+      complete: removeAnimation
+    });
+    // console.log(rippleAnimation)
+    animations.push(rippleAnimation);
+
+  }
+
 }
 
   const handleCanvasSize = ()=>{
