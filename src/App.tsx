@@ -15,6 +15,9 @@ const RefreshInterval = 50;
 const FadeAmount = 0.1;
 const animationDuration = 500
 
+const minRippleSize = 100
+const maxRippleSize = 150
+
 
 function App() {
   const animations:any =[]
@@ -48,21 +51,6 @@ function App() {
       }
     })
     const interval = setInterval(()=>{
-      // const w = canvas.width;
-      // const h = canvas.height;
-      // const imageData = ctx.getImageData(0, 0, w, h);
-      // for (let x = 0; x < w; x++) {
-      //   for (let y = 0; y < h; y++) {
-      //     const i = (x + y * w) * 4;
-      //     imageData.data[i] = Math.floor(imageData.data[i]*FadeAmount);
-      //     imageData.data[i + 1] = Math.floor(imageData.data[i + 1]*FadeAmount);
-      //     imageData.data[i + 2] = Math.floor(imageData.data[i + 2]*FadeAmount);
-      //     imageData.data[i + 3] = 255;
-      //   }
-      // }
-      // ctx.putImageData(imageData, 0, 0);
-      // const d2 = new Date();
-      // console.log("End fade frame: ", d2.getMilliseconds(), "ms")
       ctx.save()
       ctx.globalAlpha = FadeAmount;
       ctx.fillStyle = "rgba(0,0,0)";
@@ -85,7 +73,7 @@ function App() {
 
 const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   // event.preventDefault()
-  const currentColor = "rgba(60,60,60,0.6)"
+  const currentColor = "rgba(60,60,60,0.8)"
   const canvas = document.getElementById("canvas") as HTMLCanvasElement
   let x = 0
   let y = 0
@@ -98,7 +86,9 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   }
 
   if (canvas === null) return
-  const rippleSize = Math.min(150, (canvas.width * .4))
+
+  const rippleRandomSize = Math.floor(Math.random() * (maxRippleSize - minRippleSize) + minRippleSize)
+  const rippleSize = Math.min(rippleRandomSize, (canvas.width * .4))
   const ctx = canvas.getContext("2d")
   if (ctx === null) return
   // console.log(ctx.getImageData(0, 0,canvas.width, canvas.height))
