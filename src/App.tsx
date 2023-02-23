@@ -149,7 +149,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
       ctx.fillRect(0,0,300,300);
       ctx.restore();
       render = false
-      const renderTime = setTimeout(()=>{
+      setTimeout(()=>{
         render = true
       }, timeOutForRender)
     }

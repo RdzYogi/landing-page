@@ -59,7 +59,7 @@ function Navbar(props:Props) {
         <button id="contact" onClick={props.handleNavigation} className='absolute left-3/4 text-white h-12 transition transition-duration-300 ease-in-out hover:text-gray-400'>Contact</button>
         <button id="game" onClick={props.handleNavigation} className='absolute left-full text-white h-12 min-w-fit transition transition-duration-300 ease-in-out hover:text-gray-400'>Game</button>
       </div>
-      <div className='md:w-3/4 w-full mx-8 md:mx-0 relative h-px'>
+      <div className='w-3/4 mx-0 relative h-px'>
         <div id="indicator" className='h-1 absolute left-1/4 transition-all duration-300 ease-in-out bg-white w-16 z-20'></div>
       </div>
     </div>
