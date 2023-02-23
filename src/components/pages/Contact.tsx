@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Projects() {
+function Contact() {
   return (
     <div className='text-white z-20 max-w-7xl m-auto relative'>
-      <div className=''>We are in Projects</div>
+      <div className=''>We are in Contact</div>
     </div>
   )
 }
 
-export default Projects
+export default Contact

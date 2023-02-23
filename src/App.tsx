@@ -5,13 +5,14 @@ import About from './components/pages/About';
 import Projects from './components/pages/Projects';
 import anime from 'animejs/lib/anime.es.js';
 import { Circle } from './components/helpers/CircleClass';
+import Contact from './components/pages/Contact';
+import Game from './components/pages/Game';
 
 
 
 // Variables for the canvas fade effect
 const RefreshInterval = 50;
 const FadeAmount = 0.1;
-const ExplosionsColors = ["#545454", "#424242", "#4A4A4A", "#333333", "#404040"]
 const animationDuration = 500
 
 
@@ -84,7 +85,6 @@ function App() {
 
 const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   // event.preventDefault()
-  const color = ExplosionsColors[Math.floor(Math.random() * ExplosionsColors.length)];
   const currentColor = "rgba(60,60,60,0.6)"
   const canvas = document.getElementById("canvas") as HTMLCanvasElement
   let x = 0
@@ -153,6 +153,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   }
 
   const [navigation, setNavigation] = useState<React.ReactNode>(<About/>)
+  const [position, setPosition] = useState<number>(0)
   const handleNavigation = (event : React.MouseEvent<HTMLButtonElement>) =>{
     event.preventDefault()
     let componentToRender;
@@ -161,19 +162,30 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     case "":
     case "about":
       componentToRender = <About />;
+      setPosition(0)
       break;
     case "projects":
       componentToRender = <Projects />;
+      setPosition(1)
+      break;
+    case "contact":
+      componentToRender = <Contact />;
+      setPosition(2)
+      break;
+    case "game":
+      componentToRender = <Game />;
+      setPosition(3)
       break;
     default:
       componentToRender = <About />;
+      setPosition(0)
   }
     setNavigation(componentToRender)
   }
 
   return (
     <div className='relative'>
-      <Navbar handleNavigation={handleNavigation}/>
+      <Navbar handleNavigation={handleNavigation} position={position}/>
       {navigation}
       <canvas id="canvas" className='absolute top-0 z-1'></canvas>
     </div>

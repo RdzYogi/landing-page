@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Projects() {
+function Game() {
   return (
     <div className='text-white z-20 max-w-7xl m-auto relative'>
-      <div className=''>We are in Projects</div>
+      <div className=''>Coming soon</div>
     </div>
   )
 }
 
-export default Projects
+export default Game
