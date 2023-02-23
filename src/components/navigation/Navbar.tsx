@@ -5,12 +5,12 @@ type Props ={
 }
 
 function Navbar(props:Props) {
-  const indicator = document.getElementById("indicator")
-  const about = document.getElementById("about")
-  const projects = document.getElementById("projects")
-  const contact = document.getElementById("contact")
-  const game = document.getElementById("game")
   useEffect(() => {
+    const indicator = document.getElementById("indicator")
+    const about = document.getElementById("about")
+    const projects = document.getElementById("projects")
+    const contact = document.getElementById("contact")
+    const game = document.getElementById("game")
     if (indicator === null || about === null || projects === null || contact === null || game === null) return
     switch (props.position) {
       case 0:
@@ -60,7 +60,7 @@ function Navbar(props:Props) {
         <button id="game" onClick={props.handleNavigation} className='absolute left-full text-white h-12 min-w-fit transition transition-duration-300 ease-in-out hover:text-gray-400'>Game</button>
       </div>
       <div className='w-3/4 mx-0 relative h-px'>
-        <div id="indicator" className='h-1 absolute left-1/4 transition-all duration-300 ease-in-out bg-white w-16 z-20'></div>
+        <div id="indicator" className='h-1 absolute left-1/4 transition-all duration-300 ease-in-out bg-white z-20'></div>
       </div>
     </div>
   )

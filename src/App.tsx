@@ -11,10 +11,10 @@ import Game from './components/pages/Game';
 
 
 // Variables for the canvas fade effect
-const timeOutForRender = 20
+const timeOutForRender = 30
 let render = true
-const RefreshInterval = 50;
-const FadeAmount = 0.1;
+const RefreshInterval = 15;
+const FadeAmount = 0.005;
 const animationDuration = 500
 
 const minRippleSize = 100
