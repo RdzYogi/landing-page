@@ -11,6 +11,8 @@ import Game from './components/pages/Game';
 
 
 // Variables for the canvas fade effect
+const timeOutForRender = 20
+let render = true
 const RefreshInterval = 50;
 const FadeAmount = 0.1;
 const animationDuration = 500
@@ -44,12 +46,13 @@ function App() {
           anim.animatables.forEach(function(animatable: any) {
             if (anim.completed !== true) {
               // console.log("draw trigger", anim.progress)
-              animatable.target.draw();
+                animatable.target.draw();
             }
           });
         });
       }
     })
+
     const interval = setInterval(()=>{
       ctx.save()
       ctx.globalAlpha = FadeAmount;
@@ -68,6 +71,7 @@ function App() {
       document.removeEventListener("touchstart", handleMouseClick)
       window.removeEventListener("resize", handleCanvasSize)
       clearInterval(interval)
+
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -132,14 +136,24 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     if (canvas === null) return
     const ctx = canvas.getContext("2d", { willReadFrequently: true })
     if (ctx === null) return
-    var grd = ctx.createRadialGradient(150, 150, 10, 150, 150, 150);
-    grd.addColorStop(0, "#555");
-    grd.addColorStop(0.8, "rgba(10,10,10,0)");
-    ctx.save()
-    ctx.translate(x-150,y-150);
-    ctx.fillStyle = grd;
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    ctx.restore();
+
+
+    if (render) {
+      // console.log("draw state:", render)
+      var grd = ctx.createRadialGradient(150, 150, 10, 150, 150, 150);
+      grd.addColorStop(0, "#555");
+      grd.addColorStop(0.8, "rgba(10,10,10,0)");
+      ctx.save()
+      ctx.translate(x-150,y-150);
+      ctx.fillStyle = grd;
+      ctx.fillRect(0,0,300,300);
+      ctx.restore();
+      render = false
+      const renderTime = setTimeout(()=>{
+        render = true
+      }, timeOutForRender)
+    }
+
   }
 
   const [navigation, setNavigation] = useState<React.ReactNode>(<About/>)

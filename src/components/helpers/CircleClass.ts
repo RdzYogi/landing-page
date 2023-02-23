@@ -35,6 +35,7 @@ export class Circle {
 
   draw() {
     this.ctx.globalAlpha = 0.1 ;
+
     // console.log(this.opacity)
     // const d = new Date();
     // console.log("draw radius", this.r,"at:",d.getSeconds(), d.getMilliseconds());
