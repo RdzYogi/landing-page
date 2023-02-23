@@ -15,7 +15,7 @@ const timeOutForRender = 30
 let render = true
 const RefreshInterval = 15;
 const FadeAmount = 0.005;
-const animationDuration = 1000
+const animationDuration = 600
 
 
 
@@ -91,7 +91,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
 
   const numberOfSparks = Math.floor(Math.random() * 4) + 5
   for (let index = 0; index < numberOfSparks; index++) {
-    const colorPalette = ["rgba(60,60,60,0.1)", "rgba(25,25,25,0.1)", "rgba(40,40,40,0.1)", "rgba(80,80,80,0.1)", "rgba(100,100,100,0.1)"]
+    const colorPalette = ["rgba(50,50,50,0.1)", "rgba(60,60,60,0.1)", "rgba(40,40,40,0.1)", "rgba(30,30,30,0.1)"]
     const currentColor = colorPalette[Math.floor(Math.random() * colorPalette.length)]
     const getNewDestination = ()=>{
       let newDestinationX = 1
@@ -159,7 +159,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     if (render) {
       // console.log("draw state:", render)
       var grd = ctx.createRadialGradient(150, 150, 10, 150, 150, 150);
-      grd.addColorStop(0, "#555");
+      grd.addColorStop(0, "#333");
       grd.addColorStop(0.8, "rgba(10,10,10,0)");
       ctx.save()
       ctx.translate(x-150,y-150);

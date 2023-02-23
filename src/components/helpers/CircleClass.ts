@@ -54,6 +54,8 @@ export class Circle {
     this.ctx.fillStyle = grd;
     this.ctx.fillRect(0,0,300,300);
     this.ctx.restore();
+
+
     // this.ctx.globalAlpha = this.opacity ;
     // // console.log(this.opacity)
     // this.ctx.beginPath();
