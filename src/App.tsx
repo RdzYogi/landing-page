@@ -15,8 +15,8 @@ const timeOutForRender = 30
 let render = true
 const RefreshIntervalInitial = 10;
 let RefreshInterval = RefreshIntervalInitial;
-const FadeAmount = 0.005;
-const animationDuration = 600
+const FadeAmount = 0.1;
+const animationDuration = 300
 
 
 
@@ -62,7 +62,7 @@ function App() {
           ctx.globalAlpha = FadeAmount;
           ctx.fillStyle = "rgba(0,0,0)";
           ctx.globalCompositeOperation = "darken"
-          ctx.fillRect(0, 0, canvas.width,canvas.height);
+          ctx.fillRect(0, 0, window.innerWidth,window.innerHeight);
           ctx.globalCompositeOperation = "source-over"
           ctx.globalAlpha = 1;
           ctx.restore();
@@ -92,8 +92,7 @@ function App() {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
-  event.preventDefault()
-
+  // event.preventDefault()
   const canvas = document.getElementById("canvas") as HTMLCanvasElement
   let x = 0
   let y = 0
@@ -121,7 +120,6 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
       }
       return {destinationX: newDestinationX, destinationY: newDestinationY}
       }
-
 
     const {destinationX, destinationY} = getNewDestination()
 
@@ -169,7 +167,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     canvas.height = screen.height
     // eslint-disable-next-line no-restricted-globals
     canvas.width = screen.width
-    // console.log("canvas size", canvas.height, canvas.width)
+    console.log("canvas size", canvas.height, canvas.width)
 
 
     window.addEventListener("resize", handleCanvasSize)
@@ -201,7 +199,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
       // console.log("draw state:", render)
       var grd = ctx.createRadialGradient(150, 150, 10, 150, 150, 150);
       grd.addColorStop(0, "#333");
-      grd.addColorStop(0.8, "rgba(10,10,10,0)");
+      grd.addColorStop(0.3, "rgba(10,10,10,0)");
       ctx.save()
       ctx.translate(x-150,y-150);
       ctx.fillStyle = grd;
