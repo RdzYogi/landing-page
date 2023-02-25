@@ -157,7 +157,8 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
 
 }
 
-  const handleOrientationChange = ()=>{
+  const handleOrientationChange = (e:Event)=>{
+    e.preventDefault()
     window.removeEventListener("resize", handleCanvasSize)
     // console.log("orientation change")
 
