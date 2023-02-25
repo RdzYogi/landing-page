@@ -71,7 +71,8 @@ function App() {
       ctx.globalAlpha = FadeAmount;
       ctx.fillStyle = "rgba(0,0,0)";
       ctx.globalCompositeOperation = "darken"
-      ctx.fillRect(0, 0, canvas.width,canvas.height);
+      // eslint-disable-next-line no-restricted-globals
+      ctx.fillRect(0, 0, screen.width,screen.height);
       ctx.globalCompositeOperation = "source-over"
       ctx.globalAlpha = 1;
       ctx.restore();
