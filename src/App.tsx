@@ -13,10 +13,11 @@ import Game from './components/pages/Game';
 // Variables for the canvas fade effect
 const timeOutForRender = 30
 let render = true
-const RefreshIntervalInitial = 10;
+const RefreshIntervalInitial = 20;
 let RefreshInterval = RefreshIntervalInitial;
 const FadeAmount = 0.1;
 const animationDuration = 300
+let componentToRender: React.ReactNode = null;
 
 
 
@@ -197,7 +198,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
       // console.log("draw state:", render)
       var grd = ctx.createRadialGradient(150, 150, 10, 150, 150, 150);
       grd.addColorStop(0, "#333");
-      grd.addColorStop(0.3, "rgba(10,10,10,0)");
+      grd.addColorStop(0.4, "rgba(10,10,10,0)");
       ctx.save()
       ctx.translate(x-150,y-150);
       ctx.fillStyle = grd;
@@ -211,16 +212,21 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
 
   }
 
-  const [navigation, setNavigation] = useState<React.ReactNode>(<About/>)
   const [position, setPosition] = useState<number>(0)
-  const handleNavigation = (event : React.MouseEvent<HTMLButtonElement>) =>{
-    event.preventDefault()
-    let componentToRender;
+  const [navigation, setNavigation] = useState<React.ReactNode>(<About />)
+  const [prevPosition, setPrevPosition] = useState<number>(1)
+  const [prevNavigation, setPrevNavigation] = useState<React.ReactNode>(<About />)
 
+  const handleNavigation = (event : React.MouseEvent<HTMLButtonElement>) =>{
+    setPrevPosition(position)
+    event.preventDefault()
+    if (componentToRender !== null){
+      setPrevNavigation(componentToRender)
+    }
   switch (event.currentTarget.id) {
     case "":
     case "about":
-      componentToRender = <About />;
+      componentToRender = <About/>;
       setPosition(0)
       break;
     case "projects":
@@ -240,12 +246,42 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
       setPosition(0)
   }
     setNavigation(componentToRender)
+
+    const wipeData = {
+      fromLeft: 0,
+      fromRight: 100,
+    }
+    const currentPage = document.getElementById("current-page")
+    if (currentPage === null) return
+    console.log("prev position", prevPosition, "current position", position)
+    anime({
+      targets: wipeData,
+      fromLeft: 100,
+      duration: 1000,
+      easing: "linear",
+      round: 1,
+      update: function() {
+        currentPage.style.clipPath = "polygon(0% 0%,0% 100%," + wipeData.fromLeft + "% 100%," + wipeData.fromLeft + "% 0%)"
+      },
+      complete: function() {
+        currentPage.style.clipPath = ""
+        setPrevNavigation(<></>)
+      }
+
+    })
   }
 
   return (
     <div className='relative'>
       <Navbar handleNavigation={handleNavigation} position={position}/>
-      {navigation}
+      <div id="prev-page" className='absolute w-full z-20'
+        >
+        {prevNavigation}
+      </div>
+      <div id="current-page" className='absolute w-full z-20'
+      style={{clipPath:"polygon(0% 0%,0% 100%,50% 100%,50% 0%)"}}>
+        {navigation}
+      </div>
       <canvas id="canvas" className='absolute top-0 z-1'></canvas>
     </div>
   );

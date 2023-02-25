@@ -1,8 +1,33 @@
-import React from 'react'
+import anime from 'animejs'
+import React, { useEffect } from 'react'
 
 function About() {
+  // const about = document.getElementById("about-page")
+  // const wipeData = {
+  //   pozX: 0
+  // }
+  // useEffect(() => {
+  //   if (about === null) return
+  //   console.log("UseEffect triggered",props.position)
+  //   anime({
+  //     targets: wipeData,
+  //     pozX: 100,
+  //     duration: 1000,
+  //     easing: "linear",
+  //     round: 1,
+  //     update: function() {
+  //       about.style.clipPath = "polygon(0% 0%,0% 100%," + wipeData.pozX + "% 100%," + wipeData.pozX + "% 0%)"
+  //     },
+  //     complete: function() {
+  //       about.style.clipPath = ""
+  //     }
+
+  //   })
+  // },[props.position])
   return (
-    <div className='text-white z-20 w-3/4 m-auto relative'>
+    <div id='about-page' className='text-white z-20 w-3/4 m-auto relative h-96 bg-slate-500'
+          // style={{clipPath:"polygon(0% 0%,0% 100%,0% 100%,100% 0%)"} }
+          >
       <div className=''>We are in About</div>
     </div>
   )
