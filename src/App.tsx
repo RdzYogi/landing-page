@@ -31,6 +31,7 @@ function App() {
     document.addEventListener("click", handleMouseClick)
     document.addEventListener("touchstart", handleMouseClick)
     window.addEventListener("resize", handleCanvasSize)
+    // window.addEventListener("orientationchange", handleCanvasSize)
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
     if (canvas === null) return
     canvas.height = window.innerHeight
@@ -68,6 +69,7 @@ function App() {
       document.removeEventListener("click", handleMouseClick)
       document.removeEventListener("touchstart", handleMouseClick)
       window.removeEventListener("resize", handleCanvasSize)
+      // window.removeEventListener("orientationchange", handleCanvasSize)
       clearInterval(interval)
 
     }
@@ -141,10 +143,18 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
 }
 
   const handleCanvasSize = ()=>{
+    console.log("trigger resize")
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
     if (canvas === null) return
-    canvas.height = window.innerHeight
-    canvas.width = window.innerWidth
+    // canvas.height = window.innerHeight
+    // canvas.width = window.innerWidth
+    if (window.visualViewport){
+      canvas.height = window.visualViewport.height
+      canvas.width = window.visualViewport.width
+    } else{
+      canvas.height = window.innerHeight
+      canvas.width = window.innerWidth
+    }
   }
 
   const handleMouseMove = (event: MouseEvent )=>{
