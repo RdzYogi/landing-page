@@ -216,8 +216,10 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   const [navigation, setNavigation] = useState<React.ReactNode>(<About />)
   const [prevPosition, setPrevPosition] = useState<number>(1)
   const [prevNavigation, setPrevNavigation] = useState<React.ReactNode>(<About />)
+  let localPosition = 0
 
   const handleNavigation = (event : React.MouseEvent<HTMLButtonElement>) =>{
+    const localPrevPosition = position
     setPrevPosition(position)
     event.preventDefault()
     if (componentToRender !== null){
@@ -228,18 +230,22 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     case "about":
       componentToRender = <About/>;
       setPosition(0)
+      localPosition = 0
       break;
     case "projects":
       componentToRender = <Projects />;
       setPosition(1)
+      localPosition = 1
       break;
     case "contact":
       componentToRender = <Contact />;
       setPosition(2)
+      localPosition = 2
       break;
     case "game":
       componentToRender = <Game />;
       setPosition(3)
+      localPosition = 3
       break;
     default:
       componentToRender = <About />;
@@ -253,22 +259,38 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     }
     const currentPage = document.getElementById("current-page")
     if (currentPage === null) return
-    console.log("prev position", prevPosition, "current position", position)
-    anime({
-      targets: wipeData,
-      fromLeft: 100,
-      duration: 1000,
-      easing: "linear",
-      round: 1,
-      update: function() {
-        currentPage.style.clipPath = "polygon(0% 0%,0% 100%," + wipeData.fromLeft + "% 100%," + wipeData.fromLeft + "% 0%)"
-      },
-      complete: function() {
-        currentPage.style.clipPath = ""
-        setPrevNavigation(<></>)
-      }
-
-    })
+    console.log("prev position", localPrevPosition, "current position", localPosition)
+    if (localPrevPosition < localPosition){
+      anime({
+        targets: wipeData,
+        fromLeft: 100,
+        duration: 1000,
+        easing: "linear",
+        round: 1,
+        update: function() {
+          currentPage.style.clipPath = "polygon(0% 0%,0% 100%," + wipeData.fromLeft + "% 100%," + wipeData.fromLeft + "% 0%)"
+        },
+        complete: function() {
+          currentPage.style.clipPath = ""
+          setPrevNavigation(<></>)
+        }
+      })
+    } else if(localPrevPosition > localPosition){
+      anime({
+        targets: wipeData,
+        fromRight: 0,
+        duration: 1000,
+        easing: "linear",
+        round: 1,
+        update: function() {
+          currentPage.style.clipPath = "polygon(" + wipeData.fromRight + "% 0%," + wipeData.fromRight + "% 100%,100% 100%,100% 0%)"
+        },
+        complete: function() {
+          currentPage.style.clipPath = ""
+          setPrevNavigation(<></>)
+        }
+      })
+    }
   }
 
   return (
