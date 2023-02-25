@@ -13,7 +13,8 @@ import Game from './components/pages/Game';
 // Variables for the canvas fade effect
 const timeOutForRender = 30
 let render = true
-const RefreshInterval = 15;
+const RefreshIntervalInitial = 10;
+let RefreshInterval = RefreshIntervalInitial;
 const FadeAmount = 0.005;
 const animationDuration = 600
 
@@ -55,14 +56,20 @@ function App() {
     anime({
       duration: Infinity,
       update: function() {
-        ctx.save()
-        ctx.globalAlpha = FadeAmount;
-        ctx.fillStyle = "rgba(0,0,0)";
-        ctx.globalCompositeOperation = "darken"
-        ctx.fillRect(0, 0, canvas.width,canvas.height);
-        ctx.globalCompositeOperation = "source-over"
-        ctx.globalAlpha = 1;
-        ctx.restore();
+        if (RefreshInterval < 0) {
+          // console.log("triggered", RefreshInterval)
+          ctx.save()
+          ctx.globalAlpha = FadeAmount;
+          ctx.fillStyle = "rgba(0,0,0)";
+          ctx.globalCompositeOperation = "darken"
+          ctx.fillRect(0, 0, canvas.width,canvas.height);
+          ctx.globalCompositeOperation = "source-over"
+          ctx.globalAlpha = 1;
+          ctx.restore();
+          RefreshInterval = RefreshIntervalInitial
+        }
+        RefreshInterval -= 1
+
         animations.forEach(function(anim: any) {
           anim.animatables.forEach(function(animatable: any) {
             if (anim.completed !== true) {
@@ -73,16 +80,6 @@ function App() {
       }
     })
 
-    const interval = setInterval(()=>{
-      // ctx.save()
-      // ctx.globalAlpha = FadeAmount;
-      // ctx.fillStyle = "rgba(0,0,0)";
-      // ctx.globalCompositeOperation = "darken"
-      // ctx.fillRect(0, 0, canvas.width,canvas.height);
-      // ctx.globalCompositeOperation = "source-over"
-      // ctx.globalAlpha = 1;
-      // ctx.restore();
-    }, RefreshInterval)
 
     // Explosions
     return ()=>{
@@ -91,13 +88,11 @@ function App() {
       document.removeEventListener("touchstart", handleMouseClick)
       window.removeEventListener("resize", handleCanvasSize)
       window.screen.orientation.removeEventListener("change", handleOrientationChange)
-      clearInterval(interval)
-
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
-  // event.preventDefault()
+  event.preventDefault()
 
   const canvas = document.getElementById("canvas") as HTMLCanvasElement
   let x = 0
