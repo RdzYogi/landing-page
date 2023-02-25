@@ -167,23 +167,21 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     canvas.height = screen.height
     // eslint-disable-next-line no-restricted-globals
     canvas.width = screen.width
-    console.log("canvas size", canvas.height, canvas.width)
-
-
+    // console.log("canvas size", canvas.height, canvas.width)
     window.addEventListener("resize", handleCanvasSize)
   }
   const handleCanvasSize = ()=>{
     // console.log("resize")
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
     if (canvas === null) return
-    if (window && window.visualViewport){
-      // console.log(window.visualViewport.height, window.visualViewport.width)
-      canvas.height = window.visualViewport.height
-      canvas.width = window.visualViewport.width
-    } else{
+    // if (window && window.visualViewport){
+    //   // console.log(window.visualViewport.height, window.visualViewport.width)
+    //   canvas.height = window.visualViewport.height
+    //   canvas.width = window.visualViewport.width
+    // } else{
       canvas.height = window.innerHeight
       canvas.width = window.innerWidth
-    }
+    // }
   }
 
   const handleMouseMove = (event: MouseEvent )=>{
