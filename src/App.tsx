@@ -18,6 +18,7 @@ let RefreshInterval = RefreshIntervalInitial;
 const FadeAmount = 0.1;
 const animationDuration = 300
 let componentToRender: React.ReactNode = null;
+const pageWipeDuration = 600
 
 
 
@@ -251,57 +252,59 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
       componentToRender = <About />;
       setPosition(0)
   }
-    setNavigation(componentToRender)
 
     const wipeData = {
       fromLeft: 0,
       fromRight: 100,
     }
     const currentPage = document.getElementById("current-page")
-    if (currentPage === null) return
-    console.log("prev position", localPrevPosition, "current position", localPosition)
+    const prevPage = document.getElementById("prev-page")
+    if (currentPage === null || prevPage === null) return
+    currentPage.classList.add("hidden")
     if (localPrevPosition < localPosition){
       anime({
         targets: wipeData,
         fromLeft: 100,
-        duration: 1000,
+        duration: pageWipeDuration,
         easing: "linear",
         round: 1,
         update: function() {
           currentPage.style.clipPath = "polygon(0% 0%,0% 100%," + wipeData.fromLeft + "% 100%," + wipeData.fromLeft + "% 0%)"
+          prevPage.style.clipPath = "polygon("+ wipeData.fromLeft +"% 0%,"+ wipeData.fromLeft +"% 100%,100% 100%,100% 0%)"
+          currentPage.classList.remove("hidden")
         },
         complete: function() {
-          currentPage.style.clipPath = ""
           setPrevNavigation(<></>)
         }
       })
+
     } else if(localPrevPosition > localPosition){
       anime({
         targets: wipeData,
         fromRight: 0,
-        duration: 1000,
+        duration: pageWipeDuration,
         easing: "linear",
         round: 1,
         update: function() {
           currentPage.style.clipPath = "polygon(" + wipeData.fromRight + "% 0%," + wipeData.fromRight + "% 100%,100% 100%,100% 0%)"
+          prevPage.style.clipPath = "polygon(0% 0%,0% 100%," + wipeData.fromRight + "% 100%," + wipeData.fromRight + "% 0%)"
+          currentPage.classList.remove("hidden")
         },
         complete: function() {
-          currentPage.style.clipPath = ""
           setPrevNavigation(<></>)
         }
       })
     }
+    setNavigation(componentToRender)
   }
 
   return (
     <div className='relative'>
       <Navbar handleNavigation={handleNavigation} position={position}/>
-      <div id="prev-page" className='absolute w-full z-20'
-        >
+      <div id="prev-page" className='absolute w-full z-20'>
         {prevNavigation}
       </div>
-      <div id="current-page" className='absolute w-full z-20'
-      style={{clipPath:"polygon(0% 0%,0% 100%,50% 100%,50% 0%)"}}>
+      <div id="current-page" className='absolute w-full z-20'>
         {navigation}
       </div>
       <canvas id="canvas" className='absolute top-0 z-1'></canvas>
