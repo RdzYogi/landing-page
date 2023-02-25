@@ -55,10 +55,17 @@ function App() {
     anime({
       duration: Infinity,
       update: function() {
+        ctx.save()
+        ctx.globalAlpha = FadeAmount;
+        ctx.fillStyle = "rgba(0,0,0)";
+        ctx.globalCompositeOperation = "darken"
+        ctx.fillRect(0, 0, canvas.width,canvas.height);
+        ctx.globalCompositeOperation = "source-over"
+        ctx.globalAlpha = 1;
+        ctx.restore();
         animations.forEach(function(anim: any) {
           anim.animatables.forEach(function(animatable: any) {
             if (anim.completed !== true) {
-              // console.log("draw trigger", anim.progress)
                 animatable.target.draw();
             }
           });
@@ -67,15 +74,14 @@ function App() {
     })
 
     const interval = setInterval(()=>{
-      ctx.save()
-      ctx.globalAlpha = FadeAmount;
-      ctx.fillStyle = "rgba(0,0,0)";
-      ctx.globalCompositeOperation = "darken"
-      // eslint-disable-next-line no-restricted-globals
-      ctx.fillRect(0, 0, screen.width,screen.height);
-      ctx.globalCompositeOperation = "source-over"
-      ctx.globalAlpha = 1;
-      ctx.restore();
+      // ctx.save()
+      // ctx.globalAlpha = FadeAmount;
+      // ctx.fillStyle = "rgba(0,0,0)";
+      // ctx.globalCompositeOperation = "darken"
+      // ctx.fillRect(0, 0, canvas.width,canvas.height);
+      // ctx.globalCompositeOperation = "source-over"
+      // ctx.globalAlpha = 1;
+      // ctx.restore();
     }, RefreshInterval)
 
     // Explosions
