@@ -31,11 +31,25 @@ function App() {
     document.addEventListener("click", handleMouseClick)
     document.addEventListener("touchstart", handleMouseClick)
     window.addEventListener("resize", handleCanvasSize)
-    // window.addEventListener("orientationchange", handleCanvasSize)
+    window.screen.orientation.addEventListener("change", handleOrientationChange)
+
+    var viewport = document.querySelector("meta[name=viewport]")
+    if (viewport) {
+      var content = viewport.getAttribute("content");
+      viewport.setAttribute("content", content + ", maximum-scale=1.0")
+    }
+
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
     if (canvas === null) return
-    canvas.height = window.innerHeight
-    canvas.width = window.innerWidth
+    if (window.visualViewport){
+      // console.log("based on visual viewport", window.visualViewport.height, window.visualViewport.width)
+      canvas.height = window.visualViewport.height
+      canvas.width = window.visualViewport.width
+    } else{
+      console.log("based on window", window.innerHeight, window.innerWidth)
+      canvas.height = window.innerHeight
+      canvas.width = window.innerWidth
+    }
     const ctx = canvas.getContext("2d", { willReadFrequently: true })
     if (ctx === null) return
     anime({
@@ -69,7 +83,7 @@ function App() {
       document.removeEventListener("click", handleMouseClick)
       document.removeEventListener("touchstart", handleMouseClick)
       window.removeEventListener("resize", handleCanvasSize)
-      // window.removeEventListener("orientationchange", handleCanvasSize)
+      window.screen.orientation.removeEventListener("change", handleOrientationChange)
       clearInterval(interval)
 
     }
@@ -142,13 +156,27 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
 
 }
 
-  const handleCanvasSize = ()=>{
-    console.log("trigger resize")
+  const handleOrientationChange = ()=>{
+    window.removeEventListener("resize", handleCanvasSize)
+    // console.log("orientation change")
+
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
     if (canvas === null) return
-    // canvas.height = window.innerHeight
-    // canvas.width = window.innerWidth
-    if (window.visualViewport){
+    // eslint-disable-next-line no-restricted-globals
+    canvas.height = screen.height
+    // eslint-disable-next-line no-restricted-globals
+    canvas.width = screen.width
+    // console.log("canvas size", canvas.height, canvas.width)
+
+
+    window.addEventListener("resize", handleCanvasSize)
+  }
+  const handleCanvasSize = ()=>{
+    // console.log("resize")
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement
+    if (canvas === null) return
+    if (window && window.visualViewport){
+      // console.log(window.visualViewport.height, window.visualViewport.width)
       canvas.height = window.visualViewport.height
       canvas.width = window.visualViewport.width
     } else{
