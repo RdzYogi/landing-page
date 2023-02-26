@@ -37,6 +37,7 @@ function App() {
     window.addEventListener("resize", handleCanvasSize)
     window.screen.orientation.addEventListener("change", handleOrientationChange)
 
+
     var viewport = document.querySelector("meta[name=viewport]")
     if (viewport) {
       var content = viewport.getAttribute("content");
@@ -216,7 +217,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
 
   const [position, setPosition] = useState<number>(0)
   const [heroBuffer, setHeroBuffer] = useState<number>(1)
-  const [buffer1, setBuffer1] = useState<React.ReactNode>(<About />)
+  const [buffer1, setBuffer1] = useState<React.ReactNode>(<About firstLoad={true} />)
   const [buffer2, setBuffer2] = useState<React.ReactNode>(null)
   let localPosition = 0
 
@@ -228,7 +229,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   switch (event.currentTarget.id) {
     case "":
     case "about":
-      componentToRender = <About/>;
+      componentToRender = <About firstLoad={false}/>;
       setPosition(0)
       localPosition = 0
       break;
@@ -248,7 +249,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
       localPosition = 3
       break;
     default:
-      componentToRender = <About />;
+      componentToRender = <About firstLoad={false}/>;
       setPosition(0)
   }
     // After switch we get the positions and the hero component to render
