@@ -55,7 +55,7 @@ function Navbar(props:Props) {
         <button id="game" onClick={props.handleNavigation} className=' text-white h-12 min-w-fit transition transition-duration-300 ease-in-out hover:text-gray-400 z-20'>Game</button>
       </div>
       <div className='w-3/4 mx-0 relative h-px'>
-        <div id="indicator" className='h-1 absolute transition-all duration-300 ease-in-out bg-white z-20'></div>
+        <div id="indicator" className='h-1 absolute transition-all duration-300 ease-in-out bg-orange-600 z-20'></div>
       </div>
     </div>
   )
