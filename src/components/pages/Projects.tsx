@@ -6,7 +6,7 @@ function Projects() {
   const handleOpenMore = () => {
     anime({
       targets: '#projects-page',
-      height: '100vh',
+      height: '80vh',
       easing: 'easeInOutQuad',
       duration: 1000,
     })
