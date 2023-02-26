@@ -20,8 +20,7 @@ function Projects() {
   //   })
   // },[])
   return (
-    <div id='projects-page' className='text-white z-20 w-3/4 m-auto relative h-96 bg-gray-500'
-    style={{clipPath:"polygon(50% 0%,50% 100%,100% 100%,100% 0%)"}} >
+    <div id='projects-page' className='text-white z-20 w-3/4 m-auto relative h-fit'>
       <div className=''>We are in Projects</div>
     </div>
   )

@@ -25,9 +25,7 @@ function About() {
   //   })
   // },[props.position])
   return (
-    <div id='about-page' className='text-white z-20 w-3/4 m-auto relative h-96 bg-slate-500'
-          style={{clipPath:"polygon(0% 0%,0% 100%,50% 100%,50% 0%)"} }
-          >
+    <div id='about-page' className='text-white z-20 w-3/4 m-auto relative h-fit'>
       <div className=''>We are in About</div>
     </div>
   )
