@@ -1,5 +1,5 @@
 import anime from 'animejs'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 function Projects() {
 
