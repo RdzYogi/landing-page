@@ -224,7 +224,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     setPrevPosition(position)
     event.preventDefault()
     if (componentToRender !== null){
-      setPrevNavigation(componentToRender)
+      setPrevNavigation(navigation)
     }
   switch (event.currentTarget.id) {
     case "":
