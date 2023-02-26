@@ -2,26 +2,19 @@ import anime from 'animejs'
 import React, { useEffect } from 'react'
 
 function Projects() {
-  // const projects = document.getElementById("projects-page")
-  // const wipeData = {
-  //   pozX: 0
-  // }
-  // useEffect(() => {
-  //   if (projects === null) return
-  //   anime({
-  //     targets: wipeData,
-  //     pozX: 100,
-  //     duration: 1000,
-  //     easing: "linear",
-  //     round: 1,
-  //     update: function() {
-  //       projects.style.clipPath = "polygon(0% 0%,0% 100%," + wipeData.pozX + "% 100%," + wipeData.pozX + "% 0%)"
-  //     }
-  //   })
-  // },[])
+
+  const handleOpenMore = () => {
+    anime({
+      targets: '#projects-page',
+      height: '80vh',
+      easing: 'easeInOutQuad',
+      duration: 1000,
+    })
+  }
+
   return (
-    <div id='projects-page' className='text-white z-20 w-3/4 m-auto relative h-fit'>
-      <div className=''>We are in Projects</div>
+    <div id='projects-page' className='text-white z-20 w-3/4 m-auto relative h-fit bg-slate-500'>
+      <button onClick={handleOpenMore} className='border'>Open more</button>
     </div>
   )
 }

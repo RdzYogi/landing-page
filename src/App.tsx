@@ -18,7 +18,8 @@ let RefreshInterval = RefreshIntervalInitial;
 const FadeAmount = 0.1;
 const animationDuration = 300
 let componentToRender: React.ReactNode = null;
-const pageWipeDuration = 600
+const pageWipeDuration = 300
+
 
 
 
@@ -214,18 +215,16 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   }
 
   const [position, setPosition] = useState<number>(0)
-  const [navigation, setNavigation] = useState<React.ReactNode>(<About />)
-  const [prevPosition, setPrevPosition] = useState<number>(1)
-  const [prevNavigation, setPrevNavigation] = useState<React.ReactNode>(<About />)
+  const [heroBuffer, setHeroBuffer] = useState<number>(1)
+  const [buffer1, setBuffer1] = useState<React.ReactNode>(<About />)
+  const [buffer2, setBuffer2] = useState<React.ReactNode>(null)
   let localPosition = 0
 
   const handleNavigation = (event : React.MouseEvent<HTMLButtonElement>) =>{
     const localPrevPosition = position
-    setPrevPosition(position)
+
     event.preventDefault()
-    if (componentToRender !== null){
-      setPrevNavigation(componentToRender)
-    }
+
   switch (event.currentTarget.id) {
     case "":
     case "about":
@@ -252,16 +251,35 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
       componentToRender = <About />;
       setPosition(0)
   }
+    // After switch we get the positions and the hero component to render
 
+    // Set current page and previous page to corresponding buffers
+    const bufferElement1 = document.getElementById("buffer-1")
+    const bufferElement2 = document.getElementById("buffer-2")
+    if (bufferElement1 === null || bufferElement2 === null) return
+    let currentPage:HTMLElement
+    let prevPage:HTMLElement
+    if (heroBuffer === 1){
+      currentPage = bufferElement2
+      prevPage = bufferElement1
+      setHeroBuffer(2)
+      setBuffer1(buffer1)
+      setBuffer2(componentToRender)
+    } else {
+      currentPage = bufferElement1
+      prevPage = bufferElement2
+      setHeroBuffer(1)
+      setBuffer2(buffer2)
+      setBuffer1(componentToRender)
+    }
     const wipeData = {
       fromLeft: 0,
       fromRight: 100,
     }
-    const currentPage = document.getElementById("current-page")
-    const prevPage = document.getElementById("prev-page")
-    if (currentPage === null || prevPage === null) return
-    currentPage.classList.add("hidden")
+
     if (localPrevPosition < localPosition){
+      currentPage.style.clipPath = "polygon(0% 0%,0% 100%,0% 100%,0% 0%)"
+      prevPage.style.clipPath = "polygon(0% 0%,0% 100%,100% 100%,100% 0%)"
       anime({
         targets: wipeData,
         fromLeft: 100,
@@ -269,12 +287,11 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
         easing: "linear",
         round: 1,
         update: function() {
+          // console.log("update", wipeData.fromLeft)
           currentPage.style.clipPath = "polygon(0% 0%,0% 100%," + wipeData.fromLeft + "% 100%," + wipeData.fromLeft + "% 0%)"
           prevPage.style.clipPath = "polygon("+ wipeData.fromLeft +"% 0%,"+ wipeData.fromLeft +"% 100%,100% 100%,100% 0%)"
-          currentPage.classList.remove("hidden")
         },
         complete: function() {
-          setPrevNavigation(<></>)
         }
       })
 
@@ -288,24 +305,22 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
         update: function() {
           currentPage.style.clipPath = "polygon(" + wipeData.fromRight + "% 0%," + wipeData.fromRight + "% 100%,100% 100%,100% 0%)"
           prevPage.style.clipPath = "polygon(0% 0%,0% 100%," + wipeData.fromRight + "% 100%," + wipeData.fromRight + "% 0%)"
-          currentPage.classList.remove("hidden")
         },
         complete: function() {
-          setPrevNavigation(<></>)
         }
       })
     }
-    setNavigation(componentToRender)
+
   }
 
   return (
     <div className='relative'>
       <Navbar handleNavigation={handleNavigation} position={position}/>
-      <div id="prev-page" className='absolute w-full z-20'>
-        {prevNavigation}
+      <div id="buffer-1" className='absolute w-full z-20'>
+        {buffer1}
       </div>
-      <div id="current-page" className='absolute w-full z-20'>
-        {navigation}
+      <div id="buffer-2" className='absolute w-full z-20'>
+        {buffer2}
       </div>
       <canvas id="canvas" className='absolute top-0 z-1'></canvas>
     </div>
