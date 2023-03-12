@@ -10,14 +10,21 @@ import Game from './components/pages/Game';
 
 
 
+
 // Variables for the canvas fade effect
 const timeOutForRender = 30
 let render = true
-const RefreshIntervalInitial = 20;
+const RefreshIntervalInitial = 1;
 let RefreshInterval = RefreshIntervalInitial;
-const FadeAmount = 0.1;
+const FadeAmount = 0.01;
+
+// Duration of the animations on click
 const animationDuration = 300
+
+// Init variable for the page component to render
 let componentToRender: React.ReactNode = null;
+
+// Variables for the page wipe effect on navigation
 const pageWipeDuration = 300
 
 
@@ -28,6 +35,49 @@ function App() {
   function removeAnimation(animation:any) {
     const index = animations.indexOf(animation);
     animations.splice(index, 1);
+  }
+
+  // Function to handle the fade effect on the canvas
+
+  // Create the GPU kernel
+  // const gpu = new GPU({ mode: 'gpu' });
+
+
+  const fadeOut=()=>{
+    // console.log("triggered")
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement
+    const ctx = canvas.getContext("2d", { willReadFrequently: true })
+    if (ctx === null) return
+    // const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    // const pixels = imageData.data;
+    // const size = pixels.length;
+    // const kernel = gpu.createKernel(function(pixels: Float32Array, FadeAmount: number, size: number) {
+    //   const i = this.thread.x;
+    //   if ((i+1)%4 === 0) {
+    //     return pixels[i] - FadeAmount
+    //   } else {
+    //     return pixels[i]
+    //   }
+    // }).setOutput([size]).setImmutable(true)
+
+    // kernel(pixels, FadeAmount,size)
+    // const kernelResult = kernel(pixels, FadeAmount)
+    // const result = new Uint8ClampedArray(kernelResult as Float32Array)
+    // // gpu.destroy()
+    // const newImageData = new ImageData(result, canvas.width, canvas.height)
+    // ctx.drawImage(canvas, 0, 0);
+    // ctx.putImageData(newImageData, 0, 0)
+
+    ctx.save()
+    // ctx.globalAlpha = FadeAmount;
+    ctx.fillStyle = `rgba(0,0,0,${FadeAmount})`;
+    ctx.globalCompositeOperation = "darken"
+    ctx.fillRect(0, 0, canvas.width,canvas.height);
+    ctx.globalCompositeOperation = "source-over"
+    // ctx.globalAlpha = 1;
+    ctx.restore();
+    // window.requestAnimationFrame(fadeOut)
+    RefreshInterval = RefreshIntervalInitial
   }
 
   useEffect(()=>{
@@ -61,23 +111,18 @@ function App() {
     }
     const ctx = canvas.getContext("2d", { willReadFrequently: true })
     if (ctx === null) return
+
+
     anime({
       duration: Infinity,
       update: function() {
+        // Code for the canvas fade effect
         if (RefreshInterval < 0) {
-          // console.log("triggered", RefreshInterval)
-          ctx.save()
-          ctx.globalAlpha = FadeAmount;
-          ctx.fillStyle = "rgba(0,0,0)";
-          ctx.globalCompositeOperation = "darken"
-          ctx.fillRect(0, 0, canvas.width,canvas.height);
-          ctx.globalCompositeOperation = "source-over"
-          ctx.globalAlpha = 1;
-          ctx.restore();
-          RefreshInterval = RefreshIntervalInitial
+          requestAnimationFrame(fadeOut)
         }
         RefreshInterval -= 1
 
+        // Drawing the animations for clicks
         animations.forEach(function(anim: any) {
           anim.animatables.forEach(function(animatable: any) {
             if (anim.completed !== true) {
