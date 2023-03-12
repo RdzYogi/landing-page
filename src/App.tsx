@@ -14,9 +14,9 @@ import Game from './components/pages/Game';
 // Variables for the canvas fade effect
 const timeOutForRender = 30
 let render = true
-const RefreshIntervalInitial = 1;
+const RefreshIntervalInitial = 2;
 let RefreshInterval = RefreshIntervalInitial;
-const FadeAmount = 0.01;
+const FadeAmount = 0.05;
 
 // Duration of the animations on click
 const animationDuration = 300
