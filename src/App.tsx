@@ -35,7 +35,11 @@ function App() {
     document.addEventListener("click", handleMouseClick)
     document.addEventListener("touchstart", handleMouseClick)
     window.addEventListener("resize", handleCanvasSize)
+    document.addEventListener("scroll", handleScroll)
     window.screen.orientation.addEventListener("change", handleOrientationChange)
+
+    const buffer1 = document.getElementById("buffer-1") as HTMLDivElement
+    const buffer2 = document.getElementById("buffer-2") as HTMLDivElement
 
 
     var viewport = document.querySelector("meta[name=viewport]")
@@ -48,11 +52,11 @@ function App() {
     if (canvas === null) return
     if (window.visualViewport){
       // console.log("based on visual viewport", window.visualViewport.height, window.visualViewport.width)
-      canvas.height = window.visualViewport.height
+      canvas.height = Math.max(buffer1.offsetHeight + buffer1.offsetTop, buffer2.offsetHeight + buffer2.offsetTop, window.visualViewport.height)
       canvas.width = window.visualViewport.width
     } else{
       console.log("based on window", window.innerHeight, window.innerWidth)
-      canvas.height = window.innerHeight
+      canvas.height = Math.max(buffer1.offsetHeight + buffer1.offsetTop, buffer2.offsetHeight + buffer2.offsetTop, window.innerHeight)
       canvas.width = window.innerWidth
     }
     const ctx = canvas.getContext("2d", { willReadFrequently: true })
@@ -66,7 +70,7 @@ function App() {
           ctx.globalAlpha = FadeAmount;
           ctx.fillStyle = "rgba(0,0,0)";
           ctx.globalCompositeOperation = "darken"
-          ctx.fillRect(0, 0, window.innerWidth,window.innerHeight);
+          ctx.fillRect(0, 0, canvas.width,canvas.height);
           ctx.globalCompositeOperation = "source-over"
           ctx.globalAlpha = 1;
           ctx.restore();
@@ -91,9 +95,20 @@ function App() {
       document.removeEventListener("click", handleMouseClick)
       document.removeEventListener("touchstart", handleMouseClick)
       window.removeEventListener("resize", handleCanvasSize)
+      document.removeEventListener("scroll", handleScroll)
       window.screen.orientation.removeEventListener("change", handleOrientationChange)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+const handleScroll = (event: Event)=>{
+  // console.log("scrolling")
+  // const canvas = document.getElementById("canvas") as HTMLCanvasElement
+  // const buffer1 = document.getElementById("buffer-1") as HTMLDivElement
+  // const buffer2 = document.getElementById("buffer-2") as HTMLDivElement
+  // if (canvas === null ) return
+  // canvas.height = Math.max(buffer1.offsetHeight + buffer1.offsetTop, buffer2.offsetHeight + buffer2.offsetTop)
+  // console.log(buffer1.offsetHeight, buffer2.offsetHeight)
+}
 
 const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   // event.preventDefault()
@@ -164,11 +179,13 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     e.preventDefault()
     window.removeEventListener("resize", handleCanvasSize)
     // console.log("orientation change")
+    const buffer1 = document.getElementById("buffer-1") as HTMLDivElement
+    const buffer2 = document.getElementById("buffer-2") as HTMLDivElement
 
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
     if (canvas === null) return
     // eslint-disable-next-line no-restricted-globals
-    canvas.height = screen.height
+    canvas.height = canvas.height = Math.max(buffer1.offsetHeight + buffer1.offsetTop, buffer2.offsetHeight + buffer2.offsetTop, screen.height)
     // eslint-disable-next-line no-restricted-globals
     canvas.width = screen.width
     // console.log("canvas size", canvas.height, canvas.width)
@@ -177,13 +194,15 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   const handleCanvasSize = ()=>{
     // console.log("resize")
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
+    const buffer1 = document.getElementById("buffer-1") as HTMLDivElement
+    const buffer2 = document.getElementById("buffer-2") as HTMLDivElement
     if (canvas === null) return
     // if (window && window.visualViewport){
     //   // console.log(window.visualViewport.height, window.visualViewport.width)
     //   canvas.height = window.visualViewport.height
     //   canvas.width = window.visualViewport.width
     // } else{
-      canvas.height = window.innerHeight
+      canvas.height = Math.max(buffer1.offsetHeight + buffer1.offsetTop, buffer2.offsetHeight + buffer2.offsetTop, window.innerHeight)
       canvas.width = window.innerWidth
     // }
   }
