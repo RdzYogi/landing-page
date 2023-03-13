@@ -1,14 +1,16 @@
 import React from 'react'
+import profile from '../../assets/images/Profile.png'
 
 function AboutMe() {
   return (
-    <div className='h-full flex justify-between items-center'>
-      <div className='md:flex md:flex-col justify-between h-fit md:w-3/4 w-full'>
-        <h1 className='text-xl text-orange-600 '>{"<helloWorld>"}</h1>
-        <h1 className='text-base ml-20 text-white'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry. </h1>
-        <h1 className='text-xl text-orange-600'>{"</helloWorld>"}</h1>
+    <div className='h-full flex flex-col justify-between '>
+      <div id="avatar" className='aspect-square w-20 mb-5 ml-20 hidden md:flex' style={{backgroundImage: `url(${profile})`, backgroundSize: "cover",backgroundPosition:"center center"}}></div>
+      <div className='md:flex md:flex-col justify-between h-fit w-full'>
+        <h1 className='text-xl text-gray-600 '>{"<helloWorld>"}</h1>
+        <h1 className='text-base ml-20 text-gray-200'>I am a passionate developer that discovered his passion for web after finishing LeWagon coding bootcamp.</h1>
+        <h1 className='text-xl text-gray-600'>{"</helloWorld>"}</h1>
       </div>
-      <div id="avatar" className='aspect-square w-1/4 lg:w-52 hidden md:flex rounded-full bg-gray-500'></div>
+
     </div >
   )
 }

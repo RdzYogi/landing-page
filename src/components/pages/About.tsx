@@ -40,7 +40,7 @@ function About(props: Props) {
       <div id='about-1' className=' h-fit'>
         <AboutMe/>
       </div>
-      <div id='about-2' className='h-fit my-5'>
+      <div id='about-2' className='h-fit my-16'>
         <TechStack/>
       </div>
       <div id='about-3' className='h-fit'>
