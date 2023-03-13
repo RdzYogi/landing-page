@@ -7,6 +7,7 @@ import anime from 'animejs/lib/anime.es.js';
 import { Circle } from './components/helpers/CircleClass';
 import Contact from './components/pages/Contact';
 import Game from './components/pages/Game';
+import background from './assets/images/background.png'
 
 
 
@@ -85,7 +86,6 @@ function App() {
     document.addEventListener("click", handleMouseClick)
     document.addEventListener("touchstart", handleMouseClick)
     window.addEventListener("resize", handleCanvasSize)
-    document.addEventListener("scroll", handleScroll)
     window.screen.orientation.addEventListener("change", handleOrientationChange)
 
     const buffer1 = document.getElementById("buffer-1") as HTMLDivElement
@@ -109,6 +109,7 @@ function App() {
       canvas.height = Math.max(buffer1.offsetHeight + buffer1.offsetTop, buffer2.offsetHeight + buffer2.offsetTop, window.innerHeight)
       canvas.width = window.innerWidth
     }
+    handleCanvasSize()
     const ctx = canvas.getContext("2d", { willReadFrequently: true })
     if (ctx === null) return
 
@@ -140,20 +141,12 @@ function App() {
       document.removeEventListener("click", handleMouseClick)
       document.removeEventListener("touchstart", handleMouseClick)
       window.removeEventListener("resize", handleCanvasSize)
-      document.removeEventListener("scroll", handleScroll)
+
       window.screen.orientation.removeEventListener("change", handleOrientationChange)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-const handleScroll = (event: Event)=>{
-  // console.log("scrolling")
-  // const canvas = document.getElementById("canvas") as HTMLCanvasElement
-  // const buffer1 = document.getElementById("buffer-1") as HTMLDivElement
-  // const buffer2 = document.getElementById("buffer-2") as HTMLDivElement
-  // if (canvas === null ) return
-  // canvas.height = Math.max(buffer1.offsetHeight + buffer1.offsetTop, buffer2.offsetHeight + buffer2.offsetTop)
-  // console.log(buffer1.offsetHeight, buffer2.offsetHeight)
-}
+
 
 const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   // event.preventDefault()
@@ -242,14 +235,12 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     const buffer1 = document.getElementById("buffer-1") as HTMLDivElement
     const buffer2 = document.getElementById("buffer-2") as HTMLDivElement
     if (canvas === null) return
-    // if (window && window.visualViewport){
-    //   // console.log(window.visualViewport.height, window.visualViewport.width)
-    //   canvas.height = window.visualViewport.height
-    //   canvas.width = window.visualViewport.width
-    // } else{
-      canvas.height = Math.max(buffer1.offsetHeight + buffer1.offsetTop, buffer2.offsetHeight + buffer2.offsetTop, window.innerHeight)
-      canvas.width = window.innerWidth
-    // }
+    canvas.height = Math.max(buffer1.offsetHeight + buffer1.offsetTop, buffer2.offsetHeight + buffer2.offsetTop, window.innerHeight)
+    canvas.width = window.innerWidth
+    const hiddenImage = document.getElementById("hidden-image") as HTMLDivElement
+    if (hiddenImage === null) return
+    hiddenImage.style.height = canvas.height + "px"
+    hiddenImage.style.width = canvas.width + "px"
   }
 
   const handleMouseMove = (event: MouseEvent )=>{
@@ -263,13 +254,13 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
 
     if (render) {
       // console.log("draw state:", render)
-      var grd = ctx.createRadialGradient(150, 150, 10, 150, 150, 150);
+      var grd = ctx.createRadialGradient(300, 300, 10, 300, 300, 300);
       grd.addColorStop(0, "#333");
       grd.addColorStop(0.4, "rgba(10,10,10,0)");
       ctx.save()
-      ctx.translate(x-150,y-150);
+      ctx.translate(x-300,y-300);
       ctx.fillStyle = grd;
-      ctx.fillRect(0,0,300,300);
+      ctx.fillRect(0,0,600,600);
       ctx.restore();
       render = false
       setTimeout(()=>{
@@ -378,6 +369,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
 
   }
 
+
   return (
     <div className='relative'>
       <Navbar handleNavigation={handleNavigation} position={position}/>
@@ -388,6 +380,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
         {buffer2}
       </div>
       <canvas id="canvas" className='absolute top-0 z-1'></canvas>
+      <div id="hidden-image" style={{backgroundImage: `url(${background})`}} className='absolute top-0 z-10'></div>
     </div>
   );
 }
