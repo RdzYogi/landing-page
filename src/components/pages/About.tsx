@@ -36,7 +36,7 @@ function About(props: Props) {
   }, [])
 
   return (
-    <div id='about-page' className='text-white z-20 w-2/4 m-auto relative h-fit '>
+    <div id='about-page' className='text-white z-20 w-full md:w-3/4 lg:w-1/2 m-auto relative h-fit '>
       <div id='about-1' className=' h-fit'>
         <AboutMe/>
       </div>
