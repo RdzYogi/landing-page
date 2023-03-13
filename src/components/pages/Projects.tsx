@@ -13,7 +13,7 @@ function Projects() {
   }
 
   return (
-    <div id='projects-page' className='text-white z-20 w-3/4 m-auto relative h-fit bg-slate-500'>
+    <div id='projects-page' className='text-white z-20 w-2/4 m-auto relative h-fit bg-slate-500'>
       <button onClick={handleOpenMore} className='border'>Open more</button>
     </div>
   )
