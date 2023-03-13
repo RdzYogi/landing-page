@@ -26,7 +26,7 @@ const animationDuration = 300
 let componentToRender: React.ReactNode = null;
 
 // Variables for the page wipe effect on navigation
-const pageWipeDuration = 300
+const pageWipeDuration = 600
 
 
 
