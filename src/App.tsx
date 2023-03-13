@@ -284,7 +284,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   switch (event.currentTarget.id) {
     case "":
     case "about":
-      componentToRender = <About firstLoad={false}/>;
+      componentToRender = <About firstLoad={false} />;
       setPosition(0)
       localPosition = 0
       break;
