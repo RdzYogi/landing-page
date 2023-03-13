@@ -380,7 +380,7 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
         {buffer2}
       </div>
       <canvas id="canvas" className='absolute top-0 z-1'></canvas>
-      <div id="hidden-image" style={{backgroundImage: `url(${background})`}} className='absolute top-0 z-10'></div>
+      <div id="hidden-image" style={{backgroundImage: `url(${background})`, backgroundSize: "cover",backgroundPosition:"center center"}} className='absolute top-0 z-10'></div>
     </div>
   );
 }
