@@ -2,7 +2,9 @@ import React from 'react'
 
 function TvTalk() {
   return (
-    <div>TvTalk</div>
+    <div className='transform-none flex flex-wrap justify-center content-center pointer-events-none'>
+      TvTalk
+    </div>
   )
 }
 

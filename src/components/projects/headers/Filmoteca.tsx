@@ -1,11 +1,12 @@
-import { getEventListeners } from 'events'
 import React from 'react'
+import filmoteca from '../../../assets/projects/filmoteca/filmoteca.png'
+
 
 function Filmoteca() {
 
   return (
-    <div className='transform-none flex text-center bg-slate-600 pointer-events-none'>
-      <h1>Filmoteca</h1>
+    <div className='transform-none flex flex-wrap justify-center content-center pointer-events-none'>
+      <img src={filmoteca} alt="" className='w-96'/>
     </div>
   )
 }
