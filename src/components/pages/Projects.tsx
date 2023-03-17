@@ -1,6 +1,8 @@
 import anime from 'animejs'
 import React, { useEffect } from 'react'
 import Filmoteca from '../projects/headers/Filmoteca'
+import Pimp from '../projects/headers/Pimp'
+import TvTalk from '../projects/headers/TvTalk'
 
 const detailsHeight = "60vh"
 
@@ -151,9 +153,11 @@ function Projects() {
         <div id="filmoteca" onClickCapture={handleClick} onMouseMoveCapture={handleMouseMove} onMouseOutCapture={handleMouseLeave} onMouseOverCapture={handleMouseEnter} className='aspect-video flex cursor-pointer'>
           <Filmoteca/>
         </div>
-        <div id="tv-talk" onClick={handleClick} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter} className='w-72 aspect-video bg-blue-500 mt-5 cursor-pointer'>
+        <div id="tv-talk" onClick={handleClick} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter} className='aspect-video flex cursor-pointer'>
+          <TvTalk/>
         </div>
-        <div id="pimp" onClick={handleClick} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter} className='w-72 aspect-video bg-red-500 mt-5 cursor-pointer'>
+        <div id="pimp" onClick={handleClick} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter} className='aspect-video flex cursor-pointer'>
+          <Pimp/>
         </div>
       </div>
       <div id="project-details" className='w-11/12 mx-auto mt-10 bg-fuchsia-500 mb-5'>
