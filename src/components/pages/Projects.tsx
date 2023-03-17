@@ -1,5 +1,6 @@
 import anime from 'animejs'
 import React, { useEffect } from 'react'
+import Filmoteca from '../projects/headers/Filmoteca'
 
 const detailsHeight = "60vh"
 
@@ -22,7 +23,11 @@ function Projects() {
 
   const handleMouseEnter = (event:any) => {
     // zoom in on the card
-    // event.target.style.transform = "scale(1.1) translate3d(0px, 0px, -20px)"
+    event.preventDefault()
+    event.persist();
+    event.nativeEvent.stopImmediatePropagation();
+    event.stopPropagation()
+
     setTimeout(() => {
       event.target.style.transition = "ease-in-out"
     }, 200)
@@ -30,6 +35,10 @@ function Projects() {
 
   const handleMouseLeave = (event:any) => {
     // zoom out on the card
+    event.preventDefault()
+    event.persist();
+    event.nativeEvent.stopImmediatePropagation();
+    event.stopPropagation()
     event.target.style.transform = "scale(1)"
     event.target.style.transition = "transform 0.2s ease-out"
   }
@@ -41,6 +50,7 @@ function Projects() {
   }
 
   const handleClick = (e:any) => {
+
     const projectDetails = document.getElementById('project-details')
     if (projectDetails === null) return
     projectDetails.scrollIntoView({behavior: 'smooth', block: 'start'});
@@ -138,11 +148,12 @@ function Projects() {
   return (
     <div id='projects-page' className='text-white z-20 w-full lg:w-11/12 m-auto relative min-h-[25vh]'>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-8 justify-between'>
-        <div id="filmoteca" onClick={handleClick} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter} className='w-72 aspect-video bg-fuchsia-500 '>
+        <div id="filmoteca" onClickCapture={handleClick} onMouseMoveCapture={handleMouseMove} onMouseOutCapture={handleMouseLeave} onMouseOverCapture={handleMouseEnter} className='w-72 aspect-video mt-5 cursor-pointer'>
+          <Filmoteca/>
         </div>
-        <div id="tv-talk" onClick={handleClick} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter} className='w-72 aspect-video bg-blue-500'>
+        <div id="tv-talk" onClick={handleClick} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter} className='w-72 aspect-video bg-blue-500 mt-5 cursor-pointer'>
         </div>
-        <div id="pimp" onClick={handleClick} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter} className='w-72 aspect-video bg-red-500 '>
+        <div id="pimp" onClick={handleClick} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter} className='w-72 aspect-video bg-red-500 mt-5 cursor-pointer'>
         </div>
       </div>
       <div id="project-details" className='w-11/12 mx-auto mt-10 bg-fuchsia-500 mb-5'>
