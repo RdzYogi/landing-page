@@ -17,6 +17,7 @@ function Projects() {
     const projectDetails = document.getElementById('project-details')
     if (projectDetails === null) return
     projectDetails.classList.add('filmoteca')
+    projectDetails.style.height = "0"
     setTimeout(() => {
       anime({
         targets: projectDetails,
@@ -155,7 +156,7 @@ function Projects() {
           <Pimp/>
         </div>
       </div>
-      <div id="project-details" className='w-11/12 mx-auto mt-10 mb-5'>
+      <div id="project-details" className='w-11/12 mx-auto mt-10 mb-5 overflow-hidden'>
         {project}
       </div>
     </div>

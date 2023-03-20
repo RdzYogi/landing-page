@@ -2,7 +2,9 @@ import React from 'react'
 
 function TvTalk() {
   return (
-    <div>TvTalk</div>
+    <div className='bg-gray-300'>
+      TvTalk
+    </div>
   )
 }
 
