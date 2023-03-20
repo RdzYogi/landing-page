@@ -53,8 +53,9 @@ function Projects() {
 
   const handleMouseMove = (event:any) => {
     const x = event.clientX - event.target.offsetLeft - event.target.parentElement.offsetLeft - event.target.parentElement.parentElement.offsetLeft - event.target.offsetWidth / 2
-    const y = -(event.clientY - event.target.offsetTop - event.target.parentElement.offsetTop - event.target.parentElement.parentElement.offsetTop - event.target.parentElement.parentElement.parentElement.offsetTop  - event.target.offsetHeight / 2)
+    const y = -(event.clientY + window.pageYOffset - event.target.offsetTop  - event.target.parentElement.parentElement.parentElement.offsetTop  - event.target.offsetHeight / 2)
     event.target.style.transform = "perspective(75em) scale(1.1) rotateY(" + x / 10 + "deg) rotateX(" + y / 10 + "deg)"
+    // - event.target.parentElement.offsetTop - event.target.parentElement.parentElement.offsetTop
   }
 
   const handleClick = (e:any) => {
