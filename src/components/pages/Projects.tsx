@@ -1,12 +1,17 @@
 import anime from 'animejs'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Filmoteca from '../projects/headers/Filmoteca'
+import FilmotecaD from '../projects/details/FilmotecaD'
+import PimpD from '../projects/details/PimpD'
+import TvTalkD from '../projects/details/TvTalkD'
 import Pimp from '../projects/headers/Pimp'
 import TvTalk from '../projects/headers/TvTalk'
 
 const detailsHeight = "60vh"
 
 function Projects() {
+
+  const [project, setProject] = useState(<FilmotecaD/>)
 
   useEffect(() => {
     const projectDetails = document.getElementById('project-details')
@@ -69,8 +74,7 @@ function Projects() {
           duration: 250,
           easing: 'easeInOutQuad',
           complete: () => {
-            colorReset()
-            projectDetails.classList.add('bg-fuchsia-500')
+            setProject(<FilmotecaD/>)
             anime({
               targets: projectDetails,
               height: detailsHeight,
@@ -92,8 +96,7 @@ function Projects() {
           duration: 250,
           easing: 'easeInOutQuad',
           complete: () => {
-            colorReset()
-            projectDetails.classList.add('bg-blue-500')
+            setProject(<TvTalkD/>)
             anime({
               targets: projectDetails,
               height: detailsHeight,
@@ -115,8 +118,7 @@ function Projects() {
           duration: 250,
           easing: 'easeInOutQuad',
           complete: () => {
-            colorReset()
-            projectDetails.classList.add('bg-red-500')
+            setProject(<PimpD/>)
             anime({
               targets: projectDetails,
               height: detailsHeight,
@@ -139,13 +141,6 @@ function Projects() {
     projectDetails.classList.remove('pimp')
   }
 
-  const colorReset = () => {
-    const projectDetails = document.getElementById('project-details')
-    if (projectDetails === null) return
-    projectDetails.classList.remove('bg-fuchsia-500')
-    projectDetails.classList.remove('bg-blue-500')
-    projectDetails.classList.remove('bg-red-500')
-  }
 
   return (
     <div id='projects-page' className='text-white z-20 w-full lg:w-11/12 m-auto relative min-h-[25vh]'>
@@ -160,8 +155,8 @@ function Projects() {
           <Pimp/>
         </div>
       </div>
-      <div id="project-details" className='w-11/12 mx-auto mt-10 bg-fuchsia-500 mb-5'>
-
+      <div id="project-details" className='w-11/12 mx-auto mt-10 mb-5'>
+        {project}
       </div>
     </div>
   )
