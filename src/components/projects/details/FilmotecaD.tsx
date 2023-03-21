@@ -3,7 +3,7 @@ import React from 'react'
 function Filmoteca() {
   return (
     <div className='flex gap-4'>
-      <div className='h-[20vh] aspect-square bg-slate-600'>
+      <div className='h-[30vh] aspect-square bg-slate-600'>
 
       </div>
       <div className=''>
