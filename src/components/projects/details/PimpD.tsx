@@ -7,7 +7,7 @@ function Pimp() {
     <div className='flex gap-4'>
       <div className='h-[30vh] flex flex-col'>
         <img src={pimpMain} alt="" className='' />
-        <Links live= "" github=''/>
+        <Links live= "" github='https://github.com/RdzYogi/pimp-my-job'/>
 
       </div>
       <div className=''>

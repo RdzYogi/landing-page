@@ -7,7 +7,7 @@ function Filmoteca() {
     <div className='flex gap-4'>
       <div className='h-[30vh] flex flex-col'>
         <img src={filmotecaMain} alt="" className='' />
-        <Links live="" github=''/>
+        <Links live="https://filmoteca.herokuapp.com/" github='https://github.com/RdzYogi/filmoteca'/>
       </div>
       <div className=''>
         <p className='text-gray-200'>

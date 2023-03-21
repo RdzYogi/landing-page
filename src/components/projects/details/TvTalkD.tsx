@@ -7,7 +7,7 @@ function TvTalk() {
     <div className='flex gap-4'>
       <div className='h-[30vh] flex flex-col'>
         <img src={tvTalkMain} alt="" className='' />
-        <Links live='' github='' />
+        <Links live='https://www.tvtalk.me/' github='https://github.com/RdzYogi/tv-talk' />
       </div>
       <div className=''>
         <p className='text-gray-200'>
