@@ -13,7 +13,7 @@ function AboutMe() {
       <div className='md:flex md:flex-col justify-between h-fit w-full'>
         <h1 className='text-xl text-gray-600 '>{"<helloWorld>"}</h1>
         <h1 className='text-base ml-20 text-gray-200'>I am a passionate developer that discovered his passion for web after finishing LeWagon coding bootcamp.</h1>
-        <button onClick={handleClick} className="ml-20 mt-3 py-2 px-2 text-sm font-medium border border-gray-500 hover:border-gray-300 hover:text-gray-200 text-center text-white rounded-lg transition duration-300 ease-in-out sm:w-fit focus:ring-4 focus:outline-none focus:ring-primary-800">Contact me</button>
+        <button onClick={handleClick} className="ml-20 mt-3 py-2 px-2 text-sm font-medium border border-gray-500 hover:border-gray-300 hover:text-gray-200 text-center text-white rounded-lg transition duration-300 ease-in-out sm:w-fit">Contact me</button>
         <h1 className='text-xl text-gray-600'>{"</helloWorld>"}</h1>
       </div>
 
