@@ -147,13 +147,13 @@ function Projects() {
   return (
     <div id='projects-page' className='text-white z-20 w-full lg:w-11/12 m-auto relative min-h-[25vh]'>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-8 justify-between'>
-        <div id="filmoteca" onClickCapture={handleClick} onMouseMoveCapture={handleMouseMove} onMouseOutCapture={handleMouseLeave} onMouseOverCapture={handleMouseEnter} className='aspect-video flex cursor-pointer'>
+        <div id="filmoteca" onClickCapture={handleClick} onMouseMoveCapture={handleMouseMove} onMouseOutCapture={handleMouseLeave} onMouseOverCapture={handleMouseEnter} className=' flex cursor-pointer'>
           <Filmoteca/>
         </div>
-        <div id="tv-talk" onClick={handleClick} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter} className='aspect-video flex cursor-pointer'>
+        <div id="tv-talk" onClick={handleClick} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter} className=' flex cursor-pointer'>
           <TvTalk/>
         </div>
-        <div id="pimp" onClick={handleClick} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter} className='aspect-video flex cursor-pointer'>
+        <div id="pimp" onClick={handleClick} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter} className=' flex cursor-pointer'>
           <Pimp/>
         </div>
       </div>

@@ -6,7 +6,7 @@ function Filmoteca() {
 
   return (
     <div className='transform-none flex flex-wrap justify-center content-center pointer-events-none'>
-      <img src={filmoteca} alt="" className='w-96'/>
+      <img src={filmoteca} alt="" className='w-80'/>
     </div>
   )
 }
