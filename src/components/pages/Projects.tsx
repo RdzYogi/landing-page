@@ -30,6 +30,7 @@ function Projects() {
         complete: () => {}
       })
     }, 600);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleMouseEnter = (event:any) => {
