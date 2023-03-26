@@ -37,10 +37,10 @@ function About(props: Props) {
 
   return (
     <div id='about-page' className='text-white z-20 w-full md:w-3/4 lg:w-1/2 m-auto relative h-fit '>
-      <div id='about-1' className=' h-fit'>
+      <div id='about-1' className='h-fit'>
         <AboutMe/>
       </div>
-      <div id='about-2' className='h-fit my-16'>
+      <div id='about-2' className='h-fit my-10'>
         <TechStack/>
       </div>
       <div id='about-3' className='h-fit'>

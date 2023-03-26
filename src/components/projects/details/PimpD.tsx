@@ -27,7 +27,18 @@ function Pimp() {
           </ul>
         }/>
         <Tag title='techStack' content=''/>
-        <Tag title='otherContributors' content=''/>
+        <Tag title='otherContributors' content={
+          <ul className='list-disc list-inside text-sm text-gray-200'>
+            <div className='ml-10 '>
+              <li className='hover:underline'>
+                <a href="https://github.com/vitolattanzio13" className='text-blue-700'>Vito Lattanzio</a>
+              </li>
+              <li className='hover:underline'>
+                <a href="https://github.com/fcrespo8" className='text-blue-700'>Francisco Crespo Erramuspe</a>
+              </li>
+            </div>
+          </ul>
+        }/>
       </div>
     </div>
   </div>
