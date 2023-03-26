@@ -8,14 +8,19 @@ function Filmoteca() {
   return (
     <div className='flex flex-col mt-5 gap-5'>
       <img src={filmoteca} alt="" className='w-96 self-center'/>
-      <div className='flex gap-4 flex-col md:flex-row md:justify-between'>
+      <div className='flex gap-4 flex-col md:flex-row md:justify-around'>
         <div className='flex flex-col items-center'>
           <img src={filmotecaMain} alt="" className='w-80' />
           <Links live="https://filmoteca.herokuapp.com/" github='https://github.com/RdzYogi/filmoteca'/>
         </div>
-        <Tag title='about' content='Our solution created to replace the current Filmoteca website'/>
-        <Tag title='target' content='Main user of website are elderly people'/>
-      </div>
+        <div className='grid gap-2 grid-cols-1 md:grid-cols-2'>
+          <Tag title='about' content='Fullstack solution created to replace the current Filmoteca website'/>
+          <Tag title='target' content='Main user of website are elderly people'/>
+          <Tag title='features' content='Main user of website are elderly people'/>
+          <Tag title='techStack' content='Main user of website are elderly people'/>
+          <Tag title='contributors' content='Main user of website are elderly people'/>
+        </div>
+    </div>
     </div>
   )
 }
