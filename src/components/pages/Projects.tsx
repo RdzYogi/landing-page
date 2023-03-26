@@ -17,7 +17,7 @@ function Projects() {
     const projectDetails = document.getElementById('project-details')
     if (projectDetails === null) return
     projectDetails.classList.add('filmoteca')
-    // projectDetails.style.height = "0"
+    projectDetails.style.clipPath = "polygon(0% 0%,100% 0%,100% 0%,0% 0%)"
     setTimeout(() => {
       anime({
         targets: wipeData,
