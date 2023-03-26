@@ -70,7 +70,7 @@ function Navbar(props:Props) {
 
   return (
     <div className='h-20 items-center md:w-7xl pb-2 w-full'>
-      <div className='flex justify-between mx-auto h-12 w-80 md:w-96 text-gray-200 text-lg font-bold z-20'>
+      <div className='flex justify-between mx-auto h-12 w-80 md:w-96 text-gray-200 text-lg font-bold z-20 border'>
         <button id="about" onClick={props.handleNavigation} className='h-12 text-xl transition transition-duration-300 ease-in-out hover:text-gray-400 z-20'>About</button>
         <button id="projects" onClick={props.handleNavigation} className='h-12 text-xl transition transition-duration-300 ease-in-out hover:text-gray-400 z-20'>Projects</button>
         <button id="contact" onClick={props.handleNavigation} className='h-12 text-xl transition transition-duration-300 ease-in-out hover:text-gray-400 z-20'>Contact</button>
