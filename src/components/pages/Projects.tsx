@@ -7,7 +7,8 @@ import TvTalkD from '../projects/details/TvTalkD'
 import Pimp from '../projects/headers/Pimp'
 import TvTalk from '../projects/headers/TvTalk'
 
-const detailsHeight = "100%"
+const detailsHeight = "70vh"
+const detailsHeightNone = {value: "0"}
 
 function Projects() {
 
@@ -63,6 +64,7 @@ function Projects() {
     const projectDetails = document.getElementById('project-details')
     if (projectDetails === null) return
     projectDetails.scrollIntoView({behavior: 'smooth', block: 'start'});
+    console.log(project)
     switch (e.target.id) {
       case "filmoteca":
         if (projectDetails.classList.contains('filmoteca')) return
@@ -72,7 +74,7 @@ function Projects() {
 
         anime({
           targets: projectDetails,
-          height: '0',
+          height: detailsHeightNone,
           duration: 250,
           easing: 'easeInOutQuad',
           complete: () => {
@@ -94,7 +96,7 @@ function Projects() {
 
         anime({
           targets: projectDetails,
-          height: '0',
+          height: detailsHeightNone,
           duration: 250,
           easing: 'easeInOutQuad',
           complete: () => {
@@ -116,7 +118,7 @@ function Projects() {
 
         anime({
           targets: projectDetails,
-          height: '0',
+          height: detailsHeightNone,
           duration: 250,
           easing: 'easeInOutQuad',
           complete: () => {
@@ -157,7 +159,8 @@ function Projects() {
           <Pimp/>
         </div>
       </div>
-      <div id="project-details" className='w-11/12 mx-auto mt-10 mb-5 h-fit'>
+      <div className='h-[1px] w-[90%] mx-auto mt-3 bg-slate-200'></div>
+      <div id="project-details" className='w-11/12 mx-auto mt-10 mb-5 h-0 flex-1 overflow-hidden'>
         {project}
       </div>
     </div>
