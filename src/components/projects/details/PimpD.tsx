@@ -1,22 +1,37 @@
 import React from 'react'
 import pimpMain from '../../../assets/projects/pimp/pimpMain.png'
+import pimp from '../../../assets/projects/pimp/pimp.jpg'
 import Links from '../Links'
+import Tag from './Tag'
 
 function Pimp() {
   return (
-    <div className='flex gap-4'>
-      <div className='h-[30vh] flex flex-col'>
-        <img src={pimpMain} alt="" className='' />
-        <Links live= "" github='https://github.com/RdzYogi/pimp-my-job'/>
 
+  <div className='flex flex-col mt-5 gap-5'>
+    <div className='flex gap-4 flex-col items-center md:items-start md:flex-row md:justify-around'>
+      <div className='flex flex-col items-center w-[100%]'>
+        <img src={pimpMain} alt="" className='' />
+        <Links live="" github='https://github.com/RdzYogi/pimp-my-job'/>
       </div>
-      <div className=''>
-        <p className='text-gray-200'>
-          Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-          The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.
-        </p>
+      <div className='grid gap-2 grid-cols-1 md:grid-cols-2'>
+        <Tag title='about' content='My first project at Lewagon was building a full-stack application that linked people in need of help with small jobs to professionals, allowing me to showcase my ability to create complex software solutions.'/>
+        <Tag title='target' content='The target audience for this project would be people who need help with various tasks and services, but lack the skills, time or resources to do it themselves.'/>
+        <Tag title='features' content={
+          <ul className='list-disc list-inside text-sm text-gray-200'>
+            <div className='ml-10'>
+              <li>Ability to post or bid on jobs</li>
+              <li>Dashboard for managing jobs and bids</li>
+              <li>Mapbox for the locations of the jobs</li>
+              <li>Job search by title and location</li>
+              <li>User authentication</li>
+            </div>
+          </ul>
+        }/>
+        <Tag title='techStack' content=''/>
+        <Tag title='otherContributors' content=''/>
       </div>
     </div>
+  </div>
   )
 }
 

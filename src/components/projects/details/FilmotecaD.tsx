@@ -7,7 +7,7 @@ import Tag from './Tag'
 function Filmoteca() {
   return (
     <div className='flex flex-col mt-5 gap-5'>
-      <img src={filmoteca} alt="" className='w-96 self-center'/>
+      {/* <img src={filmoteca} alt="" className='w-96 self-center'/> */}
       <div className='flex gap-4 flex-col items-center md:items-start md:flex-row md:justify-around'>
         <div className='flex flex-col items-center'>
           <img src={filmotecaMain} alt="" className='' />
@@ -24,13 +24,14 @@ function Filmoteca() {
                 <li>Contains a comprehensive list of all the movies that will be shown at the cinema over the entire month, along with their screening times and other relevant information.</li>
                 <li>Ability to buy subscriptions and tickets</li>
                 <li>User authentication and authorization</li>
+                <li>Admin custom build dashboard for updating the database</li>
               </div>
             </ul>
           }/>
           <Tag title='techStack' content=''/>
           <Tag title='otherContributors' content=''/>
         </div>
-    </div>
+      </div>
     </div>
   )
 }
