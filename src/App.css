@@ -1,6 +1,7 @@
 body{
   background-color: black;
-  height: 100vh;
+  min-height: 100vh;
+  height: fit-content;
   width: 100vw;
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */

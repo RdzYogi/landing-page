@@ -7,7 +7,7 @@ import TvTalkD from '../projects/details/TvTalkD'
 import Pimp from '../projects/headers/Pimp'
 import TvTalk from '../projects/headers/TvTalk'
 
-const detailsHeight = "60vh"
+const detailsHeight = "100%"
 
 function Projects() {
 
@@ -157,7 +157,7 @@ function Projects() {
           <Pimp/>
         </div>
       </div>
-      <div id="project-details" className='w-11/12 mx-auto mt-10 mb-5 overflow-hidden'>
+      <div id="project-details" className='w-11/12 mx-auto mt-10 mb-5 h-fit'>
         {project}
       </div>
     </div>
