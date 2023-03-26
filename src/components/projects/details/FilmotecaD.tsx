@@ -16,9 +16,9 @@ function Filmoteca() {
         <div className='grid gap-2 grid-cols-1 md:grid-cols-2'>
           <Tag title='about' content='Fullstack solution created to replace the current Filmoteca website'/>
           <Tag title='target' content='Main user of website are elderly people'/>
-          <Tag title='features' content='Main user of website are elderly people'/>
-          <Tag title='techStack' content='Main user of website are elderly people'/>
-          <Tag title='contributors' content='Main user of website are elderly people'/>
+          <Tag title='features' content=''/>
+          <Tag title='techStack' content=''/>
+          <Tag title='contributors' content=''/>
         </div>
     </div>
     </div>

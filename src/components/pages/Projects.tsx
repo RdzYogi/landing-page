@@ -7,8 +7,7 @@ import TvTalkD from '../projects/details/TvTalkD'
 import Pimp from '../projects/headers/Pimp'
 import TvTalk from '../projects/headers/TvTalk'
 
-const detailsHeight = "70vh"
-const detailsHeightNone = {value: "0"}
+
 
 function Projects() {
 
@@ -18,11 +17,14 @@ function Projects() {
     const projectDetails = document.getElementById('project-details')
     if (projectDetails === null) return
     projectDetails.classList.add('filmoteca')
-    projectDetails.style.height = "0"
+    // projectDetails.style.height = "0"
     setTimeout(() => {
       anime({
-        targets: projectDetails,
-        height: detailsHeight,
+        targets: wipeData,
+        fromUp: 100,
+        update: () => {
+          projectDetails.style.clipPath = "polygon(0% 0%,100% 0%,100% " + wipeData.fromUp + "%,0% " + wipeData.fromUp + "%)"
+        },
         duration: 500,
         easing: 'easeInOutQuad',
         complete: () => {}
@@ -59,12 +61,16 @@ function Projects() {
     // - event.target.parentElement.offsetTop - event.target.parentElement.parentElement.offsetTop
   }
 
+  const wipeData = {
+    fromUp: 0,
+    fromDown: 100,
+  }
+
   const handleClick = (e:any) => {
 
     const projectDetails = document.getElementById('project-details')
     if (projectDetails === null) return
     projectDetails.scrollIntoView({behavior: 'smooth', block: 'start'});
-    console.log(project)
     switch (e.target.id) {
       case "filmoteca":
         if (projectDetails.classList.contains('filmoteca')) return
@@ -73,15 +79,21 @@ function Projects() {
 
 
         anime({
-          targets: projectDetails,
-          height: detailsHeightNone,
+          targets: wipeData,
+          fromDown: 0,
+          update: ()=>{
+            projectDetails.style.clipPath = "polygon(0% 0%,100% 0%,100% " + wipeData.fromDown + "%,0% " + wipeData.fromDown + "%)"
+          },
           duration: 250,
           easing: 'easeInOutQuad',
           complete: () => {
             setProject(<FilmotecaD/>)
             anime({
-              targets: projectDetails,
-              height: detailsHeight,
+              targets: wipeData,
+              fromUp: 100,
+              update: ()=>{
+                projectDetails.style.clipPath = "polygon(0% 0%,100% 0%,100% " + wipeData.fromUp + "%,0% " + wipeData.fromUp + "%)"
+              },
               duration: 250,
               easing: 'easeInOutQuad',
               complete: () => {}
@@ -95,15 +107,21 @@ function Projects() {
         projectDetails.classList.add('tv-talk')
 
         anime({
-          targets: projectDetails,
-          height: detailsHeightNone,
+          targets: wipeData,
+          fromDown: 0,
+          update: ()=>{
+            projectDetails.style.clipPath = "polygon(0% 0%,100% 0%,100% " + wipeData.fromDown + "%,0% " + wipeData.fromDown + "%)"
+          },
           duration: 250,
           easing: 'easeInOutQuad',
           complete: () => {
             setProject(<TvTalkD/>)
             anime({
-              targets: projectDetails,
-              height: detailsHeight,
+              targets: wipeData,
+              fromUp: 100,
+              update: ()=>{
+                projectDetails.style.clipPath = "polygon(0% 0%,100% 0%,100% " + wipeData.fromUp + "%,0% " + wipeData.fromUp + "%)"
+              },
               duration: 250,
               easing: 'easeInOutQuad',
               complete: () => {}
@@ -117,15 +135,21 @@ function Projects() {
         projectDetails.classList.add('pimp')
 
         anime({
-          targets: projectDetails,
-          height: detailsHeightNone,
+          targets: wipeData,
+          fromDown: 0,
+          update: ()=>{
+            projectDetails.style.clipPath = "polygon(0% 0%,100% 0%,100% " + wipeData.fromDown + "%,0% " + wipeData.fromDown + "%)"
+          },
           duration: 250,
           easing: 'easeInOutQuad',
           complete: () => {
             setProject(<PimpD/>)
             anime({
-              targets: projectDetails,
-              height: detailsHeight,
+              targets: wipeData,
+              fromUp: 100,
+              update: ()=>{
+                projectDetails.style.clipPath = "polygon(0% 0%,100% 0%,100% " + wipeData.fromUp + "%,0% " + wipeData.fromUp + "%)"
+              },
               duration: 250,
               easing: 'easeInOutQuad',
               complete: () => {}
@@ -160,7 +184,7 @@ function Projects() {
         </div>
       </div>
       <div className='h-[1px] w-[90%] mx-auto mt-3 bg-slate-200'></div>
-      <div id="project-details" className='w-11/12 mx-auto mt-10 mb-5 h-0 flex-1 overflow-hidden'>
+      <div id="project-details" className='w-11/12 mx-auto mt-10 mb-5 flex-1 overflow-hidden'>
         {project}
       </div>
     </div>
