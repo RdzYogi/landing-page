@@ -1,6 +1,5 @@
 import React from 'react'
 import pimpMain from '../../../assets/projects/pimp/pimpMain.png'
-import pimp from '../../../assets/projects/pimp/pimp.jpg'
 import Links from '../Links'
 import Tag from './Tag'
 
