@@ -12,7 +12,7 @@ function Filmoteca() {
           <Links live="https://filmoteca.herokuapp.com/" github='https://github.com/RdzYogi/filmoteca'/>
         </div>
         <div className='grid gap-2 grid-cols-1 md:grid-cols-2'>
-          <Tag title='about' content='Fullstack solution created to replace the current Filmoteca website. Filmoteca is a government run cinema for classic movies'/>
+          <Tag title='about' content='Fullstack solution created as a proposed replacement for the current Filmoteca website. Filmoteca is a government run cinema for classic movies'/>
           <Tag title='target' content='The website is mostly targeted towards the elderly population and has been designed with simplicity of use in mind, making it easy for this demographic to navigate and access the information and resources available.'/>
           <Tag title='features' content={
             <ul className='list-disc list-inside text-sm text-gray-200'>
@@ -30,7 +30,7 @@ function Filmoteca() {
             <ul className='list-disc list-inside text-sm text-gray-200'>
               <div className='ml-10'>
                 <li>Backend - Rails, PostgresQL </li>
-                <li>Frontend - React, Redux </li>
+                <li>Frontend - React, Redux, Tailwind CSS</li>
               </div>
             </ul>
           }/>

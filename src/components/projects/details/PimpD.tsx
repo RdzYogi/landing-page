@@ -26,7 +26,14 @@ function Pimp() {
             </div>
           </ul>
         }/>
-        <Tag title='techStack' content=''/>
+        <Tag title='techStack' content={
+          <ul className='list-disc list-inside text-sm text-gray-200'>
+            <div className='ml-10'>
+            <li>Fullstack - Ruby on rails, PostgresQl</li>
+            <li>Bootstrap and SCSS</li>
+            </div>
+          </ul>
+        }/>
         <Tag title='otherContributors' content={
           <ul className='list-disc list-inside text-sm text-gray-200'>
             <div className='ml-10 '>

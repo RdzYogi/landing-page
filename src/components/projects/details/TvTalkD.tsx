@@ -20,10 +20,20 @@ function TvTalk() {
               <li>Post and reply to messages similar to Twitter</li>
               <li>User authentication</li>
               <li>Live notifications for replies on your posts</li>
+              <li>Live chat with friends</li>
             </div>
           </ul>
         }/>
-        <Tag title='techStack' content=''/>
+        <Tag title='techStack' content={
+          <ul className='list-disc list-inside text-sm text-gray-200'>
+            <div className='ml-10'>
+              <li>Fullstack - Ruby on rails, PostgresQl</li>
+              <li>Bootstrap and SCSS</li>
+              <li>Live notifications - Rails Action Cable</li>
+              <li>Live chat - Rails Action Cable and Turbo Data</li>
+            </div>
+          </ul>
+        }/>
         <Tag title='otherContributors' content={
           <ul className='list-disc list-inside text-sm text-gray-200'>
             <div className='ml-10 '>
