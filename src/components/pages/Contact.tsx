@@ -13,7 +13,14 @@ function Contact() {
     message: '',
   })
   useEffect(() => {
-
+    const popup = document.getElementById('popUp')
+    if (popup === null) return
+    popup.style.top = "0px"
+    popup.style.left = "0px"
+    popup.style.top = 20 + "%"
+    popup.style.left = 50 + "%"
+    popup.style.transform = "translateX(-50%)"
+    popup.classList.add('hidden')
   }, [])
   const handleEmail = (e: any) => {
     setFormInfo({
@@ -36,18 +43,42 @@ function Contact() {
   const handleSubmit = (e: any) => {
     e.preventDefault()
     console.log(formInfo)
+    const popup = document.getElementById('popUp')
+    const popupText = document.getElementById('popUpText')
+    const contactForm = document.getElementById('contactForm') as HTMLFormElement
+    if (popup === null) return
+
     emailjs.send(service, template, formInfo, publicKey)
     .then((response) => {
         console.log(response.text);
+        if(response.text === 'OK'){
+          popup.classList.remove('hidden')
+          popupText!.innerHTML = 'Message sent!'
+          contactForm!.reset()
+        }
+    }, (error) => {
+        console.log(error);
+        popup.classList.remove('hidden')
+        popupText!.innerHTML = error
+        contactForm!.reset()
     })
+  }
+  const handleHide = () => {
+    const popup = document.getElementById('popUp')
+    if (popup === null) return
+    popup.classList.add('hidden')
   }
 
   return (
-    <div className='text-gray-200 z-20 w-full md:w-3/4 lg:w-1/2 m-auto relative h-fit '>
+    <div className='text-gray-200 z-20 w-full md:w-3/4 lg:w-1/2 m-auto relative h-fit'>
+      <div id="popUp" className='absolute w-64 h-20 bg-gray-600 flex flex-col justify-between items-center rounded-xl'>
+        <h1 id="popUpText" className='text-center mt-2'> </h1>
+        <button onClick={handleHide} className='w-fit bg-blue-400 text-white mb-2 px-2 rounded-lg transition-all duration-300 hover:bg-blue-500'>Ok</button>
+      </div>
       <section className="">
       <div className="pb-2 px-4 mx-auto max-w-screen-md">
           <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-white">Contact me</h2>
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <form onSubmit={handleSubmit} id="contactForm" className="space-y-8">
               <div>
                   <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-300">Your email</label>
                   <input onChange={handleEmail} type="email" id="email" className="shadow-sm border text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500 shadow-sm-light" placeholder="name@mail.com" required/>
