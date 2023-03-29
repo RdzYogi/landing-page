@@ -1,13 +1,15 @@
 
 import emailjs from '@emailjs/browser'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { ClipLoader, FadeLoader, MoonLoader } from 'react-spinners'
 
 
 function Contact() {
   const service = 'service_dou4ss6'
   const template = 'template_5o8baun'
   const publicKey = 'U9R08FW5PBGMt_iiy'
-  const [formInfo, setFormInfo] = React.useState({
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [formInfo, setFormInfo] = useState({
     email: '',
     subject: '',
     message: '',
@@ -42,7 +44,8 @@ function Contact() {
   }
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    console.log(formInfo)
+    setIsProcessing(true)
+    // console.log(formInfo)
     const popup = document.getElementById('popUp')
     const popupText = document.getElementById('popUpText')
     const contactForm = document.getElementById('contactForm') as HTMLFormElement
@@ -55,12 +58,14 @@ function Contact() {
           popup.classList.remove('hidden')
           popupText!.innerHTML = 'Message sent!'
           contactForm!.reset()
+          setIsProcessing(false)
         }
     }, (error) => {
         console.log(error);
         popup.classList.remove('hidden')
         popupText!.innerHTML = error
         contactForm!.reset()
+        setIsProcessing(false)
     })
   }
   const handleHide = () => {
@@ -91,7 +96,10 @@ function Contact() {
                   <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-400">Your message</label>
                   <textarea onChange={handleMessage} id="message" rows={6} className="block p-2.5 w-full text-sm rounded-lg shadow-sm border focus:ring-primary-500 focus:border-primary-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500" placeholder="Type a message..."></textarea>
               </div>
-              <button type="submit" className="py-3 px-5 text-sm font-medium border border-gray-500 hover:border-gray-300 hover:text-gray-200 text-center text-white rounded-lg transition duration-300 ease-in-out sm:w-fit focus:ring-4 focus:outline-none focus:ring-primary-800">Send message</button>
+              <button disabled={isProcessing} type="submit" className={"py-3 px-5 text-sm font-medium border border-gray-500 hover:border-gray-300 hover:text-gray-200 text-center rounded-lg transition duration-300 ease-in-out sm:w-fit flex " + (isProcessing ? "text-gray-400":"text-white")}>
+                {isProcessing ? "Sending" :"Send message"}
+                {isProcessing && <ClipLoader color="#999" size={20} className="ml-5"/>}
+              </button>
           </form>
       </div>
     </section>
