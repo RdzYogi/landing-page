@@ -35,16 +35,12 @@ function Pimp() {
           </ul>
         }/>
         <Tag title='otherContributors' content={
-          <ul className='list-disc list-inside text-sm text-gray-200'>
-            <div className='ml-10 '>
-              <li className='hover:underline'>
-                <a href="https://github.com/vitolattanzio13" className='text-blue-700'>Vito Lattanzio</a>
-              </li>
-              <li className='hover:underline'>
-                <a href="https://github.com/fcrespo8" className='text-blue-700'>Francisco Crespo Erramuspe</a>
-              </li>
+
+            <div className='ml-10 text-sm  text-gray-200'>
+              <a href="https://github.com/vitolattanzio13" className='text-blue-700 hover:underline'>Vito Lattanzio</a>
+              <a href="https://github.com/fcrespo8" className='text-blue-700 hover:underline ml-3'>Francisco Crespo Erramuspe</a>
             </div>
-          </ul>
+
         }/>
       </div>
     </div>

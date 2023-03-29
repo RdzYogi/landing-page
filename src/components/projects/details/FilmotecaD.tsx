@@ -35,27 +35,14 @@ function Filmoteca() {
             </ul>
           }/>
           <Tag title='otherContributors' content={
-            <ul className='list-disc list-inside text-sm text-gray-200'>
-              <div className='ml-10 '>
-                <li className='hover:underline'>
-                  <a href="https://github.com/laurangt" className='text-blue-700'>Laura Nguyen-Trong</a>
-                </li>
-                <li className='hover:underline'>
-                  <a href="https://github.com/MrBlueRuben" className='text-blue-700'>Ruben Sanchez</a>
-                </li>
-                <li className='hover:underline'>
-                  <a href="https://github.com/vitolattanzio13" className='text-blue-700'>Vito Lattanzio</a>
-                </li>
-                <li className='hover:underline'>
-                  <a href="https://github.com/fcrespo8" className='text-blue-700'>Francisco Crespo Erramuspe</a>
-                </li>
-                <li className='hover:underline'>
-                  <a href="https://github.com/amercadoarriola" className='text-blue-700'>Alberto Mercado</a>
-                </li>
-                <li className='hover:underline'>
-                  <a href="https://github.com/JorritvdP" className='text-blue-700'>Jorrit van der Plaats</a>
-                </li>
-
+            <ul className='list-disc list-inside '>
+              <div className='ml-10 text-sm text-gray-200'>
+                <a href="https://github.com/laurangt" className='text-blue-700 hover:underline'>Laura Nguyen-Trong</a>
+                <a href="https://github.com/MrBlueRuben" className='text-blue-700 hover:underline ml-3'>Ruben Sanchez</a>
+                <a href="https://github.com/vitolattanzio13" className='text-blue-700 hover:underline ml-3'>Vito Lattanzio</a>
+                <a href="https://github.com/fcrespo8" className='text-blue-700 hover:underline ml-3'>Francisco Crespo Erramuspe</a>
+                <a href="https://github.com/amercadoarriola" className='text-blue-700 hover:underline ml-3'>Alberto Mercado</a>
+                <a href="https://github.com/JorritvdP" className='text-blue-700 hover:underline ml-3'>Jorrit van der Plaats</a>
               </div>
             </ul>
           }/>
