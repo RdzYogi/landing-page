@@ -218,16 +218,16 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     canvas.height = canvas.height = Math.max(buffer1.offsetHeight + buffer1.offsetTop, buffer2.offsetHeight + buffer2.offsetTop, screen.height)
     // eslint-disable-next-line no-restricted-globals
     canvas.width = screen.width
-    // console.log("canvas size", canvas.height, canvas.width)
     window.addEventListener("resize", handleCanvasSize)
   }
   const handleCanvasSize = ()=>{
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
+    const body = document.body as HTMLBodyElement
     const buffer1 = document.getElementById("buffer-1") as HTMLDivElement
     const buffer2 = document.getElementById("buffer-2") as HTMLDivElement
-    const body = document.body as HTMLBodyElement
-    if (canvas === null) return
-    // canvas.height = Math.max(buffer1.offsetHeight + buffer1.offsetTop, buffer2.offsetHeight + buffer2.offsetTop, window.innerHeight)
+    if (canvas === null || buffer1 === null || buffer2 === null) return
+    if (buffer1.classList.contains("hidden")) body.style.height = buffer2.offsetHeight + buffer2.offsetTop + "px"
+    else body.style.height = buffer1.offsetHeight + buffer1.offsetTop + "px"
     canvas.height = body.offsetHeight
     canvas.width = window.innerWidth
     const hiddenImage = document.getElementById("hidden-image") as HTMLDivElement
@@ -316,9 +316,9 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
       setBuffer1(buffer1)
       setBuffer2(componentToRender)
       setTimeout(() => {
-        body.style.height = bufferElement2.offsetHeight + bufferElement2.offsetTop + "px"
-        handleCanvasSize()
+        // body.style.height = bufferElement2.offsetHeight + bufferElement2.offsetTop + "px"
         bufferElement1.classList.add("hidden")
+        handleCanvasSize()
       }, pageWipeDuration);
     } else {
       bufferElement1.classList.remove("hidden")
@@ -328,9 +328,9 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
       setBuffer2(buffer2)
       setBuffer1(componentToRender)
       setTimeout(() => {
-        body.style.height = bufferElement1.offsetHeight + bufferElement1.offsetTop + "px"
-        handleCanvasSize()
+        // body.style.height = bufferElement1.offsetHeight + bufferElement1.offsetTop + "px"
         bufferElement2.classList.add("hidden")
+        handleCanvasSize()
       }, pageWipeDuration);
     }
     const wipeData = {
