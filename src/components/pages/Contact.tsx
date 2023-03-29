@@ -1,7 +1,7 @@
 
 import emailjs from '@emailjs/browser'
 import React, { useEffect, useState } from 'react'
-import { ClipLoader, FadeLoader, MoonLoader } from 'react-spinners'
+import { ClipLoader } from 'react-spinners'
 
 
 function Contact() {
