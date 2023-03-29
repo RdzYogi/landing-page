@@ -77,11 +77,11 @@ function Navbar(props:Props) {
         <button id="game" onClick={props.handleNavigation} className=' h-12 text-xl min-w-fit transition transition-duration-300 ease-in-out hover:text-gray-400 z-20'>Game</button>
       </div>
       <div className='w-80 md:w-96 mx-0 relative h-px'>
-        <div id="indicator" className='absolute transition-all duration-300 ease-in-out -top-3 z-20'>
-          <div className='h-3 z-[21]'
+        <div id="indicator" className='absolute transition-all duration-300 ease-in-out -top-2 z-20'>
+          {/* <div className='h-3 z-[21]'
           style={{background: "linear-gradient(rgba(255,255,255,0),50%,#333,#666,#eee)", clipPath: "polygon(0 0, 100% 0, 70% 100%, 30% 100%)"}}
           >
-          </div>
+          </div> */}
           <div className='h-[2px] z-[20]'
           style={{background: "linear-gradient(90deg,rgba(0,0,0,0), #eee,80%, rgba(0,0,0,0)"}}
           >
