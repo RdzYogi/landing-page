@@ -8,12 +8,13 @@ import anime from 'animejs/lib/anime.es.js';
 import Contact from './components/pages/Contact';
 import Game from './components/pages/Game';
 import background from './assets/images/background.png'
+// import { GPU } from 'gpu.js';
 
 
 
 
 // Variables for the canvas fade effect
-const timeOutForRender = 30
+const timeOutForRender = 0
 let render = true
 const RefreshIntervalInitial = 10;
 let RefreshInterval = RefreshIntervalInitial;
@@ -32,7 +33,7 @@ const pageWipeDuration = 600
 
 
 function App() {
-  const animations:any =[]
+  // const animations:any =[]
   // function removeAnimation(animation:any) {
   //   const index = animations.indexOf(animation);
   //   animations.splice(index, 1);
@@ -44,10 +45,11 @@ function App() {
   // const gpu = new GPU({ mode: 'gpu' });
 
 
-  const fadeOut=()=>{
+  async function fadeOut(){
     // console.log("triggered")
+    const dpr = window.devicePixelRatio;
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
-    const ctx = canvas.getContext("2d", { willReadFrequently: true })
+    const ctx = canvas.getContext("2d", { alpha: false })
     if (ctx === null) return
     // const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     // const pixels = imageData.data;
@@ -70,14 +72,12 @@ function App() {
     // ctx.putImageData(newImageData, 0, 0)
 
     ctx.save()
-    // ctx.globalAlpha = FadeAmount;
+    ctx.scale(dpr, dpr);
     ctx.fillStyle = `rgba(0,0,0,${FadeAmount})`;
     ctx.globalCompositeOperation = "darken"
     ctx.fillRect(0, 0, canvas.width,canvas.height);
     ctx.globalCompositeOperation = "source-over"
-    // ctx.globalAlpha = 1;
     ctx.restore();
-    // window.requestAnimationFrame(fadeOut)
     RefreshInterval = RefreshIntervalInitial
   }
 
@@ -112,13 +112,13 @@ function App() {
         RefreshInterval -= 1
 
         // Drawing the animations for clicks
-        animations.forEach(function(anim: any) {
-          anim.animatables.forEach(function(animatable: any) {
-            if (anim.completed !== true) {
-                animatable.target.draw();
-            }
-          });
-        });
+        // animations.forEach(function(anim: any) {
+        //   anim.animatables.forEach(function(animatable: any) {
+        //     if (anim.completed !== true) {
+        //         animatable.target.draw();
+        //     }
+        //   });
+        // });
       }
     })
     // body.style.height = buffer1.offsetHeight + buffer1.offsetTop + "px"
@@ -232,10 +232,8 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     hiddenImage.style.width = canvas.width + "px"
   }
 
-  const handleMouseMove = (event: MouseEvent )=>{
+  async function handleMoveDraw(x: number, y: number){
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
-    const x = event.pageX
-    const y = event.pageY
     if (canvas === null) return
     const ctx = canvas.getContext("2d", { willReadFrequently: true })
     if (ctx === null) return
@@ -255,7 +253,11 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
         render = true
       }, timeOutForRender)
     }
-
+  }
+  const handleMouseMove = (event: MouseEvent )=>{
+    const x = event.pageX
+    const y = event.pageY
+    handleMoveDraw(x, y)
   }
 
   const [position, setPosition] = useState<number>(0)
