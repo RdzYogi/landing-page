@@ -150,66 +150,66 @@ function App() {
 
 const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
   // event.preventDefault()
-  const canvas = document.getElementById("canvas") as HTMLCanvasElement
-  let x = 0
-  let y = 0
-  if (event instanceof TouchEvent) {
-    x = event.touches[0].pageX
-    y = event.touches[0].pageY
-  } else {
-    x = event.pageX
-    y = event.pageY
-  }
+  // const canvas = document.getElementById("canvas") as HTMLCanvasElement
+  // let x = 0
+  // let y = 0
+  // if (event instanceof TouchEvent) {
+  //   x = event.touches[0].pageX
+  //   y = event.touches[0].pageY
+  // } else {
+  //   x = event.pageX
+  //   y = event.pageY
+  // }
 
-  if (canvas === null) return
+  // if (canvas === null) return
 
-  const numberOfSparks = Math.floor(Math.random() * 4) + 5
-  for (let index = 0; index < numberOfSparks; index++) {
-    const colorPalette = ["rgba(50,50,50,0.1)", "rgba(60,60,60,0.1)", "rgba(40,40,40,0.1)", "rgba(30,30,30,0.1)"]
-    const currentColor = colorPalette[Math.floor(Math.random() * colorPalette.length)]
-    const getNewDestination = ()=>{
-      let newDestinationX = 1
-      let newDestinationY = 1
-      while (Math.sqrt(newDestinationX * newDestinationX + newDestinationY * newDestinationY) > 100 || Math.sqrt(newDestinationX * newDestinationX + newDestinationY * newDestinationY) < 20 ) {
-        // console.log("in while")
-        newDestinationX = (Math.random() * 100) * (Math.random() >= 0.5 ? 1 : -1)
-        newDestinationY = (Math.random() * 100) * (Math.random() >= 0.5 ? 1 : -1)
-      }
-      return {destinationX: newDestinationX, destinationY: newDestinationY}
-      }
+  // const numberOfSparks = Math.floor(Math.random() * 4) + 5
+  // for (let index = 0; index < numberOfSparks; index++) {
+  //   const colorPalette = ["rgba(50,50,50,0.1)", "rgba(60,60,60,0.1)", "rgba(40,40,40,0.1)", "rgba(30,30,30,0.1)"]
+  //   const currentColor = colorPalette[Math.floor(Math.random() * colorPalette.length)]
+  //   const getNewDestination = ()=>{
+  //     let newDestinationX = 1
+  //     let newDestinationY = 1
+  //     while (Math.sqrt(newDestinationX * newDestinationX + newDestinationY * newDestinationY) > 100 || Math.sqrt(newDestinationX * newDestinationX + newDestinationY * newDestinationY) < 20 ) {
+  //       // console.log("in while")
+  //       newDestinationX = (Math.random() * 100) * (Math.random() >= 0.5 ? 1 : -1)
+  //       newDestinationY = (Math.random() * 100) * (Math.random() >= 0.5 ? 1 : -1)
+  //     }
+  //     return {destinationX: newDestinationX, destinationY: newDestinationY}
+  //     }
 
-    const {destinationX, destinationY} = getNewDestination()
+  //   const {destinationX, destinationY} = getNewDestination()
 
-    const ctx = canvas.getContext("2d")
-    if (ctx === null) return
-    const ripple = new Circle({
-      ctx: ctx,
-      x: x,
-      y: y,
-      dx: 0,
-      dy: 0,
-      fill: currentColor,
-      stroke: {
-        width: 1,
-        color: currentColor
-      },
-      opacity: 1
-    });
+  //   const ctx = canvas.getContext("2d")
+  //   if (ctx === null) return
+  //   const ripple = new Circle({
+  //     ctx: ctx,
+  //     x: x,
+  //     y: y,
+  //     dx: 0,
+  //     dy: 0,
+  //     fill: currentColor,
+  //     stroke: {
+  //       width: 1,
+  //       color: currentColor
+  //     },
+  //     opacity: 1
+  //   });
 
-    const rippleAnimation = anime({
-      targets: ripple ,
-      dx: destinationX,
-      dy: destinationY,
-      opacity: 0,
-      // easing: "easeOutExpo",
-      easing: "easeOutCirc",
-      duration: animationDuration,
-      complete: removeAnimation
-    });
-    // console.log(rippleAnimation)
-    animations.push(rippleAnimation);
+  //   const rippleAnimation = anime({
+  //     targets: ripple ,
+  //     dx: destinationX,
+  //     dy: destinationY,
+  //     opacity: 0,
+  //     // easing: "easeOutExpo",
+  //     easing: "easeOutCirc",
+  //     duration: animationDuration,
+  //     complete: removeAnimation
+  //   });
+  //   // console.log(rippleAnimation)
+  //   animations.push(rippleAnimation);
 
-  }
+  // }
 
 }
 
