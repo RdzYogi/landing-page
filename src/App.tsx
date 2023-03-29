@@ -11,8 +11,6 @@ import background from './assets/images/background.png'
 // import { GPU } from 'gpu.js';
 
 
-
-
 // Variables for the canvas fade effect
 const timeOutForRender = 0
 let render = true
