@@ -88,10 +88,6 @@ function App() {
     window.addEventListener("resize", handleCanvasSize)
     window.screen.orientation.addEventListener("change", handleOrientationChange)
 
-    const buffer1 = document.getElementById("buffer-1") as HTMLDivElement
-    const buffer2 = document.getElementById("buffer-2") as HTMLDivElement
-
-
     var viewport = document.querySelector("meta[name=viewport]")
     if (viewport) {
       var content = viewport.getAttribute("content");
@@ -304,7 +300,6 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     // Set current page and previous page to corresponding buffers
     const bufferElement1 = document.getElementById("buffer-1")
     const bufferElement2 = document.getElementById("buffer-2")
-    const body = document.body
     if (bufferElement1 === null || bufferElement2 === null) return
     let currentPage:HTMLElement
     let prevPage:HTMLElement
