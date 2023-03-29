@@ -4,7 +4,7 @@ import Navbar from './components/navigation/Navbar';
 import About from './components/pages/About';
 import Projects from './components/pages/Projects';
 import anime from 'animejs/lib/anime.es.js';
-import { Circle } from './components/helpers/CircleClass';
+// import { Circle } from './components/helpers/CircleClass';
 import Contact from './components/pages/Contact';
 import Game from './components/pages/Game';
 import background from './assets/images/background.png'
@@ -20,7 +20,7 @@ let RefreshInterval = RefreshIntervalInitial;
 const FadeAmount = 0.05;
 
 // Duration of the animations on click
-const animationDuration = 300
+// const animationDuration = 300
 
 // Init variable for the page component to render
 let componentToRender: React.ReactNode = null;
@@ -33,10 +33,10 @@ const pageWipeDuration = 600
 
 function App() {
   const animations:any =[]
-  function removeAnimation(animation:any) {
-    const index = animations.indexOf(animation);
-    animations.splice(index, 1);
-  }
+  // function removeAnimation(animation:any) {
+  //   const index = animations.indexOf(animation);
+  //   animations.splice(index, 1);
+  // }
 
   // Function to handle the fade effect on the canvas
 
@@ -100,16 +100,8 @@ function App() {
 
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
     if (canvas === null) return
-    if (window.visualViewport){
-      // console.log("based on visual viewport", window.visualViewport.height, window.visualViewport.width)
-      canvas.height = Math.max(buffer1.offsetHeight + buffer1.offsetTop, buffer2.offsetHeight + buffer2.offsetTop, window.visualViewport.height)
-      canvas.width = window.visualViewport.width
-    } else{
-      console.log("based on window", window.innerHeight, window.innerWidth)
-      canvas.height = Math.max(buffer1.offsetHeight + buffer1.offsetTop, buffer2.offsetHeight + buffer2.offsetTop, window.innerHeight)
-      canvas.width = window.innerWidth
-    }
     handleCanvasSize()
+
     const ctx = canvas.getContext("2d", { willReadFrequently: true })
     if (ctx === null) return
 
@@ -133,7 +125,7 @@ function App() {
         });
       }
     })
-
+    // body.style.height = buffer1.offsetHeight + buffer1.offsetTop + "px"
 
     // Explosions
     return ()=>{
@@ -230,12 +222,13 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     window.addEventListener("resize", handleCanvasSize)
   }
   const handleCanvasSize = ()=>{
-    // console.log("resize")
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
     const buffer1 = document.getElementById("buffer-1") as HTMLDivElement
     const buffer2 = document.getElementById("buffer-2") as HTMLDivElement
+    const body = document.body as HTMLBodyElement
     if (canvas === null) return
-    canvas.height = Math.max(buffer1.offsetHeight + buffer1.offsetTop, buffer2.offsetHeight + buffer2.offsetTop, window.innerHeight)
+    // canvas.height = Math.max(buffer1.offsetHeight + buffer1.offsetTop, buffer2.offsetHeight + buffer2.offsetTop, window.innerHeight)
+    canvas.height = body.offsetHeight
     canvas.width = window.innerWidth
     const hiddenImage = document.getElementById("hidden-image") as HTMLDivElement
     if (hiddenImage === null) return
@@ -253,7 +246,6 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
 
 
     if (render) {
-      // console.log("draw state:", render)
       var grd = ctx.createRadialGradient(300, 300, 10, 300, 300, 300);
       grd.addColorStop(0, "#333");
       grd.addColorStop(0.4, "rgba(10,10,10,0)");
@@ -312,21 +304,34 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
     // Set current page and previous page to corresponding buffers
     const bufferElement1 = document.getElementById("buffer-1")
     const bufferElement2 = document.getElementById("buffer-2")
+    const body = document.body
     if (bufferElement1 === null || bufferElement2 === null) return
     let currentPage:HTMLElement
     let prevPage:HTMLElement
     if (heroBuffer === 1){
+      bufferElement2.classList.remove("hidden")
       currentPage = bufferElement2
       prevPage = bufferElement1
       setHeroBuffer(2)
       setBuffer1(buffer1)
       setBuffer2(componentToRender)
+      setTimeout(() => {
+        body.style.height = bufferElement2.offsetHeight + bufferElement2.offsetTop + "px"
+        handleCanvasSize()
+        bufferElement1.classList.add("hidden")
+      }, pageWipeDuration);
     } else {
+      bufferElement1.classList.remove("hidden")
       currentPage = bufferElement1
       prevPage = bufferElement2
       setHeroBuffer(1)
       setBuffer2(buffer2)
       setBuffer1(componentToRender)
+      setTimeout(() => {
+        body.style.height = bufferElement1.offsetHeight + bufferElement1.offsetTop + "px"
+        handleCanvasSize()
+        bufferElement2.classList.add("hidden")
+      }, pageWipeDuration);
     }
     const wipeData = {
       fromLeft: 0,

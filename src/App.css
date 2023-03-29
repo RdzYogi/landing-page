@@ -1,7 +1,8 @@
 body{
   background-color: black;
   min-height: 100vh;
-  height: fit-content;
+  /* height: fit-content; */
+  /* overflow: hidden; */
   width: 100vw;
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */
