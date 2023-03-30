@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/silviu.info/static/css/main.dbfea2df.css",
-    "main.js": "/silviu.info/static/js/main.430b415c.js",
-    "static/js/787.6606bfd5.chunk.js": "/silviu.info/static/js/787.6606bfd5.chunk.js",
-    "static/media/tvTalkMain.png": "/silviu.info/static/media/tvTalkMain.4510fd817873eadd21f8.png",
-    "static/media/pimpMain.png": "/silviu.info/static/media/pimpMain.31f51770c5067520a525.png",
-    "static/media/filmotecaHero.png": "/silviu.info/static/media/filmotecaHero.a30aaf8af39ed76cd777.png",
-    "static/media/background.png": "/silviu.info/static/media/background.cb90052dd991fb8fa15d.png",
-    "static/media/Profile.png": "/silviu.info/static/media/Profile.474705fbe3a319bd0dd4.png",
-    "static/media/pimp.jpg": "/silviu.info/static/media/pimp.9dc1fcfed187118ee5c0.jpg",
-    "static/media/filmoteca.png": "/silviu.info/static/media/filmoteca.cfbf185e10362b5c0c32.png",
-    "static/media/tvTalk.jpg": "/silviu.info/static/media/tvTalk.10f8eaa5f54f06c8b27b.jpg",
-    "index.html": "/silviu.info/index.html",
-    "main.dbfea2df.css.map": "/silviu.info/static/css/main.dbfea2df.css.map",
-    "main.430b415c.js.map": "/silviu.info/static/js/main.430b415c.js.map",
-    "787.6606bfd5.chunk.js.map": "/silviu.info/static/js/787.6606bfd5.chunk.js.map"
+    "main.css": "/static/css/main.dbfea2df.css",
+    "main.js": "/static/js/main.2cfe79e7.js",
+    "static/js/787.6606bfd5.chunk.js": "/static/js/787.6606bfd5.chunk.js",
+    "static/media/tvTalkMain.png": "/static/media/tvTalkMain.4510fd817873eadd21f8.png",
+    "static/media/pimpMain.png": "/static/media/pimpMain.31f51770c5067520a525.png",
+    "static/media/filmotecaHero.png": "/static/media/filmotecaHero.a30aaf8af39ed76cd777.png",
+    "static/media/background.png": "/static/media/background.cb90052dd991fb8fa15d.png",
+    "static/media/Profile.png": "/static/media/Profile.474705fbe3a319bd0dd4.png",
+    "static/media/pimp.jpg": "/static/media/pimp.9dc1fcfed187118ee5c0.jpg",
+    "static/media/filmoteca.png": "/static/media/filmoteca.cfbf185e10362b5c0c32.png",
+    "static/media/tvTalk.jpg": "/static/media/tvTalk.10f8eaa5f54f06c8b27b.jpg",
+    "index.html": "/index.html",
+    "main.dbfea2df.css.map": "/static/css/main.dbfea2df.css.map",
+    "main.2cfe79e7.js.map": "/static/js/main.2cfe79e7.js.map",
+    "787.6606bfd5.chunk.js.map": "/static/js/787.6606bfd5.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.dbfea2df.css",
-    "static/js/main.430b415c.js"
+    "static/js/main.2cfe79e7.js"
   ]
 }
