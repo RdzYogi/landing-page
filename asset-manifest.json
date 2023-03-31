@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.dbfea2df.css",
-    "main.js": "/static/js/main.8e0e61b8.js",
+    "main.js": "/static/js/main.548f6531.js",
     "static/js/787.6606bfd5.chunk.js": "/static/js/787.6606bfd5.chunk.js",
     "static/media/tvTalkMain.png": "/static/media/tvTalkMain.4510fd817873eadd21f8.png",
     "static/media/pimpMain.png": "/static/media/pimpMain.31f51770c5067520a525.png",
@@ -13,11 +13,11 @@
     "static/media/tvTalk.jpg": "/static/media/tvTalk.10f8eaa5f54f06c8b27b.jpg",
     "index.html": "/index.html",
     "main.dbfea2df.css.map": "/static/css/main.dbfea2df.css.map",
-    "main.8e0e61b8.js.map": "/static/js/main.8e0e61b8.js.map",
+    "main.548f6531.js.map": "/static/js/main.548f6531.js.map",
     "787.6606bfd5.chunk.js.map": "/static/js/787.6606bfd5.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.dbfea2df.css",
-    "static/js/main.8e0e61b8.js"
+    "static/js/main.548f6531.js"
   ]
 }
