@@ -7,7 +7,6 @@ function UI() {
 
   useEffect(() => {
     const player = window.localStorage.getItem('player')
-    console.log(player)
     if (player === null){
       const mainGame = document.getElementById('mainGame')
       const menu = document.getElementById('menu')
