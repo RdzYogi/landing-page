@@ -70,7 +70,7 @@ function UI() {
           <button onClick={newGame}>New Game</button>
         </div>
         <div className='battle w-full h-[20vh] bg-gray-200 flex justify-around items-end my-20'>
-          <div id="player" className='bg-green-200 w-40 h-full'>
+          <div id="player" className='w-40 h-full'>
             <Player player={player} damage={0}/>
           </div>
           <div id="enemy" className='bg-red-200 w-40 h-full'>
