@@ -66,17 +66,17 @@ function UI() {
         </div>
       </div>
       <div id="mainGame" className='hidden'>
-        <div id="info-bar" className='w-full h-10 bg-blue-500 mb-10'>
-          <button onClick={newGame}>New Game</button>
+        <div id="info-bar" className='w-full h-10 bg-blue-500 '>
+          <button onClick={newGame}>Abandon Run</button>
         </div>
-        <div className='battle w-full h-[20vh] bg-gray-200 flex justify-around items-end my-20'>
+        <div className='battle w-full h-[20vh] bg-gray-200 flex justify-around items-end my-10'>
           <div id="player" className='w-40 h-full'>
             <Player player={player} damage={0}/>
           </div>
           <div id="enemy" className='bg-red-200 w-40 h-full'>
           </div>
         </div>
-        <div id='action-bar' className='w-full h-32 bg-yellow-400 mt-10'>
+        <div id='action-bar' className='w-full h-[30vh] bg-yellow-400'>
         </div>
 
       </div>
