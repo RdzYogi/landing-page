@@ -5,6 +5,8 @@ import Player from './Player'
 
 function UI() {
   const [player, setPlayer] = useState("")
+  const [playerDamage, setPlayerDamage] = useState(0)
+  const [playerBlock, setPlayerBlock] = useState(0)
 
   useEffect(() => {
     const player = window.localStorage.getItem('player')
@@ -71,7 +73,7 @@ function UI() {
         </div>
         <div className='battle w-full h-[20vh] bg-gray-200 flex justify-around items-end my-10'>
           <div id="player" className='w-40 h-full'>
-            <Player player={player} damage={0}/>
+            <Player player={player} damage={playerDamage} playerBlock={playerBlock}/>
           </div>
           <div id="enemy" className='bg-red-200 w-40 h-full'>
           </div>

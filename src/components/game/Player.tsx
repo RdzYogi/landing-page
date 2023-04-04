@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import wizardPortrait from '../../assets/game/wizard/portrait.png'
 import warriorPortrait from '../../assets/game/warrior/portrait.png'
 
-function Player({player, damage}: {player: string, damage: number | 0}) {
+function Player({player, damage, playerBlock}: {player: string, damage: number | 0, playerBlock: number | 0}) {
   const [portrait, setPortrait] = useState("")
   const [currentHealth, setCurrentHealth] = useState(0)
   const [maxHealth, setMaxHealth] = useState(0)
+  const [block, setBlock] = useState(0)
 
   useEffect(() => {
     if (player === "warrior") {
@@ -18,6 +19,17 @@ function Player({player, damage}: {player: string, damage: number | 0}) {
       setCurrentHealth(75)
     }
   }, [player])
+
+  useEffect(() => {
+    setBlock(prev => prev + playerBlock)
+    if (damage === 0) return
+    if (damage - block > 0) {
+      setCurrentHealth(prev => prev - (damage - block))
+      setBlock(0)
+    } else {
+      setBlock(prev => prev - damage)
+    }
+  }, [damage, playerBlock])
 
   useEffect(() => {
     const healthBar = document.getElementById('health-bar')
