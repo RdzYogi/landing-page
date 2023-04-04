@@ -2,12 +2,20 @@ import React, { useEffect, useState } from 'react'
 import warriorPortrait from '../../assets/game/warrior/portrait.png'
 import wizardPortrait from '../../assets/game/wizard/portrait.png'
 import Player from './Player'
+import enemyPicker from './helpers/enemyPicker'
+import Enemy from './Enemy'
+
 
 function UI() {
   const [player, setPlayer] = useState("")
   const [playerDamage, setPlayerDamage] = useState(0)
   const [playerBlock, setPlayerBlock] = useState(0)
+  const [level, setLevel] = useState(1)
+  const [enemy, setEnemy] = useState({})
+  const [enemyLoaded, setEnemyLoaded] = useState(false)
 
+
+  // Screen Management
   useEffect(() => {
     const player = window.localStorage.getItem('player')
     if (player === null){
@@ -24,6 +32,12 @@ function UI() {
       setPlayer(player)
     }
   }, [])
+
+  // New Enemy
+  useEffect(() => {
+    setEnemy(enemyPicker(level))
+    setEnemyLoaded(true)
+  }, [level])
 
   const pickWarrior = () => {
     const mainGame = document.getElementById('mainGame')
@@ -51,6 +65,7 @@ function UI() {
     mainGame.classList.add('hidden')
     menu.classList.remove('hidden')
   }
+
   return (
     <div>
       <div id="menu" className='hidden h-[60vh] w-full '>
@@ -75,7 +90,11 @@ function UI() {
           <div id="player" className='w-40 h-full'>
             <Player player={player} damage={playerDamage} playerBlock={playerBlock}/>
           </div>
-          <div id="enemy" className='bg-red-200 w-40 h-full'>
+          <div id="enemy" className='w-40 h-full'>
+            { enemyLoaded &&
+            // @ts-ignore
+              <Enemy enemy={enemy} />
+            }
           </div>
         </div>
         <div id='action-bar' className='w-full h-[30vh] bg-yellow-400'>
