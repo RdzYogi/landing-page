@@ -8,7 +8,7 @@ function Map({level, setLevel} : {level: number, setLevel: Function}) {
   const [path, setPath] = useState<string[]>([])
   useEffect(() => {
     if (path.length > 0) return
-    // console.log("triggered")
+
     setPath(generatePath())
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -19,7 +19,7 @@ function Map({level, setLevel} : {level: number, setLevel: Function}) {
   }, [path])
   useEffect(() => {
     if (map === undefined) return
-    drawPaths(path)
+    drawPaths()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map])
   return (
