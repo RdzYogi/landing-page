@@ -12,6 +12,14 @@ function generateMap(path: string[]) {
         <>
           <svg className='absolute -top-[50vh] w-fit h-[100vh] z-20 '>
             {/* <line x1="1" y1="1" x2="210" y2="20" stroke='white' /> */}
+            <filter id="squiggly">
+              <feTurbulence baseFrequency="0.022" numOctaves="3" type="turbulence" seed="10" result="turbulence"></feTurbulence>
+              <feDisplacementMap scale="10" in="SourceGraphic" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+            </filter>
+            <filter id="pattern-filter">
+              <feTurbulence baseFrequency="0.032" numOctaves="3" type="fractalNoise" seed="10" result="fractalNoise"></feTurbulence>
+              <feDisplacementMap scale="15" in="SourceGraphic" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+            </filter>
           </svg>
           <div data-position={i+"-"+j}
             className={'node absolute w-[45%] h-[45%] z-30 bg-black bg-opacity-50 cursor-pointer rounded-full'
