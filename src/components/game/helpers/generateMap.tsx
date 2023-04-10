@@ -10,11 +10,11 @@ function generateMap(path: string[]) {
       nodes.push(<div key={i+"-"+j} data-row={i+1} data-column={j+1} className='w-16 h-16 relative'>
         {path.includes(`${i}-${j}`) ?
         <>
-          <svg className='absolute -top-[50vh] w-fit h-[100vh] z-30 '>
+          <svg className='absolute -top-[50vh] w-fit h-[100vh] z-20 '>
             {/* <line x1="1" y1="1" x2="210" y2="20" stroke='white' /> */}
           </svg>
           <div data-position={i+"-"+j}
-            className={'node absolute w-[45%] h-[45%] bg-black bg-opacity-50 cursor-pointer rounded-full'
+            className={'node absolute w-[45%] h-[45%] z-30 bg-black bg-opacity-50 cursor-pointer rounded-full'
             }></div>
         </>: null}
       </div>)
@@ -23,7 +23,7 @@ function generateMap(path: string[]) {
 
   return (
     <div className='flex overflow-hidden'>
-      <div className='grid grid-cols-12 gap-4 place-items-center mt-6'>
+      <div className='grid grid-cols-12 gap-x-6 place-items-center mt-6'>
         {nodes}
       </div>
       <div className='flex items-center ml-4'>

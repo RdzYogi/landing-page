@@ -1,4 +1,4 @@
-
+const chanceForSecondPath = 0.2
 function drawPaths() {
   const generatedNodes = document.querySelectorAll('.node') as NodeListOf<HTMLElement>;
   // console.log(generatedNodes)
@@ -29,6 +29,7 @@ function drawPaths() {
       // console.log(nextNodes)
       // map over the next nodes and draw a line to them
       svg.innerHTML = ''
+
       nextNodes.forEach((nextNode) => {
         if(nextNode.parentElement === null || node.parentElement === null) return
         const nextNodePosition = nextNode.parentElement.getBoundingClientRect()
@@ -44,7 +45,7 @@ function drawPaths() {
         // end at the center of the next node
         const diffX = nextNodePosition.x - nodePosition.x
         const diffY = nextNodePosition.y - nodePosition.y + window.innerHeight/2
-        // console.log(node,nextNode,diffX, diffY)
+
         line.setAttribute('x2', `${Math.round(nextNode.offsetLeft + diffX )}`)
         line.setAttribute('y2', `${Math.round(nextNode.offsetTop + diffY + nextNode.offsetHeight/2)}`)
         line.setAttribute('stroke', 'white')

@@ -19,6 +19,7 @@ function UI() {
   // Screen Management
   useEffect(() => {
     const player = window.localStorage.getItem('player')
+
     if (player === null){
       const mainGame = document.getElementById('mainGame')
       const menu = document.getElementById('menu')
