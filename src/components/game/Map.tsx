@@ -19,9 +19,9 @@ function Map({level, setLevel} : {level: number, setLevel: Function}) {
   }, [path])
   useEffect(() => {
     if (map === undefined) return
+    console.log("triggered")
     drawPaths()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map])
+  }, [map,path])
   return (
     <div className='mx-auto w-fit pb-5'>
       {map}

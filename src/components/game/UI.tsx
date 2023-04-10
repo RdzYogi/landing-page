@@ -22,14 +22,18 @@ function UI() {
     if (player === null){
       const mainGame = document.getElementById('mainGame')
       const menu = document.getElementById('menu')
-      if (mainGame === null || menu === null) return
+      const minimap = document.getElementById('minimap')
+      if (mainGame === null || menu === null || minimap === null) return
       mainGame.classList.add('hidden')
+      minimap.classList.add('hidden')
       menu.classList.remove('hidden')
     } else {
       const mainGame = document.getElementById('mainGame')
       const menu = document.getElementById('menu')
-      if (mainGame === null || menu === null) return
-      mainGame.classList.remove('hidden')
+      const minimap = document.getElementById('minimap')
+      if (mainGame === null || menu === null || minimap === null) return
+      // mainGame.classList.remove('hidden')
+      minimap.classList.remove('hidden')
       setPlayer(player)
     }
   }, [])

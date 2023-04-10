@@ -44,7 +44,7 @@ function drawPaths() {
         // end at the center of the next node
         const diffX = nextNodePosition.x - nodePosition.x
         const diffY = nextNodePosition.y - nodePosition.y + window.innerHeight/2
-        console.log(diffX, diffY)
+        // console.log(node,nextNode,diffX, diffY)
         line.setAttribute('x2', `${Math.round(nextNode.offsetLeft + diffX )}`)
         line.setAttribute('y2', `${Math.round(nextNode.offsetTop + diffY + nextNode.offsetHeight/2)}`)
         line.setAttribute('stroke', 'white')
@@ -54,7 +54,6 @@ function drawPaths() {
       )
     }
   })
-
   return
 }
 
