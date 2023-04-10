@@ -38,14 +38,14 @@ function drawPaths() {
 
         // set the attributes of the line
         // start at the center of the current node
-        const x1 = Math.round(node.offsetLeft + node.offsetWidth)
-        const y1 = Math.round(node.offsetTop + node.offsetHeight/2 + window.innerHeight/2)
+        const x1 = (node.offsetLeft + node.offsetWidth)
+        const y1 = (node.offsetTop + node.offsetHeight/2 + window.innerHeight/2)
         const diffX = nextNodePosition.x - nodePosition.x
         const diffY = nextNodePosition.y - nodePosition.y + window.innerHeight/2
         // calculate the end point of the line
         // end at the center of the next node
-        const x2 = Math.round(nextNode.offsetLeft + diffX)
-        const y2 = Math.round(nextNode.offsetTop + diffY + nextNode.offsetHeight/2)
+        const x2 = nextNode.offsetLeft + diffX
+        const y2 = (nextNode.offsetTop + diffY + nextNode.offsetHeight/2)
 
         // const line = document.createElementNS('http://www.w3.org/2000/svg', 'line')
         // line.setAttribute('x1', `${x1}`)
@@ -62,7 +62,7 @@ function drawPaths() {
         path.setAttribute('fill', 'none')
         path.setAttribute('stroke-width', '2')
         // connect the filter to the path
-        path.setAttribute('filter', 'url(#pattern-filter)')
+        // path.setAttribute('filter', 'url(#pattern-filter)')
         svg.appendChild(path)
       }
       )

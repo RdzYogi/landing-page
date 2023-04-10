@@ -17,8 +17,10 @@ function generateMap(path: string[]) {
               <feDisplacementMap scale="10" in="SourceGraphic" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
             </filter>
             <filter id="pattern-filter">
-              <feTurbulence baseFrequency="0.032" numOctaves="3" type="fractalNoise" seed="10" result="fractalNoise"></feTurbulence>
-              <feDisplacementMap scale="15" in="SourceGraphic" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+            <feTurbulence type="turbulence" baseFrequency=".01"
+                numOctaves="2" result="turbulence"/>
+            <feDisplacementMap in2="turbulence" in="SourceGraphic"
+                scale="10" xChannelSelector="R" yChannelSelector="G"/>
             </filter>
           </svg>
           <div data-position={i+"-"+j}
