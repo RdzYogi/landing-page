@@ -1,15 +1,16 @@
 import React from 'react'
 import generatePath from './generatePath'
 
-function generateMap() {
+function generateMap(path: string[]) {
   const nodes = []
-  const path = generatePath()
-  console.log(path)
+  // console.log(path)
   for (let i = 0; i < 6; i++) {
     for (let j = 0; j < 12; j++) {
       // console.log(path.includes([i, j]), [i, j])
-      nodes.push(<div data-row={i+1} data-column={j+1} className='w-16 h-16  relative'>
-        {path.includes(`${i}-${j}`) ? <div className='absolute top-[50%] left-0 w-[45%] h-[45%] bg-black bg-opacity-50'></div> : null}
+      nodes.push(<div key={i+"-"+j} data-row={i+1} data-column={j+1} className='w-16 h-16 relative'>
+        {path.includes(`${i}-${j}`) ? <div
+          className={'node absolute w-[45%] h-[45%] bg-black bg-opacity-50 cursor-pointer rounded-full'
+          }></div> : null}
       </div>)
     }
   }

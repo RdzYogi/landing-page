@@ -1,12 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import generateMap from './helpers/generateMap'
+import drawPaths from './helpers/drawPaths'
+import generatePath from './helpers/generatePath'
 
 function Map({level, setLevel} : {level: number, setLevel: Function}) {
   const [map, setMap] = useState<React.ReactElement>()
+  const [path, setPath] = useState<string[]>([])
   useEffect(() => {
-    console.log("triggered")
-    setMap(generateMap())
+    if (path.length > 0) return
+    // console.log("triggered")
+    setPath(generatePath())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  useEffect(() => {
+    // console.log(path)
+    if (path.length === 0) return
+    setMap(generateMap(path))
+  }, [path])
+  useEffect(() => {
+    if (map === undefined) return
+    drawPaths(path)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map])
   return (
     <div className='mx-auto w-fit pb-5'>
       {map}

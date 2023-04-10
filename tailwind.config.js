@@ -8,7 +8,7 @@ module.exports = {
   },
   plugins: [],
   safelist: [{
-    pattern: /(w|h)-\d*/
+    pattern: /((w|h)-\d*)|(top-\[\d*%\])/
     }
   ]
 }
