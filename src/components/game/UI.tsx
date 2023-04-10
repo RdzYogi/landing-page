@@ -4,6 +4,7 @@ import wizardPortrait from '../../assets/game/wizard/portrait.png'
 import Player from './Player'
 import enemyPicker from './helpers/enemyPicker'
 import Enemy from './Enemy'
+import Map from './Map'
 
 
 function UI() {
@@ -51,9 +52,11 @@ function UI() {
   const pickWizard = () => {
     const mainGame = document.getElementById('mainGame')
     const menu = document.getElementById('menu')
-    if (mainGame === null || menu === null) return
-    mainGame.classList.remove('hidden')
+    const map = document.getElementById('minimap')
+    if (mainGame === null || menu === null || map === null) return
+    // mainGame.classList.remove('hidden')
     menu.classList.add('hidden')
+    map.classList.remove('hidden')
     setPlayer('wizard')
     window.localStorage.setItem('player', 'wizard')
   }
@@ -61,8 +64,10 @@ function UI() {
     window.localStorage.removeItem('player')
     const mainGame = document.getElementById('mainGame')
     const menu = document.getElementById('menu')
-    if (mainGame === null || menu === null) return
+    const map = document.getElementById('minimap')
+    if (mainGame === null || menu === null || map === null) return
     mainGame.classList.add('hidden')
+    map.classList.add('hidden')
     menu.classList.remove('hidden')
   }
 
@@ -81,6 +86,10 @@ function UI() {
           </div>
 
         </div>
+      </div>
+      <div id="minimap" className='hidden h-[70vh] w-full bg-gray-500'>
+        <button onClick={newGame}>Abandon Run</button>
+        <Map level={level} setLevel={setLevel}/>
       </div>
       <div id="mainGame" className='hidden'>
         <div id="info-bar" className='w-full h-10 bg-blue-500 '>
