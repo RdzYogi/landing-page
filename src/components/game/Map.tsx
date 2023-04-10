@@ -8,7 +8,7 @@ function Map({level, setLevel} : {level: number, setLevel: Function}) {
     setMap(generateMap())
   }, [])
   return (
-    <div>
+    <div className='mx-auto w-fit pb-5'>
       {map}
     </div>
   )
