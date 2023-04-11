@@ -37,7 +37,7 @@ async function generateMap(path: string[]) {
         {nodes}
       </div>
       <div className='flex items-center ml-4'>
-        <div className='w-16 h-16 bg-white border-2 border-white'></div>
+        <div className='boss w-16 h-16 bg-white border-2 border-white'></div>
       </div>
     </div>
   )
