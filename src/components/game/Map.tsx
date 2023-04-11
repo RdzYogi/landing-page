@@ -21,8 +21,12 @@ function Map({level, setLevel} : {level: number, setLevel: Function}) {
     // console.log("triggered")
     drawPaths(path)
   }, [map,path])
+  const handleRegen = () => {
+    setPath(generatePath())
+  }
   return (
     <div className='mx-auto w-fit pb-5'>
+      <button onClick={handleRegen}>Regen Map</button>
       {map}
     </div>
   )

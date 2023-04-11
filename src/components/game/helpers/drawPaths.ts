@@ -2,6 +2,7 @@ import drawPathFromTo from "./drawPathFromTo";
 
 const chanceForSecondPath = 0.2
 function drawPaths(path: string[]) {
+  console.log(path)
   const generatedNodes = document.querySelectorAll('.node') as NodeListOf<HTMLElement>;
   // console.log(generatedNodes)
   generatedNodes.forEach((node) => {
