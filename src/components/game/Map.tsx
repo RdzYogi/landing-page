@@ -19,7 +19,9 @@ function Map({level, setLevel} : {level: number, setLevel: Function}) {
   useEffect(() => {
     if (map === undefined) return
     // console.log("triggered")
-    drawPaths(path)
+    setTimeout(() => {
+      drawPaths(path)
+    }, 50);
   }, [map,path])
   const handleRegen = () => {
     setPath(generatePath())
