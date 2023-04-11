@@ -93,7 +93,6 @@ function UI() {
         </div>
       </div>
       <div id="minimap" className='hidden h-fit w-full bg-gray-500'>
-        <button onClick={newGame}>Abandon Run</button>
         <Map level={level} setLevel={setLevel}/>
       </div>
       <div id="mainGame" className='hidden'>

@@ -1,7 +1,7 @@
 import React from 'react'
 
-
-function generateMap(path: string[]) {
+const deviationForMapNodes = 30
+async function generateMap(path: string[]) {
   const nodes = []
   // console.log(path)
   for (let i = 0; i < 6; i++) {
@@ -24,8 +24,9 @@ function generateMap(path: string[]) {
             </filter>
           </svg>
           <div data-position={i+"-"+j}
-            className={'node absolute w-[45%] h-[45%] z-30 bg-black bg-opacity-50 cursor-pointer rounded-full'
-            }></div>
+            className={'node absolute w-[45%] h-[45%] z-30 bg-opacity-50 bg-black cursor-pointer rounded-full '
+            } style={{top: `${Math.round(Math.random()*deviationForMapNodes)}%`, left: `${Math.round(Math.random()*deviationForMapNodes)}%`}}
+            ></div>
         </>: null}
       </div>)
     }
@@ -37,7 +38,7 @@ function generateMap(path: string[]) {
         {nodes}
       </div>
       <div className='flex items-center ml-4'>
-        <div className='w-16 h-16 bg-white border-2 border-white'></div>
+        <div className='boss w-16 h-16 bg-white border-2 border-white'></div>
       </div>
     </div>
   )
