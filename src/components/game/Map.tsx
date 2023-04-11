@@ -19,7 +19,7 @@ function Map({level, setLevel} : {level: number, setLevel: Function}) {
   useEffect(() => {
     if (map === undefined) return
     // console.log("triggered")
-    drawPaths()
+    drawPaths(path)
   }, [map,path])
   return (
     <div className='mx-auto w-fit pb-5'>

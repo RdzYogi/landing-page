@@ -5,11 +5,18 @@ function generatePath() {
 
   for (let j = 0; j < 12; j++) {
     const oneSurePath = Math.round(Math.random()*5)
+    let twoSurePath = Math.round(Math.random()*5)
+    while (twoSurePath === oneSurePath) {
+      twoSurePath = Math.round(Math.random()*5)
+    }
     for (let i = 0; i < 6; i++) {
       // logic for deciding if a tile is a path or not
-      if (i === oneSurePath) {
+      if (i === oneSurePath ) {
         path.push(`${i}-${j}`)
-      }else if (Math.random() < probabilityOfExtraNode) {
+      }else if(i === twoSurePath) {
+        path.push(`${i}-${j}`)
+      }
+      else if (Math.random() < probabilityOfExtraNode) {
         path.push(`${i}-${j}`)
       }
     }
