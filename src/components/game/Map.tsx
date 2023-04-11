@@ -14,9 +14,12 @@ function Map({level, setLevel} : {level: number, setLevel: Function}) {
   useEffect(() => {
     // console.log(path)
     if (path.length === 0) return
-    setMap(generateMap(path))
+    generateMap(path).then((map) => {
+      setMap(map)
+    })
   }, [path])
   useEffect(() => {
+    // console.log("triggered before check")
     if (map === undefined) return
     // console.log("triggered")
     setTimeout(() => {

@@ -1,6 +1,8 @@
 
 
-function drawPathFromTo(node: HTMLElement, nextNode: HTMLElement) {
+function drawPathFromTo(nodeDataPosition: string, nextNodeDataPosition: string) {
+  const node = document.querySelector(`[data-position="${nodeDataPosition}"]`) as HTMLElement
+  const nextNode = document.querySelector(`[data-position="${nextNodeDataPosition}"]`) as HTMLElement
   const svg = node.parentElement?.querySelector('svg')
   if (!svg) return
   // svg.innerHTML = ''

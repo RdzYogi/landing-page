@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-function generateMap(path: string[]) {
+async function generateMap(path: string[]) {
   const nodes = []
   // console.log(path)
   for (let i = 0; i < 6; i++) {
