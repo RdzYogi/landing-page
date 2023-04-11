@@ -1,17 +1,17 @@
 import drawPathFromTo from "./drawPathFromTo";
 
-const chanceForSecondPath = 0.2
+const chanceForSecondPath = 0.6
 const deviationForMapNodes = 30
 function drawPaths(path: string[]) {
   // console.log(path)
 
   const generatedNodes = document.querySelectorAll('.node') as NodeListOf<HTMLElement>;
   // console.log(generatedNodes)
-  generatedNodes.forEach((node) => {
-    // Randomize the position of the nodes
-    node.style.top = `${Math.round(Math.random()*deviationForMapNodes)}%`
-    node.style.left = `${Math.round(Math.random()*deviationForMapNodes)}%`
-  })
+  // generatedNodes.forEach((node) => {
+  //   // Randomize the position of the nodes
+  //   node.style.top = `${Math.round(Math.random()*deviationForMapNodes)}%`
+  //   node.style.left = `${Math.round(Math.random()*deviationForMapNodes)}%`
+  // })
 
   const nodesAndValidNeighbors = [] as { position: string, neighbors: string[] }[]
   path.forEach((position) => {
@@ -65,7 +65,7 @@ function drawPaths(path: string[]) {
       const sameStartNodes = allPathsToValidNeighbors.filter((path) => path[0] === allPathsToValidNeighbors[index][0] && path[1] !== allPathsToValidNeighbors[index][1])
 
       const lengthOfPath = Math.abs(parseInt(allPathsToValidNeighbors[index][0].split('-')[0]) - parseInt(allPathsToValidNeighbors[index][1].split('-')[0]))
-      if(sameEndNodes.length > 0 && sameStartNodes.length > 0 && !((Math.random() < chanceForSecondPath) && lengthOfPath === 0)) {
+      if(sameEndNodes.length > 0 && sameStartNodes.length > 0 && !((Math.random() < chanceForSecondPath) && lengthOfPath < 1)) {
         allPathsToValidNeighbors.splice(index, 1)
       }
       index--
