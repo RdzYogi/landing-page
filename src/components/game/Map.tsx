@@ -18,7 +18,7 @@ function Map({level, setLevel} : {level: number, setLevel: Function}) {
   }, [])
 
   const handleMapResize = () => {
-    // console.log("triggered", path)
+
     drawPaths(path)
   }
   useEffect(() => {
@@ -29,7 +29,6 @@ function Map({level, setLevel} : {level: number, setLevel: Function}) {
     })
   }, [path])
   useEffect(() => {
-    // console.log("triggered before check")
     if (map === undefined) return
     // console.log("triggered")
     setTimeout(() => {
@@ -42,7 +41,6 @@ function Map({level, setLevel} : {level: number, setLevel: Function}) {
   const handleCurrentLevel = () => {
     const generatedNodes = document.querySelectorAll('.node') as NodeListOf<HTMLElement>
     if (generatedNodes.length === 0) return
-    // setTimeout(() => {
       generatedNodes.forEach((node) => {
         // console.log(Number(node.dataset.position?.split("-")[1]), level - 1)
         if (Number(node.dataset.position?.split("-")[1]) === level - 1) {
