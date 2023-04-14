@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import generateNodes from "../../game/helpers/generateNodes";
+import calculatePaths from "../../game/helpers/calculatePaths";
 
 const readStoredNodes = () => {
   const nodes = localStorage.getItem("nodes")
@@ -8,7 +9,17 @@ const readStoredNodes = () => {
 
 const readStoredPaths = () => {
   const paths = localStorage.getItem("paths")
-  return paths !== null ? JSON.parse(paths) : []
+  const nodes = readStoredNodes()
+  console.log("triggered",calculatePaths(nodes))
+  if (paths === null){
+    return calculatePaths(nodes)
+  } else{
+    const parsedPaths = JSON.parse(paths)
+    if (parsedPaths.length === 0) {
+      return calculatePaths(nodes)
+    } else {
+      return JSON.parse(paths)
+  }}
 }
 
 const initialState = {
@@ -24,11 +35,11 @@ export const mapSlice = createSlice({
     resetMap: (state) => {
       state.nodes = generateNodes();
       localStorage.setItem("nodes", JSON.stringify(state.nodes))
-      state.paths = [];
+      state.paths = calculatePaths(state.nodes);
       localStorage.setItem("paths", JSON.stringify(state.paths))
       state.position = 1;
       localStorage.setItem("position", "1")
-    }
+    },
   }
 })
 

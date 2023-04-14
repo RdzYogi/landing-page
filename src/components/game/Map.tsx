@@ -13,36 +13,23 @@ function Map() {
   // const [path, setPath] = useState<string[]>([])
   const level = useSelector((state: any) => state.level.level)
   const dispatch = useDispatch()
-  const path= useSelector((state: any) => state.map.nodes)
+  const nodes= useSelector((state: any) => state.map.nodes)
   // console.log(pathTest)
   useEffect(() => {
-    window.addEventListener("resize", handleMapResize)
-    // if (path.length > 0) return
-    // setPath(generateNodes())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-    return () => {
-      window.removeEventListener("resize", handleMapResize)
-    }
-  }, [])
-
-  const handleMapResize = () => {
-    drawPaths(path)
-  }
-  useEffect(() => {
     // console.log(path)
-    if (path.length === 0) return
-    generateMap(path).then((map) => {
+    if (nodes.length === 0) return
+    generateMap(nodes).then((map) => {
       setMap(map)
     })
-  }, [path])
+  }, [nodes])
   useEffect(() => {
     if (map === undefined) return
     // console.log("triggered")
     setTimeout(() => {
-      drawPaths(path)
+      drawPaths(nodes)
       handleCurrentLevel()
     }, 50);
-  }, [map,path])
+  }, [map,nodes])
 
   useEffect(() => {
     handleCurrentLevel()
