@@ -1,6 +1,6 @@
 // Generate a random path for the player to follow
 const probabilityOfExtraNode = 0.4
-function generatePath() {
+function generateNodes() {
   const path = []
 
   for (let j = 0; j < 12; j++) {
@@ -33,4 +33,4 @@ function generatePath() {
 }
 
 
-export default generatePath
+export default generateNodes

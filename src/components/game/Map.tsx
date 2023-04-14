@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import generateMap from './helpers/generateMap'
 import drawPaths from './helpers/drawPaths'
-import generatePath from './helpers/generatePath'
+import generateNodes from './helpers/generateNodes'
 import { useDispatch, useSelector } from 'react-redux'
 import { increment, reset } from '../redux/slices/levelSlice'
 
@@ -16,7 +16,7 @@ function Map() {
   useEffect(() => {
     window.addEventListener("resize", handleMapResize)
     if (path.length > 0) return
-    setPath(generatePath())
+    setPath(generateNodes())
   // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => {
       window.removeEventListener("resize", handleMapResize)
@@ -24,7 +24,6 @@ function Map() {
   }, [])
 
   const handleMapResize = () => {
-
     drawPaths(path)
   }
   useEffect(() => {
@@ -54,7 +53,7 @@ function Map() {
       generatedNodes.forEach((node) => {
         // console.log(Number(node.dataset.position?.split("-")[1]), level - 1)
         if (Number(node.dataset.position?.split("-")[1]) === level - 1) {
-          console.log("trigg",Number(node.dataset.position?.split("-")[1]), level)
+          // console.log("trigg",Number(node.dataset.position?.split("-")[1]), level)
           node.classList.remove("bg-opacity-50")
         } else {
           node.classList.add("bg-opacity-50")
@@ -62,7 +61,7 @@ function Map() {
       })
   }
   const handleRegen = () => {
-    setPath(generatePath())
+    setPath(generateNodes())
   }
   const handleLvlChange = () => {
     dispatch(increment())
