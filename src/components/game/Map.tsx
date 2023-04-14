@@ -1,41 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import generateMap from './helpers/generateMap'
-import drawPaths from './helpers/drawPaths'
-import generatePath from './helpers/generatePath'
+import { useDispatch, useSelector } from 'react-redux'
+import { increment, reset } from '../redux/slices/levelSlice'
+import { resetMap } from '../redux/slices/mapSlice'
+import RenderMap from './helpers/RenderMap'
 
 
-function Map({level, setLevel} : {level: number, setLevel: Function}) {
-  const [map, setMap] = useState<React.ReactElement>()
-  const [path, setPath] = useState<string[]>([])
+
+function Map() {
+  const level = useSelector((state: any) => state.level.level)
+  const dispatch = useDispatch()
+
+
   useEffect(() => {
-    window.addEventListener("resize", handleMapResize)
-    if (path.length > 0) return
-    setPath(generatePath())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-    return () => {
-      window.removeEventListener("resize", handleMapResize)
-    }
-  }, [])
-
-  const handleMapResize = () => {
-
-    drawPaths(path)
-  }
-  useEffect(() => {
-    // console.log(path)
-    if (path.length === 0) return
-    generateMap(path).then((map) => {
-      setMap(map)
-    })
-  }, [path])
-  useEffect(() => {
-    if (map === undefined) return
-    // console.log("triggered")
-    setTimeout(() => {
-      drawPaths(path)
-      handleCurrentLevel()
-    }, 50);
-  }, [map,path])
+    handleCurrentLevel()
+  }, [level])
 
 
   const handleCurrentLevel = () => {
@@ -52,12 +30,22 @@ function Map({level, setLevel} : {level: number, setLevel: Function}) {
       })
   }
   const handleRegen = () => {
-    setPath(generatePath())
+    // setPath(generateNodes())
+    dispatch(resetMap())
   }
+  const handleLvlChange = () => {
+    dispatch(increment())
+  }
+  const handleLvlReset = () => {
+    dispatch(reset())
+  }
+
   return (
     <div className='mx-auto w-fit pb-5'>
       <button onClick={handleRegen}>Regen Map</button>
-      {map}
+      <button className='mx-5' onClick={handleLvlChange}>Increment Level</button>
+      <button onClick={handleLvlReset}>Reset Level</button>
+      <RenderMap/>
     </div>
   )
 }
