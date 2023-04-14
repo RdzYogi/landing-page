@@ -10,7 +10,7 @@ const readStoredNodes = () => {
 const readStoredPaths = () => {
   const paths = localStorage.getItem("paths")
   const nodes = readStoredNodes()
-  console.log("triggered",calculatePaths(nodes))
+  // console.log("triggered",calculatePaths(nodes))
   if (paths === null){
     return calculatePaths(nodes)
   } else{
