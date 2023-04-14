@@ -1,6 +1,7 @@
 import React from 'react'
 import UI from '../game/UI'
 
+
 function Game() {
   const visible = false
   return (
