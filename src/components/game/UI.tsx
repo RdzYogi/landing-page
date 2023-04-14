@@ -93,7 +93,7 @@ function UI() {
         </div>
       </div>
       <div id="minimap" className='hidden h-fit w-full bg-gray-500'>
-        <Map level={level} setLevel={setLevel}/>
+        <Map />
       </div>
       <div id="mainGame" className='hidden'>
         <div id="info-bar" className='w-full h-10 bg-blue-500 '>

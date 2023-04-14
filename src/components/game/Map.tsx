@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react'
 import generateMap from './helpers/generateMap'
 import drawPaths from './helpers/drawPaths'
 import generatePath from './helpers/generatePath'
+import { useDispatch, useSelector } from 'react-redux'
+import { increment, reset } from '../redux/slices/levelSlice'
 
 
-function Map({level, setLevel} : {level: number, setLevel: Function}) {
+
+function Map() {
   const [map, setMap] = useState<React.ReactElement>()
   const [path, setPath] = useState<string[]>([])
+  const level = useSelector((state: any) => state.level.level)
+  const dispatch = useDispatch()
+  // console.log(level)
   useEffect(() => {
     window.addEventListener("resize", handleMapResize)
     if (path.length > 0) return
@@ -37,6 +43,10 @@ function Map({level, setLevel} : {level: number, setLevel: Function}) {
     }, 50);
   }, [map,path])
 
+  useEffect(() => {
+    handleCurrentLevel()
+  }, [level])
+
 
   const handleCurrentLevel = () => {
     const generatedNodes = document.querySelectorAll('.node') as NodeListOf<HTMLElement>
@@ -44,7 +54,7 @@ function Map({level, setLevel} : {level: number, setLevel: Function}) {
       generatedNodes.forEach((node) => {
         // console.log(Number(node.dataset.position?.split("-")[1]), level - 1)
         if (Number(node.dataset.position?.split("-")[1]) === level - 1) {
-          // console.log("trigg",Number(node.dataset.position?.split("-")[1]), level)
+          console.log("trigg",Number(node.dataset.position?.split("-")[1]), level)
           node.classList.remove("bg-opacity-50")
         } else {
           node.classList.add("bg-opacity-50")
@@ -54,9 +64,18 @@ function Map({level, setLevel} : {level: number, setLevel: Function}) {
   const handleRegen = () => {
     setPath(generatePath())
   }
+  const handleLvlChange = () => {
+    dispatch(increment())
+  }
+  const handleLvlReset = () => {
+    dispatch(reset())
+  }
+
   return (
     <div className='mx-auto w-fit pb-5'>
       <button onClick={handleRegen}>Regen Map</button>
+      <button className='mx-5' onClick={handleLvlChange}>Increment Level</button>
+      <button onClick={handleLvlReset}>Reset Level</button>
       {map}
     </div>
   )
