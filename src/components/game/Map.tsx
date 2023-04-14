@@ -4,19 +4,21 @@ import drawPaths from './helpers/drawPaths'
 import generateNodes from './helpers/generateNodes'
 import { useDispatch, useSelector } from 'react-redux'
 import { increment, reset } from '../redux/slices/levelSlice'
+import { resetMap } from '../redux/slices/mapSlice'
 
 
 
 function Map() {
   const [map, setMap] = useState<React.ReactElement>()
-  const [path, setPath] = useState<string[]>([])
+  // const [path, setPath] = useState<string[]>([])
   const level = useSelector((state: any) => state.level.level)
   const dispatch = useDispatch()
-  // console.log(level)
+  const path= useSelector((state: any) => state.map.nodes)
+  // console.log(pathTest)
   useEffect(() => {
     window.addEventListener("resize", handleMapResize)
-    if (path.length > 0) return
-    setPath(generateNodes())
+    // if (path.length > 0) return
+    // setPath(generateNodes())
   // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => {
       window.removeEventListener("resize", handleMapResize)
@@ -61,7 +63,8 @@ function Map() {
       })
   }
   const handleRegen = () => {
-    setPath(generateNodes())
+    // setPath(generateNodes())
+    dispatch(resetMap())
   }
   const handleLvlChange = () => {
     dispatch(increment())

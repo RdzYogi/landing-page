@@ -21,7 +21,7 @@ export const mapSlice = createSlice({
   name: 'map',
   initialState,
   reducers: {
-    reset: (state) => {
+    resetMap: (state) => {
       state.nodes = generateNodes();
       localStorage.setItem("nodes", JSON.stringify(state.nodes))
       state.paths = [];
@@ -32,6 +32,6 @@ export const mapSlice = createSlice({
   }
 })
 
-export const { reset } = mapSlice.actions
+export const { resetMap } = mapSlice.actions
 
 export default mapSlice.reducer
