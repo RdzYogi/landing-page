@@ -11,6 +11,7 @@ const classForEnemy = "bg-red-400"
 const classForRest = "bg-green-400"
 const classForCurrentPosition = "bg-yellow-400"
 const classForTraveledPaths = "bg-opacity-25"
+const scaleForSelectableNodes = "1.4"
 
 function RenderMap() {
   const validNodes = useSelector((state: any) => state.map.nodes)
@@ -25,11 +26,20 @@ function RenderMap() {
     const generatedNodes = document.querySelectorAll('.node') as NodeListOf<HTMLButtonElement>
     if (generatedNodes.length === 0) return
     generatedNodes.forEach((node) => {
-      if(traveledPaths.includes(node.dataset.position!)) {
+      // condition for last node
+      if(node.dataset.position === playerPosition) {
+        node.style.scale="1.2"
         node.classList.remove("bg-opacity-50")
-        node.classList.add(classForTraveledPaths)
-      } else{
-        if(node.classList.contains(classForTraveledPaths)) node.classList.remove(classForTraveledPaths)
+      }else{
+        if(traveledPaths.includes(node.dataset.position!)) {
+          node.classList.remove("bg-opacity-50")
+          node.classList.remove(classForEnemy)
+          node.classList.remove(classForRest)
+          node.classList.add(classForTraveledPaths)
+          node.classList.add(classForCurrentPosition)
+        } else{
+          if(node.classList.contains(classForTraveledPaths)) node.classList.remove(classForTraveledPaths)
+        }
       }
     })
   }
@@ -46,15 +56,17 @@ function RenderMap() {
           }
           if (node.dataset.position?.split("-")[1] === "0") {
             node.classList.remove("bg-opacity-50")
+            node.style.scale = scaleForSelectableNodes
             node.disabled = false
           } else {
             if(!node.classList.contains("bg-opacity-50")) node.classList.add("bg-opacity-50")
             node.disabled = true
+            node.style.scale="1"
           }
         })
       } else {
         // If player is not at the start find the next positions
-        dispatch(updateMap(playerPosition))
+        // dispatch(updateMap(playerPosition))
         const nextPositions = [] as string[]
         paths.forEach((path : string[]) => {
           if(path[0] === playerPosition) {
@@ -69,10 +81,12 @@ function RenderMap() {
               node.classList.remove("bg-opacity-50")
               node.classList.remove(classForTraveledPaths)
               node.disabled = false
+              node.style.scale = scaleForSelectableNodes
             } else {
               if(!node.classList.contains("bg-opacity-50")) node.classList.add("bg-opacity-50")
               if(node.classList.contains(classForTraveledPaths)) node.classList.remove(classForTraveledPaths)
               node.disabled = true
+              node.style.scale = "1"
             }
 
         })
@@ -186,11 +200,13 @@ function RenderMap() {
 
   return (
     <div className='flex overflow-hidden'>
-      <div className='grid grid-cols-12 gap-x-6 place-items-center mt-6'>
+      <div className='grid grid-cols-12 gap-x-6 place-items-center mt-6 ml-2'>
         {nodes}
       </div>
       <div className='flex items-center ml-4'>
-        <div className='boss w-16 h-16 bg-white border-2 border-white'></div>
+        <button className='boss flex w-16 h-16 bg-red-600 rounded-full justify-center cursor-pointer'>
+          <FontAwesomeIcon className='text-4xl my-auto' icon={faSkullCrossbones} />
+        </button>
       </div>
     </div>
   )
