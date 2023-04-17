@@ -14,6 +14,7 @@ const classForTraveledPaths = "bg-opacity-25"
 const scaleForSelectableNodes = "1.4"
 
 function RenderMap() {
+  const gameState = useSelector((state: any) => state.player.gameState)
   const validNodes = useSelector((state: any) => state.map.nodes)
   const paths = useSelector((state: any) => state.map.paths) as string[][]
   const nodeTypes = useSelector((state: any) => state.map.nodeTypes)
@@ -162,12 +163,15 @@ function RenderMap() {
   useEffect(() => {
     if (nodeTypes.length === 0) return
     if (nodes.length === 0 || paths.length === 0) return
-    drawPaths(paths)
-    drawNodeTypes()
-    handleCurrentPosition()
-    drawTraveledPaths()
+    if(gameState !== "minimap") return
+    setTimeout(() => {
+      drawPaths(paths)
+      drawNodeTypes()
+      handleCurrentPosition()
+      drawTraveledPaths()
+    }, 10);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nodes])
+  }, [nodes,gameState])
 
   const drawNodeTypes = () => {
     const generatedNodes = document.querySelectorAll('.node') as NodeListOf<HTMLButtonElement>

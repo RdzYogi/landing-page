@@ -7,6 +7,7 @@ const initialState = {
   maxMana: localStorage.getItem("maxMana") || 3,
   currentMana: localStorage.getItem("currentMana") || 3,
   block: localStorage.getItem("block") || 0,
+  gameState: localStorage.getItem("gameState") || "playerSelect",
 }
 
 export const playerSlice = createSlice({
@@ -63,8 +64,12 @@ export const playerSlice = createSlice({
       localStorage.setItem("currentMana", "0")
       localStorage.setItem("block", "0")
     },
+    setGameState: (state, action) => {
+      state.gameState = action.payload
+      localStorage.setItem("gameState", action.payload)
+    }
   },
 })
 
-export const { setPlayerClass } = playerSlice.actions
+export const { setPlayerClass, setGameState, resetPlayer } = playerSlice.actions
 export default playerSlice.reducer
