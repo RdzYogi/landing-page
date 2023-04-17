@@ -110,7 +110,7 @@ function UI() {
         </div>
         <div className='battle w-full h-[20vh] bg-gray-200 flex justify-around items-end my-10'>
           <div id="player" className='w-40 h-full'>
-            {/* <Player player={player} damage={0} playerBlock={0}/> */}
+            <Player />
           </div>
           <div id="enemy" className='w-40 h-full'>
             { enemyLoaded &&

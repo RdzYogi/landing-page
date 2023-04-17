@@ -1,35 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import wizardPortrait from '../../assets/game/wizard/portrait.png'
 import warriorPortrait from '../../assets/game/warrior/portrait.png'
+import { useSelector } from 'react-redux'
 
-function Player({player, damage, playerBlock}: {player: string, damage: number | 0, playerBlock: number | 0}) {
+function Player() {
   const [portrait, setPortrait] = useState("")
-  const [currentHealth, setCurrentHealth] = useState(0)
-  const [maxHealth, setMaxHealth] = useState(0)
-  const [block, setBlock] = useState(0)
+  // const [currentHealth, setCurrentHealth] = useState(0)
+  // const [maxHealth, setMaxHealth] = useState(0)
+  // const [block, setBlock] = useState(0)
+
+  const player = useSelector((state: any) => state.player.playerClass)
+  const maxHealth = useSelector((state: any) => state.player.maxHealth)
+  const currentHealth = useSelector((state: any) => state.player.currentHealth)
 
   useEffect(() => {
+    // console.log("triggered")
     if (player === "warrior") {
       setPortrait(warriorPortrait)
-      setMaxHealth(100)
-      setCurrentHealth(100)
+
     } else if (player === "wizard") {
       setPortrait(wizardPortrait)
-      setMaxHealth(75)
-      setCurrentHealth(75)
     }
   }, [player])
 
-  useEffect(() => {
-    setBlock(prev => prev + playerBlock)
-    if (damage === 0) return
-    if (damage - block > 0) {
-      setCurrentHealth(prev => prev - (damage - block))
-      setBlock(0)
-    } else {
-      setBlock(prev => prev - damage)
-    }
-  }, [damage, playerBlock])
+  // useEffect(() => {
+  //   setBlock(prev => prev + playerBlock)
+  //   if (damage === 0) return
+  //   if (damage - block > 0) {
+  //     setCurrentHealth(prev => prev - (damage - block))
+  //     setBlock(0)
+  //   } else {
+  //     setBlock(prev => prev - damage)
+  //   }
+  // }, [damage, playerBlock])
 
   useEffect(() => {
     const healthBar = document.getElementById('health-bar')
@@ -39,7 +42,7 @@ function Player({player, damage, playerBlock}: {player: string, damage: number |
     // console.log(difference, currentHealth, maxHealth)
     healthBar.style.backgroundImage = "linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,0,0,1) " + difference + "%, rgba(255,0,0,0) " + difference + "%)"
 
-  }, [damage, currentHealth, maxHealth])
+  }, [currentHealth, maxHealth])
   return (
     <div className='relative'>
       <img src={portrait} alt="" />
