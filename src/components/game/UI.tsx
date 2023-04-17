@@ -6,7 +6,7 @@ import enemyPicker from './helpers/enemyPicker'
 import Enemy from './Enemy'
 import Map from './Map'
 import { useDispatch, useSelector } from 'react-redux'
-import { resetPlayer, setGameState, setPlayerClass } from '../redux/slices/playerSlice'
+import { healthChange, resetPlayer, setGameState, setPlayerClass } from '../redux/slices/playerSlice'
 import { resetMap } from '../redux/slices/mapSlice'
 
 
@@ -84,6 +84,15 @@ function UI() {
     dispatch(setGameState("minimap"))
   }
 
+  const handleTakeDamage = () => {
+    const amount = - Math.round(Math.random() * 15)
+    dispatch(healthChange(amount))
+  }
+
+  const handleHeal = () => {
+    const amount = Math.round(Math.random() * 15)
+    dispatch(healthChange(amount))
+  }
   return (
     <div>
       <button onClick={newGame}>Abandon Run</button>
@@ -105,10 +114,13 @@ function UI() {
         <Map />
       </div>
       <div id="mainGame" className='hidden'>
-        <div id="info-bar" className='w-full h-10 bg-blue-500 '>
+        <div id="info-bar" className='w-full h-10  '>
           <button onClick={handleWinBattle}>Win Battle</button>
+          <button className='mx-5' onClick={handleTakeDamage}>Take Damage</button>
+          <button onClick={handleHeal}>Heal</button>
+
         </div>
-        <div className='battle w-full h-[20vh] bg-gray-200 flex justify-around items-end my-10'>
+        <div className='battle w-full h-[20vh] flex justify-around items-end my-10'>
           <div id="player" className='w-40 h-full'>
             <Player />
           </div>

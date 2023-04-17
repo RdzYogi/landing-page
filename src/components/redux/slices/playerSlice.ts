@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
   playerClass: localStorage.getItem("playerClass") || "",
-  maxHealth: localStorage.getItem("maxHealth") || 0,
-  currentHealth: localStorage.getItem("currentHealth") || 0,
-  maxMana: localStorage.getItem("maxMana") || 3,
-  currentMana: localStorage.getItem("currentMana") || 3,
-  block: localStorage.getItem("block") || 0,
+  maxHealth: Number(localStorage.getItem("maxHealth")) || 0,
+  currentHealth: Number(localStorage.getItem("currentHealth")) || 0,
+  maxMana: Number(localStorage.getItem("maxMana")) || 3,
+  currentMana: Number(localStorage.getItem("currentMana")) || 3,
+  block: Number(localStorage.getItem("block")) || 0,
   gameState: localStorage.getItem("gameState") || "playerSelect",
 }
 
@@ -67,9 +67,25 @@ export const playerSlice = createSlice({
     setGameState: (state, action) => {
       state.gameState = action.payload
       localStorage.setItem("gameState", action.payload)
+    },
+    healthChange: (state, action) => {
+      // console.log("healthChange called with payload: " + action.payload)
+      if (state.currentHealth + action.payload > state.maxHealth) {
+        state.currentHealth = state.maxHealth
+        localStorage.setItem("currentHealth", state.maxHealth.toString())
+        return
+      } else if (state.currentHealth + action.payload < 0) {
+        state.currentHealth = 0
+        localStorage.setItem("currentHealth", "0")
+        return
+      } else {
+        state.currentHealth += action.payload
+        localStorage.setItem("currentHealth", state.currentHealth += action.payload)
+      }
     }
   },
 })
 
-export const { setPlayerClass, setGameState, resetPlayer } = playerSlice.actions
+export const { setPlayerClass, setGameState, resetPlayer, healthChange } = playerSlice.actions
+
 export default playerSlice.reducer
