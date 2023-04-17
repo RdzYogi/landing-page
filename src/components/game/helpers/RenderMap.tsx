@@ -1,62 +1,139 @@
-import React, { MouseEventHandler, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import drawPaths from './drawPaths'
+import { updateMap } from '../../redux/slices/mapSlice'
 
 
 const deviationForMapNodes = 30
 const classForEnemy = "bg-red-400"
 const classForRest = "bg-green-400"
 const classForCurrentPosition = "bg-yellow-400"
+const classForTraveledPaths = "bg-opacity-25"
 
-function RenderMap({onNodeSelect}: {onNodeSelect: (e: React.MouseEvent) => void}) {
+function RenderMap() {
   const validNodes = useSelector((state: any) => state.map.nodes)
   const paths = useSelector((state: any) => state.map.paths) as string[][]
   const nodeTypes = useSelector((state: any) => state.map.nodeTypes)
   const playerPosition = useSelector((state: any) => state.map.position)
-  const nodes = [] as JSX.Element[]
+  const traveledPaths = useSelector((state: any) => state.map.traveledPaths)
+  const dispatch = useDispatch()
+  const [nodes, setNodes] = useState([] as JSX.Element[])
 
-  for (let i = 0; i < 6; i++) {
-    for (let j = 0; j < 12; j++) {
-      if(validNodes.includes(`${i}-${j}`)){
-        nodes.push(<div key={i+"-"+j} data-row={i+1} data-column={j+1} className='w-16 h-16 relative'>
-            <svg className='absolute -top-[50vh] w-fit h-[100vh] z-20 '>
-
-              {/* <filter id="squiggly">
-                <feTurbulence baseFrequency="0.022" numOctaves="3" type="turbulence" seed="10" result="turbulence"></feTurbulence>
-                <feDisplacementMap scale="10" in="SourceGraphic" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
-              </filter>
-              <filter id="pattern-filter">
-              <feTurbulence type="turbulence" baseFrequency=".01"
-                  numOctaves="2" result="turbulence"/>
-              <feDisplacementMap in2="turbulence" in="SourceGraphic"
-                  scale="10" xChannelSelector="R" yChannelSelector="G"/>
-              </filter> */}
-            </svg>
-            <button data-position={i+"-"+j} onClick={onNodeSelect}
-              className={'node absolute w-[45%] h-[45%] z-30 bg-opacity-50 bg-white rounded-full '}
-              style={{top: `${Math.round(Math.random()*deviationForMapNodes)}%`, left: `${Math.round(Math.random()*deviationForMapNodes)}%`}}
-              ></button>
-
-        </div>)
-      } else {
-        nodes.push(<div key={i+"-"+j} data-row={i+1} data-column={j+1} className='w-16 h-16 relative'></div>)
+  const drawTraveledPaths = () => {
+    const generatedNodes = document.querySelectorAll('.node') as NodeListOf<HTMLButtonElement>
+    if (generatedNodes.length === 0) return
+    generatedNodes.forEach((node) => {
+      if(traveledPaths.includes(node.dataset.position!)) {
+        node.classList.remove("bg-opacity-50")
+        node.classList.add(classForTraveledPaths)
+      } else{
+        if(node.classList.contains(classForTraveledPaths)) node.classList.remove(classForTraveledPaths)
       }
-    }
+    })
   }
-  // check if component is mounted
+
+  const handleCurrentPosition = () => {
+    const generatedNodes = document.querySelectorAll('.node') as NodeListOf<HTMLButtonElement>
+    if (generatedNodes.length === 0) return
+      if(playerPosition === "start") {
+        generatedNodes.forEach((node) => {
+          // console.log(node.dataset.position)
+          if(node.classList.contains(classForCurrentPosition)) {
+            node.classList.remove(classForCurrentPosition)
+            // node.classList.add("bg-white")
+          }
+          if (node.dataset.position?.split("-")[1] === "0") {
+
+            node.classList.remove("bg-opacity-50")
+            node.disabled = false
+          } else {
+            if(!node.classList.contains("bg-opacity-50")) node.classList.add("bg-opacity-50")
+            node.disabled = true
+          }
+        })
+      } else {
+        // If player is not at the start find the next positions
+        dispatch(updateMap(playerPosition))
+        const nextPositions = [] as string[]
+        paths.forEach((path : string[]) => {
+          if(path[0] === playerPosition) {
+            nextPositions.push(path[1])
+          }
+        })
+
+        generatedNodes.forEach((node) => {
+            // if(!node.classList.contains("bg-white")) node.classList.add("bg-white")
+            // node.classList.remove(classForCurrentPosition)
+            if(nextPositions.includes(node.dataset.position!)) {
+              node.classList.remove("bg-opacity-50")
+              node.classList.remove(classForTraveledPaths)
+              node.disabled = false
+            } else {
+              if(!node.classList.contains("bg-opacity-50")) node.classList.add("bg-opacity-50")
+              if(!node.classList.contains(classForTraveledPaths)) node.classList.remove(classForTraveledPaths)
+              node.disabled = true
+            }
+
+        })
+      }
+      // TODO: Add a check to see if the player is at the end of the map and reached the boss
+
+      // TODO: Reset after boss is defeated
+
+  }
+  const onNodeSelect = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement
+    const position = target.dataset.position
+    // console.log(position)
+    dispatch(updateMap(position!))
+  }
 
   useEffect(() => {
-    if (nodes.length === 0) return
-    drawPaths(paths)
-  }, [nodes,paths])
+    setNodes([])
+    for (let i = 0; i < 6; i++) {
+      for (let j = 0; j < 12; j++) {
+        if(validNodes.includes(`${i}-${j}`)){
+          // nodes.push(
+            setNodes((prevNodes) => [...prevNodes,
+            <div key={i+"-"+j} data-row={i+1} data-column={j+1} className='w-16 h-16 relative'>
+                <svg className='absolute -top-[50vh] w-fit h-[100vh] z-20 '>
+
+                  {/* <filter id="squiggly">
+                    <feTurbulence baseFrequency="0.022" numOctaves="3" type="turbulence" seed="10" result="turbulence"></feTurbulence>
+                    <feDisplacementMap scale="10" in="SourceGraphic" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+                  </filter>
+                  <filter id="pattern-filter">
+                  <feTurbulence type="turbulence" baseFrequency=".01"
+                      numOctaves="2" result="turbulence"/>
+                  <feDisplacementMap in2="turbulence" in="SourceGraphic"
+                      scale="10" xChannelSelector="R" yChannelSelector="G"/>
+                  </filter> */}
+                </svg>
+                <button data-position={i+"-"+j} onClick={onNodeSelect}
+                  className={'node absolute w-[45%] h-[45%] z-30 bg-opacity-50 bg-white rounded-full '}
+                  style={{top: `${Math.round(Math.random()*deviationForMapNodes)}%`, left: `${Math.round(Math.random()*deviationForMapNodes)}%`}}
+                  >
+                  </button>
+
+            </div>] )
+          // )
+        } else {
+          // nodes.push(<div key={i+"-"+j} data-row={i+1} data-column={j+1} className='w-16 h-16 relative'></div>)
+          setNodes((prevNodes) => [...prevNodes, <div key={i+"-"+j} data-row={i+1} data-column={j+1} className='w-16 h-16 relative'></div>])
+        }
+      }
+  }},[validNodes])
 
   useEffect(() => {
     if (nodeTypes.length === 0) return
+    if (nodes.length === 0 || paths.length === 0) return
+    drawPaths(paths)
     const generatedNodes = document.querySelectorAll('.node') as NodeListOf<HTMLButtonElement>
+    // console.log("triggered")
     generatedNodes.forEach((node) => {
       const nodePosition = node.dataset.position
       if(nodePosition === playerPosition) {
-        console.log(nodePosition, playerPosition)
+        // console.log(nodePosition, playerPosition)
         node.classList.remove(classForEnemy)
         node.classList.remove(classForRest)
         node.classList.remove("bg-white")
@@ -69,6 +146,8 @@ function RenderMap({onNodeSelect}: {onNodeSelect: (e: React.MouseEvent) => void}
                 node.classList.remove("bg-white")
                 node.classList.remove(classForRest)
                 node.classList.add(classForEnemy)
+                // console.log(node.childNodes)
+                // node.innerHTML = "<i class='fa-solid fa-skull-crossbones'></i>"
                 break;
               case "rest":
                 node.classList.remove("bg-white")
@@ -83,7 +162,14 @@ function RenderMap({onNodeSelect}: {onNodeSelect: (e: React.MouseEvent) => void}
         })
       }
     })
-  }, [nodeTypes,playerPosition])
+    handleCurrentPosition()
+    drawTraveledPaths()
+  }, [nodes])
+
+  useEffect(() => {
+    handleCurrentPosition()
+    drawTraveledPaths()
+  }, [playerPosition])
 
   return (
     <div className='flex overflow-hidden'>
