@@ -4,10 +4,15 @@ import drawPaths from './drawPaths'
 
 
 const deviationForMapNodes = 30
+const classForEnemy = "bg-red-400"
+const classForRest = "bg-green-400"
+const classForCurrentPosition = "bg-yellow-400"
+
 function RenderMap({onNodeSelect}: {onNodeSelect: (e: React.MouseEvent) => void}) {
   const validNodes = useSelector((state: any) => state.map.nodes)
   const paths = useSelector((state: any) => state.map.paths) as string[][]
   const nodeTypes = useSelector((state: any) => state.map.nodeTypes)
+  const playerPosition = useSelector((state: any) => state.map.position)
   const nodes = [] as JSX.Element[]
 
   for (let i = 0; i < 6; i++) {
@@ -44,6 +49,41 @@ function RenderMap({onNodeSelect}: {onNodeSelect: (e: React.MouseEvent) => void}
     if (nodes.length === 0) return
     drawPaths(paths)
   }, [nodes,paths])
+
+  useEffect(() => {
+    if (nodeTypes.length === 0) return
+    const generatedNodes = document.querySelectorAll('.node') as NodeListOf<HTMLButtonElement>
+    generatedNodes.forEach((node) => {
+      const nodePosition = node.dataset.position
+      if(nodePosition === playerPosition) {
+        console.log(nodePosition, playerPosition)
+        node.classList.remove(classForEnemy)
+        node.classList.remove(classForRest)
+        node.classList.remove("bg-white")
+        node.classList.add(classForCurrentPosition)
+      } else {
+        nodeTypes.forEach((type: string[]) => {
+          if (type[0] === nodePosition) {
+            switch (type[1]) {
+              case "normal":
+                node.classList.remove("bg-white")
+                node.classList.remove(classForRest)
+                node.classList.add(classForEnemy)
+                break;
+              case "rest":
+                node.classList.remove("bg-white")
+                node.classList.add(classForRest)
+                node.classList.remove(classForEnemy)
+                break;
+
+              default:
+                break;
+            }
+          }
+        })
+      }
+    })
+  }, [nodeTypes,playerPosition])
 
   return (
     <div className='flex overflow-hidden'>

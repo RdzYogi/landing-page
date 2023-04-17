@@ -61,16 +61,8 @@ function Map() {
         })
 
         generatedNodes.forEach((node) => {
-          if(node.dataset.position === playerPosition) {
-            // console.log(playerPosition)
-            node.classList.remove("bg-white")
-            node.classList.remove("bg-opacity-50")
-            node.classList.remove(classForTraveledPaths)
-            node.classList.add(classForCurrentPosition)
-            node.disabled = true
-          } else{
-            if(!node.classList.contains("bg-white")) node.classList.add("bg-white")
-            node.classList.remove(classForCurrentPosition)
+            // if(!node.classList.contains("bg-white")) node.classList.add("bg-white")
+            // node.classList.remove(classForCurrentPosition)
             if(nextPositions.includes(node.dataset.position!)) {
               node.classList.remove("bg-opacity-50")
               node.classList.remove(classForTraveledPaths)
@@ -80,7 +72,7 @@ function Map() {
               if(!node.classList.contains(classForTraveledPaths)) node.classList.remove(classForTraveledPaths)
               node.disabled = true
             }
-          }
+
         })
       }
       // TODO: Add a check to see if the player is at the end of the map and reached the boss
