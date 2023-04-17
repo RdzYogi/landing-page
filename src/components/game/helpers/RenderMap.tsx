@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import drawPaths from './drawPaths'
-import { updateMap } from '../../redux/slices/mapSlice'
+import { resetMap, updateMap } from '../../redux/slices/mapSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCampground, faSkullCrossbones } from '@fortawesome/free-solid-svg-icons';
 
@@ -92,6 +92,17 @@ function RenderMap() {
         })
       }
       // TODO: Add a check to see if the player is at the end of the map and reached the boss
+
+      if(playerPosition.split("-")[1] === "11") {
+        // console.log("Boss fight")
+        const boss = document.querySelector('.boss') as HTMLButtonElement
+        boss.classList.remove("opacity-50")
+        boss.disabled = false
+      }else{
+        const boss = document.querySelector('.boss') as HTMLButtonElement
+        if (!boss.classList.contains("opacity-50")) boss.classList.add("opacity-50")
+        boss.disabled = true
+      }
 
       // TODO: Reset after boss is defeated
 
@@ -201,13 +212,16 @@ function RenderMap() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playerPosition])
 
+  const handleBoss = () => {
+    dispatch(resetMap())
+  }
   return (
     <div className='flex overflow-hidden'>
       <div className='grid grid-cols-12 gap-x-6 place-items-center mt-6 ml-2'>
         {nodes}
       </div>
       <div className='flex items-center ml-4'>
-        <button className='boss flex w-16 h-16 bg-red-600 rounded-full justify-center cursor-pointer'>
+        <button onClick={handleBoss} className='boss flex w-16 h-16 bg-red-600 rounded-full justify-center z-50 opacity-50' >
           <FontAwesomeIcon className='text-4xl my-auto' icon={faSkullCrossbones} />
         </button>
       </div>
