@@ -16,3 +16,7 @@ body{
 .medieval{
   font-family: 'MedievalSharp', cursive;
 }
+
+.node{
+  transition: scale 0.3s;
+}

@@ -36,7 +36,7 @@ function Enemy(enemy: EnemyObject, turn: number, receivedDamage: number) {
   return (
     <div className='relative'>
       <img src={enemy.enemy.img} alt="" />
-      <div id="enemy-health-bar" className='w-full h-3 text-center  mt-1 rounded-lg'>
+      <div id="enemy-health-bar" className='w-full h-4 text-center mt-1 rounded-lg border border-gray-500'>
         <h1 id="enemy-health-number" className=' text-xs -bottom-0'>{currentHealth + "/" + maxHealth}</h1>
       </div>
     </div>
