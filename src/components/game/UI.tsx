@@ -40,7 +40,7 @@ function UI() {
         break;
 
       case "combat":
-        if(!minimap.classList.contains('hidden')) mainGame.classList.add('hidden')
+        if(!minimap.classList.contains('hidden')) minimap.classList.add('hidden')
         if(!menu.classList.contains('hidden')) menu.classList.add('hidden')
         mainGame.classList.remove('hidden')
         break;
@@ -50,23 +50,6 @@ function UI() {
     }
   }, [gameState])
 
-  // Screen Management
-  // useEffect(() => {
-  //   const player = window.localStorage.getItem('player')
-  //   const mainGame = document.getElementById('mainGame')
-  //   const menu = document.getElementById('menu')
-  //   const minimap = document.getElementById('minimap')
-  //   if (mainGame === null || menu === null || minimap === null) return
-  //   if (player === null){
-  //     mainGame.classList.add('hidden')
-  //     minimap.classList.add('hidden')
-  //     menu.classList.remove('hidden')
-  //   } else {
-  //     // mainGame.classList.remove('hidden')
-  //     minimap.classList.remove('hidden')
-  //     setPlayer(player)
-  //   }
-  // }, [])
 
   // New Enemy
   useEffect(() => {
@@ -97,6 +80,10 @@ function UI() {
     }
   }
 
+  const handleWinBattle = () => {
+    dispatch(setGameState("minimap"))
+  }
+
   return (
     <div>
       <button onClick={newGame}>Abandon Run</button>
@@ -119,7 +106,7 @@ function UI() {
       </div>
       <div id="mainGame" className='hidden'>
         <div id="info-bar" className='w-full h-10 bg-blue-500 '>
-          <button onClick={newGame}>Abandon Run</button>
+          <button onClick={handleWinBattle}>Win Battle</button>
         </div>
         <div className='battle w-full h-[20vh] bg-gray-200 flex justify-around items-end my-10'>
           <div id="player" className='w-40 h-full'>

@@ -4,6 +4,7 @@ import drawPaths from './drawPaths'
 import { resetMap, updateMap } from '../../redux/slices/mapSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCampground, faSkullCrossbones } from '@fortawesome/free-solid-svg-icons';
+import { setGameState } from '../../redux/slices/playerSlice';
 
 
 const deviationForMapNodes = 30
@@ -113,6 +114,7 @@ function RenderMap() {
     const position = target.dataset.position
     // console.log(position)
     dispatch(updateMap(position!))
+    dispatch(setGameState("combat"))
   }
 
   useEffect(() => {
@@ -214,6 +216,7 @@ function RenderMap() {
     handleCurrentPosition()
     drawTraveledPaths()
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [playerPosition])
 
   const handleBoss = () => {
