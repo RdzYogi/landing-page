@@ -145,6 +145,7 @@ function RenderMap() {
           setNodes((prevNodes) => [...prevNodes, <div key={i+"-"+j} data-row={i+1} data-column={j+1} className='w-16 h-16 relative'></div>])
         }
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }},[validNodes])
 
   useEffect(() => {
@@ -154,6 +155,7 @@ function RenderMap() {
     drawNodeTypes()
     handleCurrentPosition()
     drawTraveledPaths()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nodes])
 
   const drawNodeTypes = () => {
@@ -196,6 +198,7 @@ function RenderMap() {
     drawNodeTypes()
     handleCurrentPosition()
     drawTraveledPaths()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playerPosition])
 
   return (

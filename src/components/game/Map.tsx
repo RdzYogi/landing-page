@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { resetMap, updateMap, resetPosition } from '../redux/slices/mapSlice'
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { resetMap, resetPosition } from '../redux/slices/mapSlice'
 import RenderMap from './helpers/RenderMap'
 
-const classForTraveledPaths = "bg-opacity-25"
-const classForCurrentPosition = "bg-yellow-400"
 
 function Map() {
 
