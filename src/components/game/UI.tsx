@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import warriorPortrait from '../../assets/game/warrior/portrait.png'
 import wizardPortrait from '../../assets/game/wizard/portrait.png'
 import Player from './Player'

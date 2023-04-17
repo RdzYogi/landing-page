@@ -216,7 +216,6 @@ function RenderMap() {
     handleCurrentPosition()
     drawTraveledPaths()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-
   }, [playerPosition])
 
   const handleBoss = () => {
