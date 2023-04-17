@@ -7,6 +7,7 @@ const deviationForMapNodes = 30
 function RenderMap({onNodeSelect}: {onNodeSelect: (e: React.MouseEvent) => void}) {
   const validNodes = useSelector((state: any) => state.map.nodes)
   const paths = useSelector((state: any) => state.map.paths) as string[][]
+  const nodeTypes = useSelector((state: any) => state.map.nodeTypes)
   const nodes = [] as JSX.Element[]
 
   for (let i = 0; i < 6; i++) {
@@ -27,7 +28,7 @@ function RenderMap({onNodeSelect}: {onNodeSelect: (e: React.MouseEvent) => void}
               </filter> */}
             </svg>
             <button data-position={i+"-"+j} onClick={onNodeSelect}
-              className={'node absolute w-[45%] h-[45%] z-30 bg-opacity-50 bg-black rounded-full '}
+              className={'node absolute w-[45%] h-[45%] z-30 bg-opacity-50 bg-white rounded-full '}
               style={{top: `${Math.round(Math.random()*deviationForMapNodes)}%`, left: `${Math.round(Math.random()*deviationForMapNodes)}%`}}
               ></button>
 

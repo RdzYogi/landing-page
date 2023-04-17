@@ -92,7 +92,7 @@ function UI() {
 
         </div>
       </div>
-      <div id="minimap" className='hidden h-fit w-full bg-gray-500'>
+      <div id="minimap" className='hidden h-fit w-full '>
         <Map />
       </div>
       <div id="mainGame" className='hidden'>

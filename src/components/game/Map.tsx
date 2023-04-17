@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { resetMap, updateMap, resetPosition } from '../redux/slices/mapSlice'
 import RenderMap from './helpers/RenderMap'
 
-
+const classForTraveledPaths = "bg-opacity-25"
+const classForCurrentPosition = "bg-yellow-400"
 
 function Map() {
   const playerPosition = useSelector((state: any) => state.map.position)
@@ -16,7 +17,7 @@ function Map() {
   useEffect(() => {
     handleCurrentPosition()
     drawTraveledPaths()
-  }, [playerPosition])
+  }, [playerPosition, calculatedPaths, traveledPaths])
 
   const drawTraveledPaths = () => {
     const generatedNodes = document.querySelectorAll('.node') as NodeListOf<HTMLButtonElement>
@@ -24,9 +25,9 @@ function Map() {
     generatedNodes.forEach((node) => {
       if(traveledPaths.includes(node.dataset.position!)) {
         node.classList.remove("bg-opacity-50")
-        node.classList.add("bg-opacity-75")
+        node.classList.add(classForTraveledPaths)
       } else{
-        if(node.classList.contains("bg-opacity-75")) node.classList.remove("bg-opacity-75")
+        if(node.classList.contains(classForTraveledPaths)) node.classList.remove(classForTraveledPaths)
       }
     })
   }
@@ -36,7 +37,12 @@ function Map() {
     if (generatedNodes.length === 0) return
       if(playerPosition === "start") {
         generatedNodes.forEach((node) => {
+          if(node.classList.contains(classForCurrentPosition)) {
+            node.classList.remove(classForCurrentPosition)
+            node.classList.add("bg-white")
+          }
           if (node.dataset.position?.split("-")[1] === "0") {
+            // console.log(node.dataset)
             node.classList.remove("bg-opacity-50")
             node.disabled = false
           } else {
@@ -55,14 +61,25 @@ function Map() {
         })
 
         generatedNodes.forEach((node) => {
-          if(nextPositions.includes(node.dataset.position!)) {
+          if(node.dataset.position === playerPosition) {
+            // console.log(playerPosition)
+            node.classList.remove("bg-white")
             node.classList.remove("bg-opacity-50")
-            node.classList.remove("bg-opacity-75")
-            node.disabled = false
-          } else {
-            if(!node.classList.contains("bg-opacity-50")) node.classList.add("bg-opacity-50")
-            if(!node.classList.contains("bg-opacity-75")) node.classList.remove("bg-opacity-75")
+            node.classList.remove(classForTraveledPaths)
+            node.classList.add(classForCurrentPosition)
             node.disabled = true
+          } else{
+            if(!node.classList.contains("bg-white")) node.classList.add("bg-white")
+            node.classList.remove(classForCurrentPosition)
+            if(nextPositions.includes(node.dataset.position!)) {
+              node.classList.remove("bg-opacity-50")
+              node.classList.remove(classForTraveledPaths)
+              node.disabled = false
+            } else {
+              if(!node.classList.contains("bg-opacity-50")) node.classList.add("bg-opacity-50")
+              if(!node.classList.contains(classForTraveledPaths)) node.classList.remove(classForTraveledPaths)
+              node.disabled = true
+            }
           }
         })
       }
@@ -73,16 +90,18 @@ function Map() {
   }
   const handleNewMap = () => {
     dispatch(resetMap())
+    // handleCurrentPosition()
   }
 
   const handleLvlReset = () => {
     dispatch(resetPosition())
+    // handleCurrentPosition()
   }
 
   const onNodeSelect = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement
     const position = target.dataset.position
-    console.log(position)
+    // console.log(position)
     dispatch(updateMap(position!))
   }
 

@@ -26,8 +26,21 @@ const readStoredTraveledPaths = () => {
   return traveledPaths !== null ? JSON.parse(traveledPaths) : [] as string[]
 }
 
+const chanceForRest = 0.1
 const calculateNodeTypes = () => {
-
+  const nodes = readStoredNodes()
+  const storedNodeTypes = localStorage.getItem("nodeTypes")
+  if (storedNodeTypes !== null) return JSON.parse(storedNodeTypes)
+  const nodeTypes = nodes.map((node : string) => {
+    // Logic for generating node types
+    if((Math.random() < chanceForRest) && (Number(node.split("-")[1]) > 3)) {
+      return [node, "rest"]
+    } else {
+      return [node, "normal"]
+    }
+  })
+  localStorage.setItem("nodeTypes", JSON.stringify(nodeTypes))
+  return nodeTypes
 }
 
 const initialState = {
@@ -50,7 +63,9 @@ export const mapSlice = createSlice({
       state.traveledPaths = [];
       localStorage.setItem("traveledPaths", JSON.stringify([]))
       state.position = "start";
-      localStorage.setItem("level", state.position)
+      localStorage.setItem("level", "start")
+      state.nodeTypes = calculateNodeTypes();
+      localStorage.setItem("nodeTypes", JSON.stringify(state.nodeTypes))
     },
     updateMap: (state, action) => {
       if(!state.traveledPaths.includes(action.payload)) state.traveledPaths.push(action.payload)
@@ -60,7 +75,9 @@ export const mapSlice = createSlice({
     },
     resetPosition: (state) => {
       state.position = "start";
-      localStorage.setItem("level", state.position)
+      localStorage.setItem("level", "start")
+      state.traveledPaths = [];
+      localStorage.setItem("traveledPaths", JSON.stringify([]))
     }
   }
 })
