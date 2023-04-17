@@ -22,10 +22,15 @@ const readStoredPaths = () => {
   }}
 }
 
+const readStoredTraveledPaths = () => {
+  const traveledPaths = localStorage.getItem("traveledPaths")
+  return traveledPaths !== null ? JSON.parse(traveledPaths) : [] as string[]
+}
+
 const initialState = {
   nodes : readStoredNodes(),
   paths : readStoredPaths(),
-  position: Number(localStorage.getItem("position")) || 1,
+  traveledPaths: readStoredTraveledPaths(),
 }
 
 export const mapSlice = createSlice({
@@ -37,9 +42,12 @@ export const mapSlice = createSlice({
       localStorage.setItem("nodes", JSON.stringify(state.nodes))
       state.paths = calculatePaths(state.nodes);
       localStorage.setItem("paths", JSON.stringify(state.paths))
-      state.position = 1;
-      localStorage.setItem("position", "1")
+      state.traveledPaths = [];
+      localStorage.setItem("traveledPaths", JSON.stringify(state.traveledPaths))
     },
+    updateMap: (state, action) => {
+      state.traveledPaths.push(action.payload)
+    }
   }
 })
 

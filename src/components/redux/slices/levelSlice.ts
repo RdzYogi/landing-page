@@ -10,12 +10,12 @@ export const levelSlice = createSlice({
   initialState,
   reducers: {
     increment: (state,action) => {
-      state.position += action.payload;
+      state.position = action.payload;
       localStorage.setItem("level", state.position.toString())
     },
     reset: (state) => {
-      state.position = "0-0";
-      localStorage.setItem("level", "0-0")
+      state.position = "start";
+      localStorage.setItem("level", state.position)
     }
   }
 })
