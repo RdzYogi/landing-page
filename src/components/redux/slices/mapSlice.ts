@@ -10,7 +10,6 @@ const readStoredNodes = () => {
 const readStoredPaths = () => {
   const paths = localStorage.getItem("paths")
   const nodes = readStoredNodes()
-  // console.log("triggered",calculatePaths(nodes))
   if (paths === null){
     return calculatePaths(nodes)
   } else{
@@ -27,11 +26,16 @@ const readStoredTraveledPaths = () => {
   return traveledPaths !== null ? JSON.parse(traveledPaths) : [] as string[]
 }
 
+const calculateNodeTypes = () => {
+
+}
+
 const initialState = {
   nodes : readStoredNodes(),
   paths : readStoredPaths(),
   traveledPaths: readStoredTraveledPaths(),
   position:  localStorage.getItem("level") || "start",
+  nodeTypes: calculateNodeTypes(),
 }
 
 export const mapSlice = createSlice({
@@ -49,9 +53,10 @@ export const mapSlice = createSlice({
       localStorage.setItem("level", state.position)
     },
     updateMap: (state, action) => {
-      state.traveledPaths.push(action.payload)
+      if(!state.traveledPaths.includes(action.payload)) state.traveledPaths.push(action.payload)
       state.position = action.payload;
       localStorage.setItem("level", state.position.toString())
+      localStorage.setItem("traveledPaths", JSON.stringify(state.traveledPaths))
     },
     resetPosition: (state) => {
       state.position = "start";
