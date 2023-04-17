@@ -91,6 +91,7 @@ function RenderMap() {
     setNodes([])
     for (let i = 0; i < 6; i++) {
       for (let j = 0; j < 12; j++) {
+        let type = ""
         if(validNodes.includes(`${i}-${j}`)){
           // nodes.push(
             setNodes((prevNodes) => [...prevNodes,
