@@ -2,20 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-  level: Number(localStorage.getItem("level")) || 1,
+  position: localStorage.getItem("level") || "0-0",
 }
 
 export const levelSlice = createSlice({
   name: 'level',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.level += 1;
-      localStorage.setItem("level", state.level.toString())
+    increment: (state,action) => {
+      state.position += action.payload;
+      localStorage.setItem("level", state.position.toString())
     },
     reset: (state) => {
-      state.level = 1;
-      localStorage.setItem("level", "1")
+      state.position = "0-0";
+      localStorage.setItem("level", "0-0")
     }
   }
 })

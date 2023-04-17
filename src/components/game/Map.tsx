@@ -12,11 +12,11 @@ function Map() {
 
 
   useEffect(() => {
-    handleCurrentLevel()
+    handleCurrentPosition()
   }, [level])
 
 
-  const handleCurrentLevel = () => {
+  const handleCurrentPosition = () => {
     const generatedNodes = document.querySelectorAll('.node') as NodeListOf<HTMLElement>
     if (generatedNodes.length === 0) return
       generatedNodes.forEach((node) => {
@@ -33,8 +33,8 @@ function Map() {
     // setPath(generateNodes())
     dispatch(resetMap())
   }
-  const handleLvlChange = () => {
-    dispatch(increment())
+  const handlePositionChange = () => {
+    // dispatch(increment())
   }
   const handleLvlReset = () => {
     dispatch(reset())
@@ -43,7 +43,7 @@ function Map() {
   return (
     <div className='mx-auto w-fit pb-5'>
       <button onClick={handleRegen}>Regen Map</button>
-      <button className='mx-5' onClick={handleLvlChange}>Increment Level</button>
+      <button className='mx-5' onClick={handlePositionChange}>Increment Level</button>
       <button onClick={handleLvlReset}>Reset Level</button>
       <RenderMap/>
     </div>
