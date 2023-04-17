@@ -43,7 +43,6 @@ function RenderMap() {
             // node.classList.add("bg-white")
           }
           if (node.dataset.position?.split("-")[1] === "0") {
-
             node.classList.remove("bg-opacity-50")
             node.disabled = false
           } else {
@@ -70,7 +69,7 @@ function RenderMap() {
               node.disabled = false
             } else {
               if(!node.classList.contains("bg-opacity-50")) node.classList.add("bg-opacity-50")
-              if(!node.classList.contains(classForTraveledPaths)) node.classList.remove(classForTraveledPaths)
+              if(node.classList.contains(classForTraveledPaths)) node.classList.remove(classForTraveledPaths)
               node.disabled = true
             }
 
@@ -128,8 +127,15 @@ function RenderMap() {
     if (nodeTypes.length === 0) return
     if (nodes.length === 0 || paths.length === 0) return
     drawPaths(paths)
+    drawNodeTypes()
+    handleCurrentPosition()
+    drawTraveledPaths()
+  }, [nodes])
+
+  const drawNodeTypes = () => {
     const generatedNodes = document.querySelectorAll('.node') as NodeListOf<HTMLButtonElement>
     // console.log("triggered")
+    if (generatedNodes.length === 0) return
     generatedNodes.forEach((node) => {
       const nodePosition = node.dataset.position
       if(nodePosition === playerPosition) {
@@ -146,8 +152,6 @@ function RenderMap() {
                 node.classList.remove("bg-white")
                 node.classList.remove(classForRest)
                 node.classList.add(classForEnemy)
-                // console.log(node.childNodes)
-                // node.innerHTML = "<i class='fa-solid fa-skull-crossbones'></i>"
                 break;
               case "rest":
                 node.classList.remove("bg-white")
@@ -162,11 +166,10 @@ function RenderMap() {
         })
       }
     })
-    handleCurrentPosition()
-    drawTraveledPaths()
-  }, [nodes])
+  }
 
   useEffect(() => {
+    drawNodeTypes()
     handleCurrentPosition()
     drawTraveledPaths()
   }, [playerPosition])
