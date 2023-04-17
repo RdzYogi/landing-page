@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-  position: localStorage.getItem("level") || "0-0",
+  position:  localStorage.getItem("level") || "0-0",
 }
 
 export const levelSlice = createSlice({
