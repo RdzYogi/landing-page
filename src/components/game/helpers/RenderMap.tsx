@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import drawPaths from './drawPaths'
 import { updateMap } from '../../redux/slices/mapSlice'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCampground, faSkullCrossbones } from '@fortawesome/free-solid-svg-icons';
 
 
 const deviationForMapNodes = 30
@@ -94,6 +96,11 @@ function RenderMap() {
         let type = ""
         if(validNodes.includes(`${i}-${j}`)){
           // nodes.push(
+            nodeTypes.forEach((nodeType: string) => {
+              if (nodeType[0] === `${i}-${j}`) {
+                type = nodeType[1]
+              }
+            })
             setNodes((prevNodes) => [...prevNodes,
             <div key={i+"-"+j} data-row={i+1} data-column={j+1} className='w-16 h-16 relative'>
                 <svg className='absolute -top-[50vh] w-fit h-[100vh] z-20 '>
@@ -113,6 +120,8 @@ function RenderMap() {
                   className={'node absolute w-[45%] h-[45%] z-30 bg-opacity-50 bg-white rounded-full '}
                   style={{top: `${Math.round(Math.random()*deviationForMapNodes)}%`, left: `${Math.round(Math.random()*deviationForMapNodes)}%`}}
                   >
+                    {type === "normal" ? <FontAwesomeIcon className='pointer-events-none' icon={faSkullCrossbones} /> : null}
+                    {type === "rest" ? <FontAwesomeIcon className='pointer-events-none' icon={faCampground} />  : null}
                   </button>
 
             </div>] )
