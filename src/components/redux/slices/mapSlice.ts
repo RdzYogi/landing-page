@@ -31,6 +31,7 @@ const initialState = {
   nodes : readStoredNodes(),
   paths : readStoredPaths(),
   traveledPaths: readStoredTraveledPaths(),
+  position:  localStorage.getItem("level") || "start",
 }
 
 export const mapSlice = createSlice({
@@ -43,14 +44,22 @@ export const mapSlice = createSlice({
       state.paths = calculatePaths(state.nodes);
       localStorage.setItem("paths", JSON.stringify(state.paths))
       state.traveledPaths = [];
-      localStorage.setItem("traveledPaths", JSON.stringify(state.traveledPaths))
+      localStorage.setItem("traveledPaths", JSON.stringify([]))
+      state.position = "start";
+      localStorage.setItem("level", state.position)
     },
     updateMap: (state, action) => {
       state.traveledPaths.push(action.payload)
+      state.position = action.payload;
+      localStorage.setItem("level", state.position.toString())
+    },
+    resetPosition: (state) => {
+      state.position = "start";
+      localStorage.setItem("level", state.position)
     }
   }
 })
 
-export const { resetMap } = mapSlice.actions
+export const { resetMap, updateMap, resetPosition } = mapSlice.actions
 
 export default mapSlice.reducer
