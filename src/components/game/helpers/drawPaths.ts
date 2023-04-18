@@ -47,6 +47,7 @@ function drawPaths(paths: string[][]) {
         path.setAttribute('stroke', 'white')
         path.setAttribute('fill', 'none')
         path.setAttribute('stroke-width', '2')
+        path.setAttribute('stroke-dasharray', '4 6 7 6')
         // connect the filter to the path
         // path.setAttribute('filter', 'url(#pattern-filter)')
         svg.appendChild(path)

@@ -13,7 +13,8 @@ type EnemyType = 'goblin' | 'goblin2' | 'dragon' | 'skeleton' | 'wolf' | 'orc' |
 type EnemyData = {
   [key in EnemyType]: {
     name: string;
-    health: number;
+    currentHealth: number;
+    maxHealth: number;
     attack: {
       min: number;
       max: number;
@@ -31,7 +32,8 @@ type EnemyData = {
 export const Enemies : EnemyData =  {
   'goblin': {
     name: "Goblin",
-    health: 20,
+    currentHealth: 20,
+    maxHealth: 20,
     attack: { min: 8, max: 10},
     defense: { min: 6, max: 8},
     img: goblin,
@@ -40,7 +42,8 @@ export const Enemies : EnemyData =  {
   },
   'goblin2': {
     name: "Goblin Archer",
-    health: 20,
+    currentHealth: 20,
+    maxHealth: 20,
     attack: { min: 10, max: 15},
     defense: { min: 0, max: 0},
     img: goblin2,
@@ -50,7 +53,8 @@ export const Enemies : EnemyData =  {
 
   'skeleton': {
     name: "Skeleton",
-    health: 25,
+    currentHealth: 25,
+    maxHealth: 25,
     attack: { min: 10, max: 12},
     defense: { min: 15, max: 20},
     img: undead,
@@ -60,7 +64,8 @@ export const Enemies : EnemyData =  {
 
   'wolf' : {
     name: "Werewolf",
-    health: 50,
+    currentHealth: 50,
+    maxHealth: 50,
     attack: { min: 12, max: 15},
     defense: { min: 10, max: 12},
     img: wolf,
@@ -70,7 +75,8 @@ export const Enemies : EnemyData =  {
 
   'orc':{
     name: "Orc",
-    health: 80,
+    currentHealth: 80,
+    maxHealth: 80,
     attack: { min: 15, max: 20},
     defense: { min: 10, max: 15},
     img: orc,
@@ -80,7 +86,8 @@ export const Enemies : EnemyData =  {
 
   'leech':{
     name: "Leech",
-    health: 60,
+    currentHealth: 60,
+    maxHealth: 60,
     attack: { min: 15, max: 25},
     defense: { min: 0, max: 0},
     img: leech,
@@ -89,7 +96,8 @@ export const Enemies : EnemyData =  {
   },
   'demon':{
     name: "Demon",
-    health: 250,
+    currentHealth: 250,
+    maxHealth: 250,
     attack: { min: 20, max: 30},
     defense: { min: 20, max: 30},
     img: demon,
@@ -98,7 +106,8 @@ export const Enemies : EnemyData =  {
   },
   'iceSpirit':{
     name: "Ice Spirit",
-    health: 200,
+    currentHealth: 200,
+    maxHealth: 200,
     attack: { min: 20, max: 30},
     defense: { min: 20, max: 30},
     img: iceSpirit,
@@ -107,7 +116,8 @@ export const Enemies : EnemyData =  {
   },
   'waterSpirit':{
     name: "Water Spirit",
-    health: 200,
+    currentHealth: 200,
+    maxHealth: 200,
     attack: { min: 20, max: 30},
     defense: { min: 20, max: 30},
     img: waterSpirit,
@@ -116,11 +126,12 @@ export const Enemies : EnemyData =  {
   },
   'dragon':{
     name: "Dragon",
-    health: 500,
+    currentHealth: 500,
+    maxHealth: 500,
     attack: { min: 30, max: 40},
     defense: { min: 30, max: 40},
     img: dragon,
     special: ["attackUp", "defenseUp", "enrage"],
-    tier: -1
+    tier: 4
   }
 }

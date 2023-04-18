@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import drawPaths from './drawPaths'
 import { resetMap, updateMap } from '../../redux/slices/mapSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCampground, faSkullCrossbones } from '@fortawesome/free-solid-svg-icons';
+import { faDungeon, faSkullCrossbones, faTent } from '@fortawesome/free-solid-svg-icons';
+import {} from '@fortawesome/free-regular-svg-icons';
 import { setGameState } from '../../redux/slices/playerSlice';
 
 
@@ -23,6 +24,7 @@ function RenderMap() {
   const traveledPaths = useSelector((state: any) => state.map.traveledPaths)
   const dispatch = useDispatch()
   const [nodes, setNodes] = useState([] as JSX.Element[])
+  const [loaded, setLoaded] = useState(false)
 
   const drawTraveledPaths = () => {
     const generatedNodes = document.querySelectorAll('.node') as NodeListOf<HTMLButtonElement>
@@ -149,21 +151,24 @@ function RenderMap() {
                   style={{top: `${Math.round(Math.random()*deviationForMapNodes)}%`, left: `${Math.round(Math.random()*deviationForMapNodes)}%`}}
                   >
                     {type === "normal" ? <FontAwesomeIcon className='pointer-events-none' icon={faSkullCrossbones} /> : null}
-                    {type === "rest" ? <FontAwesomeIcon className='pointer-events-none' icon={faCampground} />  : null}
+                    {type === "rest" ? <FontAwesomeIcon className='pointer-events-none' icon={faTent} /> : null}
+
                   </button>
 
             </div>] )
           // )
         } else {
-          // nodes.push(<div key={i+"-"+j} data-row={i+1} data-column={j+1} className='w-16 h-16 relative'></div>)
+
           setNodes((prevNodes) => [...prevNodes, <div key={i+"-"+j} data-row={i+1} data-column={j+1} className='w-16 h-16 relative'></div>])
         }
       }
+      setLoaded(true)
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }},[validNodes])
 
   useEffect(() => {
     if (nodeTypes.length === 0) return
+    if (!loaded) return
     if (nodes.length === 0 || paths.length === 0) return
     if(gameState !== "minimap") return
     setTimeout(() => {
@@ -172,6 +177,8 @@ function RenderMap() {
       handleCurrentPosition()
       drawTraveledPaths()
     }, 10);
+    // console.log("nodes:",validNodes,"paths:",paths,"nodeTypes:",nodeTypes)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nodes,gameState])
 
@@ -226,9 +233,9 @@ function RenderMap() {
       <div className='grid grid-cols-12 gap-x-6 place-items-center mt-6 ml-2'>
         {nodes}
       </div>
-      <div className='flex items-center ml-4'>
+      <div className='flex items-center ml-10'>
         <button onClick={handleBoss} className='boss flex w-16 h-16 bg-red-600 rounded-full justify-center z-50 opacity-50' >
-          <FontAwesomeIcon className='text-4xl my-auto' icon={faSkullCrossbones} />
+          <FontAwesomeIcon className='text-4xl my-auto' icon={faDungeon} />
         </button>
       </div>
     </div>
