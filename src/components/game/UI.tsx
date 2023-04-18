@@ -9,13 +9,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { healthChange, resetPlayer, setGameState, setPlayerClass } from '../redux/slices/playerSlice'
 import { resetMap } from '../redux/slices/mapSlice'
 import { enemyHealthChange, setCurrentEnemy } from '../redux/slices/enemySlice'
+import { current } from '@reduxjs/toolkit'
 
+const DEV_MODE = true
 
 function UI() {
   const playerPosition = useSelector((state: any) => state.map.position)
   const gameState = useSelector((state: any) => state.player.gameState)
   const playerCurrentHealth = useSelector((state: any) => state.player.currentHealth)
-  const enemyCurrentHealth = useSelector((state: any) => state.enemy.currentHealth)
+  const enemyCurrentHealth = useSelector((state: any) => state.enemy.currentEnemy.currentHealth)
   const dispatch = useDispatch()
 
   // const [player, setPlayer] = useState("")
@@ -23,6 +25,7 @@ function UI() {
 
   useEffect(() => {
     // console.log(gameState)
+
     const mainGame = document.getElementById('mainGame')
     const menu = document.getElementById('menu')
     const minimap = document.getElementById('minimap')
@@ -75,6 +78,22 @@ function UI() {
     }
   }
 
+  useEffect(() => {
+    // console.log(enemyCurrentHealth)
+    if(enemyCurrentHealth <= 0) {
+      handleWinBattle()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enemyCurrentHealth])
+
+  useEffect(() => {
+    // console.log(playerCurrentHealth)
+    if(playerCurrentHealth <= 0) {
+      newGame()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playerCurrentHealth])
+
   const handleWinBattle = () => {
     dispatch(setGameState("minimap"))
     const newEnemy = enemyPicker(playerPosition)
@@ -92,7 +111,7 @@ function UI() {
   }
 
   const handleDealDamage = () => {
-    const amount = Math.round(Math.random() * 5 + 1)
+    const amount = - Math.round(Math.random() * 5 + 1)
     dispatch(enemyHealthChange(amount))
   }
   const handleHealEnemy = () => {
@@ -125,12 +144,16 @@ function UI() {
       </div>
       <div id="mainGame" className='hidden'>
         <div id="info-bar" className='w-full h-10  '>
-          <button onClick={handleWinBattle}>Win Battle</button>
-          <button className='mx-5' onClick={handleTakeDamage}>Take Damage</button>
-          <button onClick={handleHeal}>Heal</button>
-          <button className='mx-5' onClick={handleDealDamage}>Deal Damage</button>
-          <button onClick={handleHealEnemy}>Heal Enemy</button>
-          <button className='mx-5' onClick={handleNewEnemy}>New Enemy</button>
+          {DEV_MODE &&
+            <>
+              <button onClick={handleWinBattle}>Win Battle</button>
+              <button className='mx-5' onClick={handleTakeDamage}>Take Damage</button>
+              <button onClick={handleHeal}>Heal</button>
+              <button className='mx-5' onClick={handleDealDamage}>Deal Damage</button>
+              <button onClick={handleHealEnemy}>Heal Enemy</button>
+              <button className='mx-5' onClick={handleNewEnemy}>New Enemy</button>
+            </>
+          }
 
         </div>
         <div className='battle w-full h-[20vh] flex justify-around items-end my-10'>

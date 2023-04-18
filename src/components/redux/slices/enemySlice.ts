@@ -34,20 +34,21 @@ export const enemySlice = createSlice({
     },
     enemyHealthChange: (state, action) => {
       const enemy = state.currentEnemy
+      // console.log(enemy.currentHealth += action.payload)
       if (enemy.currentHealth + action.payload > enemy.maxHealth) {
         enemy.currentHealth = enemy.maxHealth
         state.currentEnemy = enemy
-        localStorage.setItem("currentEnemy", enemy)
+        localStorage.setItem("currentEnemy", JSON.stringify(enemy))
         return
       } else if (enemy.currentHealth + action.payload < 0) {
         enemy.currentHealth = 0
         state.currentEnemy = enemy
-        localStorage.setItem("currentEnemy", enemy)
+        localStorage.setItem("currentEnemy", JSON.stringify(enemy))
         return
       } else {
         enemy.currentHealth += action.payload
         state.currentEnemy = enemy
-        localStorage.setItem("currentEnemy", enemy)
+        localStorage.setItem("currentEnemy", JSON.stringify(enemy))
       }
     },
   },

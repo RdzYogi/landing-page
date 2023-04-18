@@ -22,7 +22,7 @@ function enemyPicker(playerPosition: string) : Enemy {
   const enemies = Object.keys(Enemies)
   const enemy = enemies[Math.floor(Math.random() * enemies.length)] as keyof typeof Enemies
   const enemyObj = Enemies[enemy]
-  console.log(enemyObj.tier,tier)
+  // console.log(enemyObj.tier,tier)
   if (enemyObj.tier > tier) {
     return enemyPicker(playerPosition)
   }

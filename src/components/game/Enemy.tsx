@@ -23,7 +23,7 @@ function Enemy() {
     const difference = Math.round((currentHealth / maxHealth ) * 100)
     // console.log(difference, currentHealth, maxHealth)
     healthBar.style.backgroundImage = "linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,0,0,1) " + difference + "%, rgba(255,0,0,0) " + difference + "%)"
-  }, [currentHealth, maxHealth, enemyLoaded])
+  }, [enemy, currentHealth, maxHealth, enemyLoaded])
 
 
   return (
