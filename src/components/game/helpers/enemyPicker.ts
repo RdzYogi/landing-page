@@ -1,7 +1,8 @@
 import { Enemies } from "../Enemies"
 type Enemy = {
   name: string;
-  health: number;
+  maxHealth: number;
+  currentHealth: number;
   attack: {
     min: number;
     max: number;

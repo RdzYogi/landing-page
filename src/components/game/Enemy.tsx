@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 type EnemyObject = {
   enemy:{name: string;
-  health: number;
+  maxHealth: number;
+  currentHealth: number;
   attack: {
     min: number;
     max: number;
@@ -19,8 +20,8 @@ function Enemy(enemy: EnemyObject, turn: number, receivedDamage: number) {
   const [maxHealth, setMaxHealth] = useState(0)
   const [currentHealth, setCurrentHealth] = useState(0)
   useEffect(() => {
-    setMaxHealth(enemy.enemy.health)
-    setCurrentHealth(enemy.enemy.health)
+    setMaxHealth(enemy.enemy.maxHealth)
+    setCurrentHealth(enemy.enemy.currentHealth)
     // console.log(enemy.enemy)
 
   }, [enemy])
