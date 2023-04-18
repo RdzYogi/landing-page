@@ -32,7 +32,8 @@ function Enemy(enemy: EnemyObject, turn: number, receivedDamage: number) {
     // console.log(difference, currentHealth, maxHealth)
     healthBar.style.backgroundImage = "linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,0,0,1) " + difference + "%, rgba(255,0,0,0) " + difference + "%)"
   }, [currentHealth, maxHealth])
-  useEffect(() => {}, [turn])
+
+
   return (
     <div className='relative'>
       <img src={enemy.enemy.img} alt="" />
