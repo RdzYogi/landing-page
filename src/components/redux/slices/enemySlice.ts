@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { Enemies } from "../../game/Enemies"
+import calculateNextEnemyAction from "../../game/helpers/calculateNextEnemyAction"
 
 
 const readCurrentEnemy = () => {
@@ -12,7 +13,8 @@ const readCurrentEnemy = () => {
 
 const initialState = {
   currentEnemy: readCurrentEnemy(),
-  nextEnemyAction: localStorage.getItem("nextEnemyAction") || "",
+  nextEnemyAction: localStorage.getItem("nextEnemyAction") || "attack",
+  enemyBlock: Number(localStorage.getItem("enemyBlock")) || 0,
 }
 
 export const enemySlice = createSlice({
@@ -22,10 +24,35 @@ export const enemySlice = createSlice({
     setCurrentEnemy: (state, action) => {
       state.currentEnemy = action.payload
       localStorage.setItem("currentEnemy", JSON.stringify(action.payload))
-    }
+    },
+    setNextEnemyAction: (state) => {
+      state.nextEnemyAction = calculateNextEnemyAction(state.currentEnemy.special)
+    },
+    setEnemyBlock: (state, action) => {
+      state.enemyBlock = action.payload
+      localStorage.setItem("enemyBlock", JSON.stringify(action.payload))
+    },
+    healthChange: (state, action) => {
+      const enemy = state.currentEnemy
+      if (enemy.currentHealth + action.payload > enemy.maxHealth) {
+        enemy.currentHealth = enemy.maxHealth
+        state.currentEnemy = enemy
+        localStorage.setItem("currentEnemy", enemy)
+        return
+      } else if (enemy.currentHealth + action.payload < 0) {
+        enemy.currentHealth = 0
+        state.currentEnemy = enemy
+        localStorage.setItem("currentEnemy", enemy)
+        return
+      } else {
+        enemy.currentHealth += action.payload
+        state.currentEnemy = enemy
+        localStorage.setItem("currentEnemy", enemy)
+      }
+    },
   },
 })
 
-export const {} = enemySlice.actions
+export const { setCurrentEnemy, setNextEnemyAction, setEnemyBlock } = enemySlice.actions
 
 export default enemySlice.reducer
