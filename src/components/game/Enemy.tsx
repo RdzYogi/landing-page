@@ -1,21 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-// type EnemyObject = {
-//   enemy:{name: string;
-//   maxHealth: number;
-//   currentHealth: number;
-//   attack: {
-//     min: number;
-//     max: number;
-//   };
-//   defense: {
-//     min: number;
-//     max: number;
-//   };
-//   img: string;
-//   special: string[];
-//   tier: number;}
-// };
 
 function Enemy() {
   const [enemyLoaded, setEnemyLoaded] = useState(false)
@@ -25,7 +9,7 @@ function Enemy() {
   const maxHealth = useSelector((state: any) => state.enemy.currentEnemy.maxHealth)
   // const currentHealth
   useEffect(() => {
-    console.log(enemy.img)
+    // console.log(enemy.img)
     setEnemyLoaded(true)
   }, [])
   useEffect(() => {

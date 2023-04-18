@@ -32,7 +32,7 @@ export const enemySlice = createSlice({
       state.enemyBlock = action.payload
       localStorage.setItem("enemyBlock", JSON.stringify(action.payload))
     },
-    healthChange: (state, action) => {
+    enemyHealthChange: (state, action) => {
       const enemy = state.currentEnemy
       if (enemy.currentHealth + action.payload > enemy.maxHealth) {
         enemy.currentHealth = enemy.maxHealth
@@ -53,6 +53,6 @@ export const enemySlice = createSlice({
   },
 })
 
-export const { setCurrentEnemy, setNextEnemyAction, setEnemyBlock } = enemySlice.actions
+export const { setCurrentEnemy, setNextEnemyAction, setEnemyBlock, enemyHealthChange } = enemySlice.actions
 
 export default enemySlice.reducer

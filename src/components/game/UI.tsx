@@ -8,17 +8,18 @@ import Map from './Map'
 import { useDispatch, useSelector } from 'react-redux'
 import { healthChange, resetPlayer, setGameState, setPlayerClass } from '../redux/slices/playerSlice'
 import { resetMap } from '../redux/slices/mapSlice'
+import { enemyHealthChange, setCurrentEnemy } from '../redux/slices/enemySlice'
 
 
 function UI() {
   const playerPosition = useSelector((state: any) => state.map.position)
   const gameState = useSelector((state: any) => state.player.gameState)
+  const playerCurrentHealth = useSelector((state: any) => state.player.currentHealth)
+  const enemyCurrentHealth = useSelector((state: any) => state.enemy.currentHealth)
   const dispatch = useDispatch()
 
   // const [player, setPlayer] = useState("")
 
-  const [enemy, setEnemy] = useState({})
-  const [enemyLoaded, setEnemyLoaded] = useState(false)
 
   useEffect(() => {
     // console.log(gameState)
@@ -51,12 +52,6 @@ function UI() {
   }, [gameState])
 
 
-  // New Enemy
-  useEffect(() => {
-    setEnemy(enemyPicker(playerPosition))
-    setEnemyLoaded(true)
-  }, [playerPosition])
-
   const newGame = () => {
     dispatch(setGameState("playerSelect"))
     dispatch(resetMap())
@@ -82,16 +77,31 @@ function UI() {
 
   const handleWinBattle = () => {
     dispatch(setGameState("minimap"))
+    const newEnemy = enemyPicker(playerPosition)
+    dispatch(setCurrentEnemy(newEnemy))
   }
 
   const handleTakeDamage = () => {
-    const amount = - Math.round(Math.random() * 15)
+    const amount = - Math.round(Math.random() * 10 + 5)
     dispatch(healthChange(amount))
   }
 
   const handleHeal = () => {
-    const amount = Math.round(Math.random() * 15)
+    const amount = Math.round(Math.random() * 10 + 5)
     dispatch(healthChange(amount))
+  }
+
+  const handleDealDamage = () => {
+    const amount = Math.round(Math.random() * 5 + 1)
+    dispatch(enemyHealthChange(amount))
+  }
+  const handleHealEnemy = () => {
+    const amount = Math.round(Math.random() * 5 + 1)
+    dispatch(enemyHealthChange(amount))
+  }
+  const handleNewEnemy = () => {
+    const newEnemy = enemyPicker(playerPosition)
+    dispatch(setCurrentEnemy(newEnemy))
   }
   return (
     <div>
@@ -118,6 +128,9 @@ function UI() {
           <button onClick={handleWinBattle}>Win Battle</button>
           <button className='mx-5' onClick={handleTakeDamage}>Take Damage</button>
           <button onClick={handleHeal}>Heal</button>
+          <button className='mx-5' onClick={handleDealDamage}>Deal Damage</button>
+          <button onClick={handleHealEnemy}>Heal Enemy</button>
+          <button className='mx-5' onClick={handleNewEnemy}>New Enemy</button>
 
         </div>
         <div className='battle w-full h-[20vh] flex justify-around items-end my-10'>

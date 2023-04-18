@@ -132,6 +132,6 @@ export const Enemies : EnemyData =  {
     defense: { min: 30, max: 40},
     img: dragon,
     special: ["attackUp", "defenseUp", "enrage"],
-    tier: -1
+    tier: 4
   }
 }
