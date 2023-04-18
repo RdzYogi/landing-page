@@ -125,10 +125,7 @@ function UI() {
             <Player />
           </div>
           <div id="enemy" className='w-40 h-full'>
-            { enemyLoaded &&
-            // @ts-ignore
-              <Enemy enemy={enemy} />
-            }
+              <Enemy />
           </div>
         </div>
         <div id='action-bar' className='w-full h-[30vh] bg-yellow-400'>
