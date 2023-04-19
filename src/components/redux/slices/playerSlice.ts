@@ -102,6 +102,9 @@ export const playerSlice = createSlice({
       state.turn = 0
       localStorage.setItem("turn", "0")
     },
+    updateCardsInHand: (state, action) => {
+      state.numberOfCardsInHand = action.payload
+    },
   },
 })
 
@@ -111,6 +114,7 @@ export const {setPlayerClass,
               healthChange,
               incrementTurn,
               resetTurn,
+              updateCardsInHand,
             } = playerSlice.actions
 
 export default playerSlice.reducer

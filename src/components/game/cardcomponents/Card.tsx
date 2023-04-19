@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import calculateCardTransform from './helpers/calculateCardTransform'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateCardsInHand } from '../../redux/slices/playerSlice'
 
 
 function Card({card, total, index}: {card: any, total: number, index: number}) {
   // console.log("card triggered")
   // debugger
+  const dispatch = useDispatch()
   const cardsInHand = useSelector((state: any) => state.player.numberOfCardsInHand)
   const turn = useSelector((state: any) => state.player.turn)
   // let transformClass = calculateCardTransform(total, index)
   const [transformClass, setTransformClass] = useState("")
 
   useEffect(() => {
-    setTransformClass("scale-0 -translate-x-[100vh]")
-    setTimeout(() => {
-      setTransformClass(calculateCardTransform(total, index))
-    }, 300);
+    // setTransformClass("scale-0 -translate-x-[100vh]")
+    // setTimeout(() => {
+      setTransformClass(calculateCardTransform(cardsInHand, index))
+    // }, 300);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cardsInHand,turn])
+  }, [turn])
 
   let description = ""
 
@@ -33,14 +35,16 @@ function Card({card, total, index}: {card: any, total: number, index: number}) {
     description = card.description[0]
   }
 
-
-
-  const handleClick = () => {}
+  const handleClick = (e: any) => {
+    // dispatch(updateCardsInHand(cardsInHand - 1))
+    // setTransformClass(calculateCardTransform(cardsInHand-1, index))
+    e.target.classList.add("hidden")
+  }
 
   return (
     <div
         onClick={handleClick}
-        className={'w-48 h-72 -mx-10 bg-contain bg-center relative transition-all duration-300 ease-out transform hover:scale-125 hover:-translate-y-8 z-50 hover:rotate-0 hover:mx-12 ' + transformClass}
+        className={'w-48 h-72 cursor-pointer -mx-10 bg-contain bg-center relative transition-all duration-300 ease-out transform hover:scale-125 hover:-translate-y-8 z-50 hover:rotate-0 hover:mx-12 ' + transformClass}
         style={{backgroundImage: `url(${card.img})`}}>
       <h1 className='relative top-[5%] left-[50%] w-fit pointer-events-none'
           style={{transform: 'translateX(-55%)'}}>

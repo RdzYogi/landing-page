@@ -17,19 +17,18 @@ function CurrentHand() {
   const cardsInHand = useSelector((state: any) => state.player.numberOfCardsInHand)
   const turn = useSelector((state: any) => state.player.turn)
   // console.log(warriorDeck, cardsInHand, playerType)
-  const [hand, setHand] = useState([] as JSX.Element[])
+  const [hand, setHand] = useState([] as CardType[])
+  const [transformClass, setTransformClass] = useState("")
 
   useEffect(() => {
     if(hand){
-      const selectedCards = cardPicker(warriorDeck, cardsInHand, playerType)
-      setHand([])
-      selectedCards.forEach((card: CardType,index) => {
-        // console.log("hand triggered")
-        // debugger
-        setHand(prev=>[...prev, <Card key={card.name + index} card={card} total={selectedCards.length} index={index} />])
-      })
-      // console.log(selectedCards)
+      const selectedCards = cardPicker(warriorDeck, cardsInHand, playerType) as CardType[]
+      setHand(selectedCards)
     }
+    setTransformClass("scale-0 -translate-x-[100vh]")
+    setTimeout(() => {
+      setTransformClass("")
+    }, 300);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [turn])
 
@@ -39,8 +38,11 @@ function CurrentHand() {
     }
   }, [hand])
   return (
-    <div className='flex items-center self-center'>
-      {hand}
+    <div className={'flex transition-all duration-300 ease-out items-center self-center ' + transformClass }>
+      {hand.map((card: CardType, index) => {
+        return <Card key={card.name + index} card={card} total={hand.length} index={index} />
+      })
+      }
     </div>
   )
 }

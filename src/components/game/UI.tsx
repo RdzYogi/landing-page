@@ -6,7 +6,7 @@ import enemyPicker from './helpers/enemyPicker'
 import Enemy from './Enemy'
 import Map from './Map'
 import { useDispatch, useSelector } from 'react-redux'
-import { healthChange, incrementTurn, resetPlayer, resetTurn, setGameState, setPlayerClass } from '../redux/slices/playerSlice'
+import { healthChange, incrementTurn, resetPlayer, resetTurn, setGameState, setPlayerClass, updateCardsInHand } from '../redux/slices/playerSlice'
 import { resetMap } from '../redux/slices/mapSlice'
 import { enemyHealthChange, setCurrentEnemy } from '../redux/slices/enemySlice'
 import { current } from '@reduxjs/toolkit'
@@ -125,10 +125,12 @@ function UI() {
   }
 
   const handleNextTurn = () => {
+    dispatch(updateCardsInHand(4))
     dispatch(incrementTurn())
   }
 
   const handleResetTurn = () => {
+    dispatch(updateCardsInHand(4))
     dispatch(resetTurn())
   }
   return (

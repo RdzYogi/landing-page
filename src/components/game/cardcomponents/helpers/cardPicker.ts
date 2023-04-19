@@ -1,6 +1,6 @@
 import { warriorCards } from "./warriorCards";
 
-type Card = {
+type CardType = {
   name: string;
   description: string[];
   numberValues: number[];
@@ -10,15 +10,12 @@ type Card = {
 }
 
 function cardPicker(deck: string[], cardsInHand: number, playerType: string) {
-  const cards = [] as Card[]
+  const cards = [] as CardType[]
 
   // TODO: Discard pile and remaining deck
 
   // Logic for picking cards
-  const keys = Object.keys(warriorCards)
   const deckCopy = [...deck]
-  console.log(deck)
-  console.log(keys)
   for (let i = 0; i < cardsInHand; i++) {
     if(playerType === "warrior") {
       // get a random card from deck
