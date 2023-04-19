@@ -19,6 +19,7 @@ function CurrentHand() {
   // console.log(warriorDeck, cardsInHand, playerType)
   const [hand, setHand] = useState([] as CardType[])
   const [transformClass, setTransformClass] = useState("")
+  const [individualTransformClass, setIndividualTransformClass] = useState("")
 
   useEffect(() => {
     if(hand){
@@ -40,7 +41,7 @@ function CurrentHand() {
   return (
     <div className={'flex transition-all duration-300 ease-out items-center self-center ' + transformClass }>
       {hand.map((card: CardType, index) => {
-        return <Card key={card.name + index} card={card} total={hand.length} index={index} />
+        return <div key={card.name + index} className={''}><Card card={card} total={hand.length} index={index}/></div>
       })
       }
     </div>
