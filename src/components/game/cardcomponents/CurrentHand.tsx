@@ -21,7 +21,7 @@ function CurrentHand() {
 
   useEffect(() => {
     if(hand){
-      const selectedCards = cardPicker(warriorDeck, 5, playerType)
+      const selectedCards = cardPicker(warriorDeck, cardsInHand, playerType)
       setHand([])
       selectedCards.forEach((card: CardType,index) => {
         // console.log("hand triggered")

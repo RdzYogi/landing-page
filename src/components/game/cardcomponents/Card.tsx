@@ -1,11 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import calculateCardTransform from './helpers/calculateCardTransform'
+import { useSelector } from 'react-redux'
 
 
 function Card({card, total, index}: {card: any, total: number, index: number}) {
   // console.log("card triggered")
   // debugger
+  const cardsInHand = useSelector((state: any) => state.player.numberOfCardsInHand)
+  // let transformClass = calculateCardTransform(total, index)
+  const [transformClass, setTransformClass] = useState("")
+  useEffect(() => {
+    setTransformClass(calculateCardTransform(total, index))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cardsInHand])
+
   let description = ""
-  console.log(total,index)
+
+  // console.log(total,index)
   if (card.numberValues.length > 0) {
     for (let i = 0; i < card.numberValues.length; i++) {
       description += card.description[i] + " " + card.numberValues[i] + " "
@@ -17,78 +28,8 @@ function Card({card, total, index}: {card: any, total: number, index: number}) {
     description = card.description[0]
   }
 
-  let transformClass = ""
-  if (total % 2 === 0) {
-    const reference = (total / 2) + 0.5
-    if (index + 1 < reference) {
-      switch (reference-(index + 1)) {
-        case 0.5:
-            transformClass = "-rotate-[3deg]"
-          break;
-        case 1.5:
-            transformClass = "-rotate-[9deg] translate-y-4"
-          break;
-        case 2.5:
-            transformClass = "-rotate-[15deg] translate-y-8"
-          break;
 
-        default:
-          break;
-      }
-      // transformClass = "-rotate-["+ ((reference-(index + 1))*6) +"deg] "
-    } else {
-      switch ((index + 1)-reference) {
-        case 0.5:
-            transformClass = "rotate-[3deg]"
-          break;
-        case 1.5:
-            transformClass = "rotate-[9deg] translate-y-4"
-          break;
-        case 2.5:
-            transformClass = "rotate-[15deg] translate-y-8"
-          break;
-        default:
-          break;
-      }
-      // transformClass = "rotate-["+ (((index + 1)-reference)*6) +"deg] "
-    }
-  }else{
-    const half = total/2 + 0.5
-    if(index + 1 === half){
-      transformClass = "-translate-y-2"
-    }
-    if(index + 1  < half){
-      switch (half-(index+1)) {
-        case 1:
-            transformClass = "-rotate-[3deg]"
-          break;
-        case 2:
-            transformClass = "-rotate-[9deg] translate-y-4"
-          break;
-        case 3:
-            transformClass = "-rotate-[15deg] translate-y-8"
-          break;
 
-        default:
-          break;
-      }
-    }else{
-      switch ((index + 1)-half) {
-        case 1:
-            transformClass = "rotate-[3deg]"
-          break;
-        case 2:
-            transformClass = "rotate-[9deg] translate-y-4"
-          break;
-        case 3:
-            transformClass = "rotate-[15deg] translate-y-8"
-          break;
-
-        default:
-          break;
-      }
-    }
-  }
   const handleClick = () => {}
 
   return (
