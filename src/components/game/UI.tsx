@@ -175,7 +175,7 @@ function UI() {
               <Enemy />
           </div>
         </div>
-        <div id='action-bar' className='w-full h-[30vh] bg-gray-400 flex justify-center'>
+        <div id='action-bar' className='w-full h-[30vh] mt-10 flex justify-center'>
           <CurrentHand/>
         </div>
 

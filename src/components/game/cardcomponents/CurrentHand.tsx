@@ -33,7 +33,7 @@ function CurrentHand() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [turn])
   return (
-    <div className='flex gap-4'>
+    <div className='flex items-center'>
       {hand}
     </div>
   )

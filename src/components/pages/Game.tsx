@@ -8,7 +8,7 @@ function Game() {
   useEffect(() => {
     if(Ui){
       setUi(<UI/>)
-      console.log("game triggered")
+      // console.log("game triggered")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
