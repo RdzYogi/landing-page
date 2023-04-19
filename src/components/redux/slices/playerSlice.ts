@@ -16,6 +16,7 @@ const initialState = {
   gameState: localStorage.getItem("gameState") || "playerSelect",
   warriorStartingDeck: ["strike","strike","strike","strike","strike", "block", "block", "block", "block","block","rage","peace"],
   warriorCurrentDeck: readWarriorCurrentDeck(),
+  // Max number of cards < 8 (7 is the max number of cards in hand)
   numberOfCardsInHand: 4,
   turn: Number(localStorage.getItem("turn")) || 0,
 }

@@ -39,7 +39,7 @@ function CurrentHand() {
     }
   }, [hand])
   return (
-    <div className='flex items-center'>
+    <div className='flex items-center self-center'>
       {hand}
     </div>
   )
