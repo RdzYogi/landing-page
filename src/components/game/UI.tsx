@@ -6,7 +6,7 @@ import enemyPicker from './helpers/enemyPicker'
 import Enemy from './Enemy'
 import Map from './Map'
 import { useDispatch, useSelector } from 'react-redux'
-import { healthChange, resetPlayer, setGameState, setPlayerClass } from '../redux/slices/playerSlice'
+import { healthChange, incrementTurn, resetPlayer, resetTurn, setGameState, setPlayerClass } from '../redux/slices/playerSlice'
 import { resetMap } from '../redux/slices/mapSlice'
 import { enemyHealthChange, setCurrentEnemy } from '../redux/slices/enemySlice'
 import { current } from '@reduxjs/toolkit'
@@ -25,7 +25,7 @@ function UI() {
 
 
   useEffect(() => {
-    // console.log(gameState)
+    // console.log("UI triggered")
 
     const mainGame = document.getElementById('mainGame')
     const menu = document.getElementById('menu')
@@ -123,6 +123,14 @@ function UI() {
     const newEnemy = enemyPicker(playerPosition)
     dispatch(setCurrentEnemy(newEnemy))
   }
+
+  const handleNextTurn = () => {
+    dispatch(incrementTurn())
+  }
+
+  const handleResetTurn = () => {
+    dispatch(resetTurn())
+  }
   return (
     <div>
       <button onClick={newGame}>Abandon Run</button>
@@ -153,6 +161,8 @@ function UI() {
               <button className='mx-5' onClick={handleDealDamage}>Deal Damage</button>
               <button onClick={handleHealEnemy}>Heal Enemy</button>
               <button className='mx-5' onClick={handleNewEnemy}>New Enemy</button>
+              <button onClick={handleNextTurn}>Next Turn</button>
+              <button className='mx-5' onClick={handleResetTurn}>Reset Turns</button>
             </>
           }
 

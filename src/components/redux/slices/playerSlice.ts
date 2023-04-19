@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const readWarriorCurrentHand = () => {
-  const warriorStartingHand = ["strike","strike","strike","strike","strike", "block", "block", "block", "block","block","rage","peace"]
-  const currentHand = localStorage.getItem("warriorCurrentHand")
-  return currentHand !== null ? JSON.parse(currentHand) : warriorStartingHand
+const readWarriorCurrentDeck = () => {
+  const warriorStartingDeck = ["strike","strike","strike","strike","strike", "block", "block", "block", "block","block","rage","peace"]
+  const currentDeck = localStorage.getItem("warriorCurrentDeck")
+  return currentDeck !== null ? JSON.parse(currentDeck) : warriorStartingDeck
 }
 
 const initialState = {
@@ -14,8 +14,10 @@ const initialState = {
   currentMana: Number(localStorage.getItem("currentMana")) || 3,
   block: Number(localStorage.getItem("block")) || 0,
   gameState: localStorage.getItem("gameState") || "playerSelect",
-  warriorStartingHand: ["strike","strike","strike","strike","strike", "block", "block", "block", "block","block","rage","peace"],
-  warriorCurrentHand: readWarriorCurrentHand(),
+  warriorStartingDeck: ["strike","strike","strike","strike","strike", "block", "block", "block", "block","block","rage","peace"],
+  warriorCurrentDeck: readWarriorCurrentDeck(),
+  numberOfCardsInHand: 4,
+  turn: Number(localStorage.getItem("turn")) || 0,
 }
 
 export const playerSlice = createSlice({
@@ -90,10 +92,24 @@ export const playerSlice = createSlice({
         state.currentHealth += action.payload
         localStorage.setItem("currentHealth", state.currentHealth += action.payload)
       }
-    }
+    },
+    incrementTurn: (state) => {
+      state.turn += 1
+      localStorage.setItem("turn", (state.turn + 1).toString())
+    },
+    resetTurn: (state) => {
+      state.turn = 0
+      localStorage.setItem("turn", "0")
+    },
   },
 })
 
-export const { setPlayerClass, setGameState, resetPlayer, healthChange } = playerSlice.actions
+export const {setPlayerClass,
+              setGameState,
+              resetPlayer,
+              healthChange,
+              incrementTurn,
+              resetTurn,
+            } = playerSlice.actions
 
 export default playerSlice.reducer

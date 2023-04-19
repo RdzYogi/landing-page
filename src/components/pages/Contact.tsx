@@ -5,6 +5,7 @@ import { ClipLoader } from 'react-spinners'
 
 
 function Contact() {
+  // console.log("contact triggered")
   const service = 'service_dou4ss6'
   const template = 'template_5o8baun'
   const publicKey = 'U9R08FW5PBGMt_iiy'
