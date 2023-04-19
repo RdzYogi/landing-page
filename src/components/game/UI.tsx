@@ -10,6 +10,7 @@ import { healthChange, resetPlayer, setGameState, setPlayerClass } from '../redu
 import { resetMap } from '../redux/slices/mapSlice'
 import { enemyHealthChange, setCurrentEnemy } from '../redux/slices/enemySlice'
 import { current } from '@reduxjs/toolkit'
+import CurrentHand from './cardcomponents/CurrentHand'
 
 const DEV_MODE = true
 
@@ -164,7 +165,8 @@ function UI() {
               <Enemy />
           </div>
         </div>
-        <div id='action-bar' className='w-full h-[30vh] bg-yellow-400'>
+        <div id='action-bar' className='w-full h-[30vh] bg-yellow-400 flex justify-center'>
+          <CurrentHand/>
         </div>
 
       </div>
