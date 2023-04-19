@@ -21,17 +21,23 @@ function CurrentHand() {
 
   useEffect(() => {
     if(hand){
-      const selectedCards = cardPicker(warriorDeck, cardsInHand, playerType)
+      const selectedCards = cardPicker(warriorDeck, 5, playerType)
       setHand([])
       selectedCards.forEach((card: CardType,index) => {
         // console.log("hand triggered")
         // debugger
-        setHand(prev=>[...prev, <Card key={card.name + index} card={card} />])
+        setHand(prev=>[...prev, <Card key={card.name + index} card={card} total={selectedCards.length} index={index} />])
       })
       // console.log(selectedCards)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [turn])
+
+  useEffect(() => {
+    if(hand.length > 0){
+      // console.log(hand)
+    }
+  }, [hand])
   return (
     <div className='flex items-center'>
       {hand}
