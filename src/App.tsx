@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './App.css';
 import Navbar from './components/navigation/Navbar';
 import About from './components/pages/About';
@@ -266,106 +266,106 @@ const handleMouseClick = (event: MouseEvent | TouchEvent )=>{
 
   const handleNavigation = (event : React.MouseEvent<HTMLButtonElement>) =>{
     const localPrevPosition = position
-
     event.preventDefault()
 
-  switch (event.currentTarget.id) {
-    case "":
-    case "about":
-      componentToRender = <About firstLoad={false} />;
-      setPosition(0)
-      localPosition = 0
-      break;
-    case "projects":
-      componentToRender = <Projects />;
-      setPosition(1)
-      localPosition = 1
-      break;
-    case "contact":
-      componentToRender = <Contact />;
-      setPosition(2)
-      localPosition = 2
-      break;
-    case "game":
-      componentToRender = <Game />;
-      setPosition(3)
-      localPosition = 3
-      break;
-    default:
-      componentToRender = <About firstLoad={false}/>;
-      setPosition(0)
+    switch (event.currentTarget.id) {
+      case "":
+      case "about":
+        componentToRender = <About firstLoad={false} />;
+        setPosition(0)
+        localPosition = 0
+        break;
+      case "projects":
+        componentToRender = <Projects />;
+        setPosition(1)
+        localPosition = 1
+        break;
+      case "contact":
+        componentToRender = <Contact />;
+        setPosition(2)
+        localPosition = 2
+        break;
+      case "game":
+        componentToRender = <Game />;
+        setPosition(3)
+        localPosition = 3
+        break;
+      default:
+        componentToRender = <About firstLoad={false}/>;
+        setPosition(0)
   }
-    // After switch we get the positions and the hero component to render
+      // After switch we get the positions and the hero component to render
 
-    // Set current page and previous page to corresponding buffers
-    const bufferElement1 = document.getElementById("buffer-1")
-    const bufferElement2 = document.getElementById("buffer-2")
-    if (bufferElement1 === null || bufferElement2 === null) return
-    let currentPage:HTMLElement
-    let prevPage:HTMLElement
-    if (heroBuffer === 1){
-      bufferElement2.classList.remove("hidden")
-      currentPage = bufferElement2
-      prevPage = bufferElement1
-      setHeroBuffer(2)
-      setBuffer1(buffer1)
-      setBuffer2(componentToRender)
-      setTimeout(() => {
-        // body.style.height = bufferElement2.offsetHeight + bufferElement2.offsetTop + "px"
-        bufferElement1.classList.add("hidden")
-        handleCanvasSize()
-      }, pageWipeDuration);
-    } else {
-      bufferElement1.classList.remove("hidden")
-      currentPage = bufferElement1
-      prevPage = bufferElement2
-      setHeroBuffer(1)
-      setBuffer2(buffer2)
-      setBuffer1(componentToRender)
-      setTimeout(() => {
-        // body.style.height = bufferElement1.offsetHeight + bufferElement1.offsetTop + "px"
-        bufferElement2.classList.add("hidden")
-        handleCanvasSize()
-      }, pageWipeDuration);
-    }
-    const wipeData = {
-      fromLeft: 0,
-      fromRight: 100,
-    }
+      // Set current page and previous page to corresponding buffers
+      const bufferElement1 = document.getElementById("buffer-1")
+      const bufferElement2 = document.getElementById("buffer-2")
+      if (bufferElement1 === null || bufferElement2 === null) return
+      let currentPage:HTMLElement
+      let prevPage:HTMLElement
+      if (heroBuffer === 1){
+        bufferElement2.classList.remove("hidden")
+        currentPage = bufferElement2
+        prevPage = bufferElement1
+        setHeroBuffer(2)
+        setBuffer1(buffer1)
+        setBuffer2(componentToRender)
 
-    if (localPrevPosition < localPosition){
-      currentPage.style.clipPath = "polygon(0% 0%,0% 100%,0% 100%,0% 0%)"
-      prevPage.style.clipPath = "polygon(0% 0%,0% 100%,100% 100%,100% 0%)"
-      anime({
-        targets: wipeData,
-        fromLeft: 100,
-        duration: pageWipeDuration,
-        easing: "linear",
-        round: 1,
-        update: function() {
-          // console.log("update", wipeData.fromLeft)
-          currentPage.style.clipPath = "polygon(0% 0%,0% 100%," + wipeData.fromLeft + "% 100%," + wipeData.fromLeft + "% 0%)"
-          prevPage.style.clipPath = "polygon("+ wipeData.fromLeft +"% 0%,"+ wipeData.fromLeft +"% 100%,100% 100%,100% 0%)"
-        },
-        complete: function() {
-        }
-      })
+        setTimeout(() => {
+          // body.style.height = bufferElement2.offsetHeight + bufferElement2.offsetTop + "px"
+          bufferElement1.classList.add("hidden")
+          handleCanvasSize()
+        }, pageWipeDuration);
+      } else {
+        bufferElement1.classList.remove("hidden")
+        currentPage = bufferElement1
+        prevPage = bufferElement2
+        setHeroBuffer(1)
+        setBuffer2(buffer2)
+        setBuffer1(componentToRender)
+        setTimeout(() => {
+          // body.style.height = bufferElement1.offsetHeight + bufferElement1.offsetTop + "px"
+          bufferElement2.classList.add("hidden")
+          handleCanvasSize()
+        }, pageWipeDuration);
+      }
+      const wipeData = {
+        fromLeft: 0,
+        fromRight: 100,
+      }
 
-    } else if(localPrevPosition > localPosition){
-      anime({
-        targets: wipeData,
-        fromRight: 0,
-        duration: pageWipeDuration,
-        easing: "linear",
-        round: 1,
-        update: function() {
-          currentPage.style.clipPath = "polygon(" + wipeData.fromRight + "% 0%," + wipeData.fromRight + "% 100%,100% 100%,100% 0%)"
-          prevPage.style.clipPath = "polygon(0% 0%,0% 100%," + wipeData.fromRight + "% 100%," + wipeData.fromRight + "% 0%)"
-        },
-        complete: function() {
-        }
-      })
-    }
+      if (localPrevPosition < localPosition){
+        currentPage.style.clipPath = "polygon(0% 0%,0% 100%,0% 100%,0% 0%)"
+        prevPage.style.clipPath = "polygon(0% 0%,0% 100%,100% 100%,100% 0%)"
+        anime({
+          targets: wipeData,
+          fromLeft: 100,
+          duration: pageWipeDuration,
+          easing: "linear",
+          round: 1,
+          update: function() {
+            // console.log("update", wipeData.fromLeft)
+            currentPage.style.clipPath = "polygon(0% 0%,0% 100%," + wipeData.fromLeft + "% 100%," + wipeData.fromLeft + "% 0%)"
+            prevPage.style.clipPath = "polygon("+ wipeData.fromLeft +"% 0%,"+ wipeData.fromLeft +"% 100%,100% 100%,100% 0%)"
+          },
+          complete: function() {
+          }
+        })
+
+      } else if(localPrevPosition > localPosition){
+        anime({
+          targets: wipeData,
+          fromRight: 0,
+          duration: pageWipeDuration,
+          easing: "linear",
+          round: 1,
+          update: function() {
+            currentPage.style.clipPath = "polygon(" + wipeData.fromRight + "% 0%," + wipeData.fromRight + "% 100%,100% 100%,100% 0%)"
+            prevPage.style.clipPath = "polygon(0% 0%,0% 100%," + wipeData.fromRight + "% 100%," + wipeData.fromRight + "% 0%)"
+          },
+          complete: function() {
+          }
+        })
+      }
 
   }
 

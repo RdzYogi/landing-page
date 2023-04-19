@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+const readWarriorCurrentDeck = () => {
+  const warriorStartingDeck = ["strike","strike","strike","strike","strike", "block", "block", "block", "block","block","rage","peace"]
+  const currentDeck = localStorage.getItem("warriorCurrentDeck")
+  return currentDeck !== null ? JSON.parse(currentDeck) : warriorStartingDeck
+}
+
 const initialState = {
   playerClass: localStorage.getItem("playerClass") || "",
   maxHealth: Number(localStorage.getItem("maxHealth")) || 0,
@@ -8,6 +14,11 @@ const initialState = {
   currentMana: Number(localStorage.getItem("currentMana")) || 3,
   block: Number(localStorage.getItem("block")) || 0,
   gameState: localStorage.getItem("gameState") || "playerSelect",
+  warriorStartingDeck: ["strike","strike","strike","strike","strike", "block", "block", "block", "block","block","rage","peace"],
+  warriorCurrentDeck: readWarriorCurrentDeck(),
+  // Max number of cards < 8 (7 is the max number of cards in hand)
+  numberOfCardsInHand: 4,
+  turn: Number(localStorage.getItem("turn")) || 0,
 }
 
 export const playerSlice = createSlice({
@@ -82,10 +93,28 @@ export const playerSlice = createSlice({
         state.currentHealth += action.payload
         localStorage.setItem("currentHealth", state.currentHealth += action.payload)
       }
-    }
+    },
+    incrementTurn: (state) => {
+      state.turn += 1
+      localStorage.setItem("turn", (state.turn + 1).toString())
+    },
+    resetTurn: (state) => {
+      state.turn = 0
+      localStorage.setItem("turn", "0")
+    },
+    updateCardsInHand: (state, action) => {
+      state.numberOfCardsInHand = action.payload
+    },
   },
 })
 
-export const { setPlayerClass, setGameState, resetPlayer, healthChange } = playerSlice.actions
+export const {setPlayerClass,
+              setGameState,
+              resetPlayer,
+              healthChange,
+              incrementTurn,
+              resetTurn,
+              updateCardsInHand,
+            } = playerSlice.actions
 
 export default playerSlice.reducer

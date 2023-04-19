@@ -6,10 +6,11 @@ import enemyPicker from './helpers/enemyPicker'
 import Enemy from './Enemy'
 import Map from './Map'
 import { useDispatch, useSelector } from 'react-redux'
-import { healthChange, resetPlayer, setGameState, setPlayerClass } from '../redux/slices/playerSlice'
+import { healthChange, incrementTurn, resetPlayer, resetTurn, setGameState, setPlayerClass, updateCardsInHand } from '../redux/slices/playerSlice'
 import { resetMap } from '../redux/slices/mapSlice'
 import { enemyHealthChange, setCurrentEnemy } from '../redux/slices/enemySlice'
 import { current } from '@reduxjs/toolkit'
+import CurrentHand from './cardcomponents/CurrentHand'
 
 const DEV_MODE = true
 
@@ -24,7 +25,7 @@ function UI() {
 
 
   useEffect(() => {
-    // console.log(gameState)
+    // console.log("UI triggered")
 
     const mainGame = document.getElementById('mainGame')
     const menu = document.getElementById('menu')
@@ -122,6 +123,16 @@ function UI() {
     const newEnemy = enemyPicker(playerPosition)
     dispatch(setCurrentEnemy(newEnemy))
   }
+
+  const handleNextTurn = () => {
+    dispatch(updateCardsInHand(4))
+    dispatch(incrementTurn())
+  }
+
+  const handleResetTurn = () => {
+    dispatch(updateCardsInHand(4))
+    dispatch(resetTurn())
+  }
   return (
     <div>
       <button onClick={newGame}>Abandon Run</button>
@@ -152,6 +163,8 @@ function UI() {
               <button className='mx-5' onClick={handleDealDamage}>Deal Damage</button>
               <button onClick={handleHealEnemy}>Heal Enemy</button>
               <button className='mx-5' onClick={handleNewEnemy}>New Enemy</button>
+              <button onClick={handleNextTurn}>Next Turn</button>
+              <button className='mx-5' onClick={handleResetTurn}>Reset Turns</button>
             </>
           }
 
@@ -164,7 +177,8 @@ function UI() {
               <Enemy />
           </div>
         </div>
-        <div id='action-bar' className='w-full h-[30vh] bg-yellow-400'>
+        <div id='action-bar' className='w-full h-[40vh] mt-10 flex justify-center'>
+          <CurrentHand/>
         </div>
 
       </div>
