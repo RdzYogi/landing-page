@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+const readWarriorCurrentHand = () => {
+  const warriorStartingHand = ["strike","strike","strike","strike","strike", "block", "block", "block", "block","block","rage","peace"]
+  const currentHand = localStorage.getItem("warriorCurrentHand")
+  return currentHand !== null ? JSON.parse(currentHand) : warriorStartingHand
+}
+
 const initialState = {
   playerClass: localStorage.getItem("playerClass") || "",
   maxHealth: Number(localStorage.getItem("maxHealth")) || 0,
@@ -8,6 +14,8 @@ const initialState = {
   currentMana: Number(localStorage.getItem("currentMana")) || 3,
   block: Number(localStorage.getItem("block")) || 0,
   gameState: localStorage.getItem("gameState") || "playerSelect",
+  warriorStartingHand: ["strike","strike","strike","strike","strike", "block", "block", "block", "block","block","rage","peace"],
+  warriorCurrentHand: readWarriorCurrentHand(),
 }
 
 export const playerSlice = createSlice({
