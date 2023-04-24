@@ -6,10 +6,9 @@ import enemyPicker from './helpers/enemyPicker'
 import Enemy from './Enemy'
 import Map from './Map'
 import { useDispatch, useSelector } from 'react-redux'
-import { drawCards, healthChange, incrementTurn, playCard, resetMana, resetPlayer, resetTurn, resetWarriorDecks, setGameState, setPlayerClass, updateCardsInHand } from '../redux/slices/playerSlice'
+import { drawCards, generateDrawPile, healthChange, incrementTurn, playCard, resetMana, resetPlayer, resetTurn, resetWarriorDecks, setGameState, setPlayerClass, updateCardsInHand } from '../redux/slices/playerSlice'
 import { resetMap } from '../redux/slices/mapSlice'
 import { enemyHealthChange, setCurrentEnemy } from '../redux/slices/enemySlice'
-import { current } from '@reduxjs/toolkit'
 import CurrentHand from './cardcomponents/CurrentHand'
 import Energy from './Energy'
 import EndTurn from './EndTurn'
@@ -102,9 +101,13 @@ function UI() {
   }, [playerCurrentHealth])
 
   const handleWinBattle = () => {
+    dispatch(resetTurn())
     dispatch(setGameState("minimap"))
     const newEnemy = enemyPicker(playerPosition)
     dispatch(setCurrentEnemy(newEnemy))
+    dispatch(resetMana())
+    dispatch(generateDrawPile())
+    dispatch(drawCards())
   }
 
   const handleTakeDamage = () => {
@@ -143,6 +146,7 @@ function UI() {
   const handleResetTurn = () => {
     // dispatch(updateCardsInHand(4))
     dispatch(resetTurn())
+    dispatch(resetMana())
   }
   return (
     <div>
@@ -175,8 +179,7 @@ function UI() {
               <button className='mx-5' onClick={handleDealDamage}>Deal Damage</button>
               <button onClick={handleHealEnemy}>Heal Enemy</button>
               <button className='mx-5' onClick={handleNewEnemy}>New Enemy</button>
-              <button onClick={handleNextTurn}>Next Turn</button>
-              <button className='mx-5' onClick={handleResetTurn}>Reset Turns</button>
+              <button className='' onClick={handleResetTurn}>Reset Turns</button>
             </>
           }
 
@@ -193,7 +196,7 @@ function UI() {
           {/* <div>{drawPile.length}</div> */}
           <Energy/>
           <CurrentHand/>
-          <EndTurn/>
+          <EndTurn handleNextTurn={handleNextTurn}/>
           {/* <div>{discardPile.length}</div> */}
         </div>
 

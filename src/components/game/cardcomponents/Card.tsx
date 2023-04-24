@@ -1,6 +1,21 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { enemyHealthChange } from '../../redux/slices/enemySlice';
+import { updateMana } from '../../redux/slices/playerSlice';
 
-function Card({card, handlePlayCard, index, reRender}: {card: any, handlePlayCard: any, index: number, reRender: boolean}) {
+type CardType = {
+  name: string;
+  description: string[];
+  numberValues: number[];
+  type: string;
+  img: string;
+  cost: number;
+}
+
+function Card({card, handlePlayCard, index, reRender}: {card: CardType, handlePlayCard: any, index: number, reRender: boolean}) {
+
+  const currentMana = useSelector((state: any) => state.player.currentMana)
+  const dispatch = useDispatch()
 
   let description = ""
   // let discardAnimationClass = ""
@@ -22,9 +37,21 @@ function Card({card, handlePlayCard, index, reRender}: {card: any, handlePlayCar
   }, [index])
 
   const handleClick = (e:any) => {
+    if(card.cost > currentMana) return
+    switch (card.type) {
+      case "Attack":
+        dispatch(enemyHealthChange(-card.numberValues[0]))
+        dispatch(updateMana(-card.cost))
+        break;
+
+      default:
+        break;
+    }
     setDiscardAnimationClass("transform transition-all duration-300 ease-out scale-0 translate-x-[30vw]")
     handlePlayCard(e, index)
   }
+
+
   useEffect(() => {
     // console.log("trigger ")
     setDiscardAnimationClass("")
