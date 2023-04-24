@@ -125,12 +125,12 @@ function UI() {
   }
 
   const handleNextTurn = () => {
-    dispatch(updateCardsInHand(4))
+    // dispatch(updateCardsInHand(4))
     dispatch(incrementTurn())
   }
 
   const handleResetTurn = () => {
-    dispatch(updateCardsInHand(4))
+    // dispatch(updateCardsInHand(4))
     dispatch(resetTurn())
   }
   return (

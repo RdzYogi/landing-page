@@ -17,7 +17,7 @@ const initialState = {
   warriorStartingDeck: ["strike","strike","strike","strike","strike", "block", "block", "block", "block","block","rage","peace"],
   warriorCurrentDeck: readWarriorCurrentDeck(),
   // Max number of cards < 8 (7 is the max number of cards in hand)
-  numberOfCardsInHand: 4,
+  numberOfCardsInHand: Number(localStorage.getItem("numberOfCardsInHand")) || 5,
   turn: Number(localStorage.getItem("turn")) || 0,
 }
 
@@ -104,6 +104,7 @@ export const playerSlice = createSlice({
     },
     updateCardsInHand: (state, action) => {
       state.numberOfCardsInHand = action.payload
+      localStorage.setItem("numberOfCardsInHand", action.payload.toString())
     },
   },
 })

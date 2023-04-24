@@ -1,27 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import calculateCardTransform from './helpers/calculateCardTransform'
-import { useDispatch, useSelector } from 'react-redux'
-import { updateCardsInHand } from '../../redux/slices/playerSlice'
 
-
-function Card({card, total, index}: {card: any, total: number, index: number}) {
-  // console.log("card triggered")
-  // debugger
-  const dispatch = useDispatch()
-  const cardsInHand = useSelector((state: any) => state.player.numberOfCardsInHand)
-  const turn = useSelector((state: any) => state.player.turn)
-  // let transformClass = calculateCardTransform(total, index)
-  const [transformClass, setTransformClass] = useState("")
-
-  useEffect(() => {
-    // setTransformClass("scale-0 -translate-x-[100vh]")
-    // setTimeout(() => {
-      setTransformClass(calculateCardTransform(cardsInHand, index))
-    // }, 300);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [turn])
+function Card({card, handlePlayCard, index, reRender}: {card: any, handlePlayCard: any, index: number, reRender: boolean}) {
 
   let description = ""
+  // let discardAnimationClass = ""
+  const [discardAnimationClass, setDiscardAnimationClass] = useState("")
 
   // console.log(total,index)
   if (card.numberValues.length > 0) {
@@ -34,17 +17,24 @@ function Card({card, total, index}: {card: any, total: number, index: number}) {
   } else {
     description = card.description[0]
   }
+  useEffect(() => {
+    setDiscardAnimationClass("")
+  }, [index])
 
-  const handleClick = (e: any) => {
-    // dispatch(updateCardsInHand(cardsInHand - 1))
-    // setTransformClass(calculateCardTransform(cardsInHand-1, index))
-    e.target.classList.add("hidden")
+  const handleClick = (e:any) => {
+    setDiscardAnimationClass("transform transition-all duration-300 ease-out scale-0 translate-x-[30vw]")
+    handlePlayCard(e, index)
   }
+  useEffect(() => {
+    // console.log("trigger ")
+    setDiscardAnimationClass("")
+  }, [reRender])
 
   return (
     <div
         onClick={handleClick}
-        className={'w-48 h-72 cursor-pointer -mx-10 bg-contain bg-center relative transform '}
+        data-index={index}
+        className={'w-48 h-72 cursor-pointer -mx-10 bg-contain bg-center relative ' + discardAnimationClass}
         style={{backgroundImage: `url(${card.img})`}}>
       <h1 className='relative top-[5%] left-[50%] w-fit pointer-events-none'
           style={{transform: 'translateX(-55%)'}}>
