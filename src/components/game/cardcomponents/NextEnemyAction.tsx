@@ -20,6 +20,7 @@ function NextEnemyAction() {
         break;
 
       case "defend":
+        // console.log(minEnemyDefense)
         setImageString(enemyIntentDefend)
         setNumberValue(minEnemyDefense)
         break;
@@ -33,7 +34,7 @@ function NextEnemyAction() {
   return (
     <div className='flex justify-center items-center'>
       <img src={imageString} alt="enemy intent" className='w-6 mb-1'/>
-      {numberValue !== 0 && <p className='text-sm ml-1 '>{numberValue}</p>}
+      {(numberValue !== 0) && <p className='text-sm ml-1 '>{numberValue}</p>}
     </div>
   )
 }

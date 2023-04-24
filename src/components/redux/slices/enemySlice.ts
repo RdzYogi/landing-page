@@ -28,6 +28,7 @@ export const enemySlice = createSlice({
       localStorage.setItem("enemyBlock", "0")
     },
     setNextEnemyAction: (state) => {
+      // console.log("triggered")
       const enemyAction = calculateNextEnemyAction(state.currentEnemy.special)
       state.nextEnemyAction = enemyAction
       localStorage.setItem("nextEnemyAction", enemyAction)

@@ -116,6 +116,7 @@ function UI() {
     dispatch(setGameState("minimap"))
     const newEnemy = enemyPicker(playerPosition)
     dispatch(setCurrentEnemy(newEnemy))
+    dispatch(setNextEnemyAction())
     dispatch(resetMana())
     dispatch(generateDrawPile())
     dispatch(drawCards())
