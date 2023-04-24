@@ -124,6 +124,14 @@ export const playerSlice = createSlice({
       state.turn += 1
       localStorage.setItem("turn", (state.turn + 1).toString())
     },
+    updateMana: (state, action) => {
+      state.currentMana += action.payload
+      localStorage.setItem("currentMana", state.currentMana.toString())
+    },
+    resetMana: (state) => {
+      state.currentMana = state.maxMana
+      localStorage.setItem("currentMana", state.maxMana.toString())
+    },
     resetTurn: (state) => {
       state.turn = 0
       localStorage.setItem("turn", "0")
@@ -202,6 +210,8 @@ export const {setPlayerClass,
               healthChange,
               incrementTurn,
               resetTurn,
+              updateMana,
+              resetMana,
               updateCardsInHand,
               resetWarriorDecks,
               addToWarriorDeck,

@@ -11,6 +11,7 @@ import { resetMap } from '../redux/slices/mapSlice'
 import { enemyHealthChange, setCurrentEnemy } from '../redux/slices/enemySlice'
 import { current } from '@reduxjs/toolkit'
 import CurrentHand from './cardcomponents/CurrentHand'
+import Energy from './Energy'
 
 const DEV_MODE = true
 
@@ -149,11 +150,12 @@ function UI() {
         <div className='flex justify-around mt-10'>
           <div className='flex flex-col items-center'>
             <h1>Warrior</h1>
-            <img onClick={pickPlayer} src={warriorPortrait} alt="warriorPortrait" className='w-44 cursor-pointer'/>
+            <img onClick={pickPlayer} src={warriorPortrait} alt="warriorPortrait" className='w-44 cursor-pointer transition-all duration-300 hover:scale-105'/>
           </div>
           <div className='flex flex-col items-center'>
             <h1>Wizard</h1>
-            <img onClick={pickPlayer} src={wizardPortrait} alt="wizardPortrait" className='w-44 cursor-pointer'/>
+            <img src={wizardPortrait} alt="wizardPortrait" className='w-44 grayscale'/>
+            <h1>(coming soon)</h1>
           </div>
 
         </div>
@@ -186,9 +188,12 @@ function UI() {
           </div>
         </div>
         <div id='action-bar' className='w-full h-[40vh] mt-10 flex justify-between'>
-          <div>{drawPile.length}</div>
+          {/* <div>{drawPile.length}</div> */}
+          <Energy/>
           <CurrentHand/>
-          <div>{discardPile.length}</div>
+          <div>
+            {/* {discardPile.length} */}
+          </div>
         </div>
 
       </div>

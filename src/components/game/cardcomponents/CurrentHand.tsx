@@ -59,11 +59,9 @@ function CurrentHand() {
   }, [hand,currentHand])
 
   const handlePlayCard = (e:any, index:number) => {
-    // console.log(e.target.dataset.name)
     setTimeout(() => {
       dispatch(playCard(e.target.dataset.name))
       const newHand = hand.filter((card, i) => (i !== index))
-      // console.log(hand,newHand,index)
       setHand(newHand)
     }, 200);
    }
