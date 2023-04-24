@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import wizardPortrait from '../../assets/game/wizard/portrait.png'
 import warriorPortrait from '../../assets/game/warrior/portrait.png'
 import { useSelector } from 'react-redux'
+import PlayerStatusBar from './PlayerStatusBar'
 
 function Player() {
   const [portrait, setPortrait] = useState("")
@@ -39,6 +40,7 @@ function Player() {
       <div id="health-bar" className='w-full h-4 text-center  mt-1 rounded-lg border border-gray-500'>
         <h1 id="health-number" className=' text-xs -bottom-0'>{currentHealth + "/" + maxHealth}</h1>
       </div>
+      <PlayerStatusBar/>
     </div>
   )
 }

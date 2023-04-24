@@ -8,7 +8,7 @@ import Map from './Map'
 import { useDispatch, useSelector } from 'react-redux'
 import { drawCards, generateDrawPile, healthChange, incrementTurn, playCard, resetMana, resetPlayer, resetTurn, resetWarriorDecks, setGameState, setPlayerClass, updateCardsInHand } from '../redux/slices/playerSlice'
 import { resetMap } from '../redux/slices/mapSlice'
-import { enemyHealthChange, setCurrentEnemy } from '../redux/slices/enemySlice'
+import { enemyHealthChange, setCurrentEnemy, setNextEnemyAction } from '../redux/slices/enemySlice'
 import CurrentHand from './cardcomponents/CurrentHand'
 import Energy from './Energy'
 import EndTurn from './EndTurn'
@@ -141,6 +141,7 @@ function UI() {
     dispatch(resetMana())
     dispatch(incrementTurn())
     dispatch(drawCards())
+    dispatch(setNextEnemyAction())
   }
 
   const handleResetTurn = () => {
@@ -184,7 +185,7 @@ function UI() {
           }
 
         </div>
-        <div className='battle w-full h-[20vh] flex justify-around items-end my-10'>
+        <div className='battle w-full h-fit flex justify-around items-end my-10'>
           <div id="player" className='w-40 h-full'>
             <Player />
           </div>
