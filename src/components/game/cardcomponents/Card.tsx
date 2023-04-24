@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import calculateCardTransform from './helpers/calculateCardTransform'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateCardsInHand } from '../../redux/slices/playerSlice'
+import { enemyHealthChange } from '../../redux/slices/enemySlice';
+import { updateMana, updatePlayerBlock } from '../../redux/slices/playerSlice';
 
+type CardType = {
+  name: string;
+  description: string[];
+  numberValues: number[];
+  type: string;
+  img: string;
+  cost: number;
+}
 
-function Card({card, total, index}: {card: any, total: number, index: number}) {
-  // console.log("card triggered")
-  // debugger
+function Card({card, handlePlayCard, index, reRender}: {card: CardType, handlePlayCard: any, index: number, reRender: boolean}) {
+
+  const currentMana = useSelector((state: any) => state.player.currentMana)
   const dispatch = useDispatch()
-  const cardsInHand = useSelector((state: any) => state.player.numberOfCardsInHand)
-  const turn = useSelector((state: any) => state.player.turn)
-  // let transformClass = calculateCardTransform(total, index)
-  const [transformClass, setTransformClass] = useState("")
-
-  useEffect(() => {
-    // setTransformClass("scale-0 -translate-x-[100vh]")
-    // setTimeout(() => {
-      setTransformClass(calculateCardTransform(cardsInHand, index))
-    // }, 300);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [turn])
 
   let description = ""
+  // let discardAnimationClass = ""
+  const [discardAnimationClass, setDiscardAnimationClass] = useState("")
 
   // console.log(total,index)
   if (card.numberValues.length > 0) {
@@ -34,17 +32,42 @@ function Card({card, total, index}: {card: any, total: number, index: number}) {
   } else {
     description = card.description[0]
   }
+  useEffect(() => {
+    setDiscardAnimationClass("")
+  }, [index])
 
-  const handleClick = (e: any) => {
-    // dispatch(updateCardsInHand(cardsInHand - 1))
-    // setTransformClass(calculateCardTransform(cardsInHand-1, index))
-    e.target.classList.add("hidden")
+  const handleClick = (e:any) => {
+    if(card.cost > currentMana) return
+    switch (card.type) {
+      case "Attack":
+        dispatch(enemyHealthChange(-card.numberValues[0]))
+        dispatch(updateMana(-card.cost))
+        break;
+
+      case "Skill":
+        dispatch(updatePlayerBlock(card.numberValues[0]))
+        dispatch(updateMana(-card.cost))
+        break;
+
+
+      default:
+        break;
+    }
+    setDiscardAnimationClass("transform transition-all duration-300 ease-out scale-0 translate-x-[30vw]")
+    handlePlayCard(e, index)
   }
+
+
+  useEffect(() => {
+    // console.log("trigger ")
+    setDiscardAnimationClass("")
+  }, [reRender])
 
   return (
     <div
         onClick={handleClick}
-        className={'w-48 h-72 cursor-pointer -mx-10 bg-contain bg-center relative transition-all duration-300 ease-out transform hover:scale-125 hover:-translate-y-8 z-50 hover:rotate-0 hover:mx-12 ' + transformClass}
+        data-name={card.name.toLowerCase()}
+        className={'w-48 h-72 cursor-pointer -mx-10 bg-contain bg-center relative ' + discardAnimationClass}
         style={{backgroundImage: `url(${card.img})`}}>
       <h1 className='relative top-[5%] left-[50%] w-fit pointer-events-none'
           style={{transform: 'translateX(-55%)'}}>

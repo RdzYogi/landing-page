@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import NextEnemyAction from './cardcomponents/NextEnemyAction'
+import EnemyStatusBar from './EnemyStatusBar'
 
 function Enemy() {
   const [enemyLoaded, setEnemyLoaded] = useState(false)
@@ -30,10 +32,12 @@ function Enemy() {
     <div className='relative'>
       {enemyLoaded &&
       <>
+        <NextEnemyAction/>
         <img src={enemy.img} alt={enemy.name} />
         <div id="enemy-health-bar" className='w-full h-4 text-center mt-1 rounded-lg border border-gray-500'>
           <h1 id="enemy-health-number" className=' text-xs -bottom-0'>{currentHealth + "/" + maxHealth}</h1>
         </div>
+        <EnemyStatusBar/>
       </>
       }
     </div>

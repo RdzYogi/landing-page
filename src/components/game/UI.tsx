@@ -6,11 +6,12 @@ import enemyPicker from './helpers/enemyPicker'
 import Enemy from './Enemy'
 import Map from './Map'
 import { useDispatch, useSelector } from 'react-redux'
-import { healthChange, incrementTurn, resetPlayer, resetTurn, setGameState, setPlayerClass, updateCardsInHand } from '../redux/slices/playerSlice'
+import { drawCards, generateDrawPile, healthChange, incrementTurn, playCard, resetMana, resetPlayer, resetPlayerBlock, resetTurn, resetWarriorDecks, setGameState, setPlayerClass, updateCardsInHand } from '../redux/slices/playerSlice'
 import { resetMap } from '../redux/slices/mapSlice'
-import { enemyHealthChange, setCurrentEnemy } from '../redux/slices/enemySlice'
-import { current } from '@reduxjs/toolkit'
+import { enemyHealthChange, resetEnemyBlock, setCurrentEnemy, setEnemyBlock, setNextEnemyAction } from '../redux/slices/enemySlice'
 import CurrentHand from './cardcomponents/CurrentHand'
+import Energy from './Energy'
+import EndTurn from './EndTurn'
 
 const DEV_MODE = true
 
@@ -19,6 +20,12 @@ function UI() {
   const gameState = useSelector((state: any) => state.player.gameState)
   const playerCurrentHealth = useSelector((state: any) => state.player.currentHealth)
   const enemyCurrentHealth = useSelector((state: any) => state.enemy.currentEnemy.currentHealth)
+  const drawPile = useSelector((state: any) => state.player.warriorDrawPile)
+  const discardPile = useSelector((state: any) => state.player.warriorDiscardPile)
+  const warriorCurrentHand = useSelector((state: any) => state.player.warriorCardsInHand)
+  const enemyNextAction = useSelector((state: any) => state.enemy.nextEnemyAction)
+  const enemyDamage = useSelector((state: any) => state.enemy.currentEnemy.attack.min)
+  const enemyBlock = useSelector((state: any) => state.enemy.currentEnemy.defense.min)
   const dispatch = useDispatch()
 
   // const [player, setPlayer] = useState("")
@@ -60,6 +67,13 @@ function UI() {
     dispatch(setGameState("playerSelect"))
     dispatch(resetMap())
     dispatch(resetPlayer())
+    const newEnemy = enemyPicker(playerPosition)
+    dispatch(setCurrentEnemy(newEnemy))
+    dispatch(resetEnemyBlock())
+    dispatch(resetTurn())
+    dispatch(resetMana())
+    dispatch(resetPlayerBlock())
+    dispatch(setNextEnemyAction())
   }
 
   const pickPlayer = (e:any) => {
@@ -68,6 +82,8 @@ function UI() {
       case "warriorPortrait":
         dispatch(setPlayerClass("warrior"))
         dispatch(setGameState("minimap"))
+        dispatch(resetWarriorDecks())
+
         break;
       case "wizardPortrait":
         dispatch(setPlayerClass("wizard"))
@@ -96,9 +112,14 @@ function UI() {
   }, [playerCurrentHealth])
 
   const handleWinBattle = () => {
+    dispatch(resetTurn())
     dispatch(setGameState("minimap"))
     const newEnemy = enemyPicker(playerPosition)
     dispatch(setCurrentEnemy(newEnemy))
+    dispatch(setNextEnemyAction())
+    dispatch(resetMana())
+    dispatch(generateDrawPile())
+    dispatch(drawCards())
   }
 
   const handleTakeDamage = () => {
@@ -125,13 +146,34 @@ function UI() {
   }
 
   const handleNextTurn = () => {
-    dispatch(updateCardsInHand(4))
+    switch (enemyNextAction) {
+      case "attack":
+        dispatch(healthChange(-enemyDamage))
+        dispatch(resetEnemyBlock())
+        break;
+      case "defend":
+        dispatch(setEnemyBlock(enemyBlock))
+        break;
+
+      default:
+        dispatch(resetEnemyBlock())
+        break;
+    }
+
+    warriorCurrentHand.forEach((card: any) => {
+      dispatch(playCard(card))
+    })
+    dispatch(resetMana())
     dispatch(incrementTurn())
+    dispatch(drawCards())
+    dispatch(setNextEnemyAction())
+    dispatch(resetPlayerBlock())
   }
 
   const handleResetTurn = () => {
-    dispatch(updateCardsInHand(4))
     dispatch(resetTurn())
+    dispatch(resetMana())
+    dispatch(resetPlayerBlock())
   }
   return (
     <div>
@@ -141,11 +183,12 @@ function UI() {
         <div className='flex justify-around mt-10'>
           <div className='flex flex-col items-center'>
             <h1>Warrior</h1>
-            <img onClick={pickPlayer} src={warriorPortrait} alt="warriorPortrait" className='w-44 cursor-pointer'/>
+            <img onClick={pickPlayer} src={warriorPortrait} alt="warriorPortrait" className='w-44 cursor-pointer transition-all duration-300 hover:scale-105'/>
           </div>
           <div className='flex flex-col items-center'>
             <h1>Wizard</h1>
-            <img onClick={pickPlayer} src={wizardPortrait} alt="wizardPortrait" className='w-44 cursor-pointer'/>
+            <img src={wizardPortrait} alt="wizardPortrait" className='w-44 grayscale'/>
+            <h1>(coming soon)</h1>
           </div>
 
         </div>
@@ -163,13 +206,12 @@ function UI() {
               <button className='mx-5' onClick={handleDealDamage}>Deal Damage</button>
               <button onClick={handleHealEnemy}>Heal Enemy</button>
               <button className='mx-5' onClick={handleNewEnemy}>New Enemy</button>
-              <button onClick={handleNextTurn}>Next Turn</button>
-              <button className='mx-5' onClick={handleResetTurn}>Reset Turns</button>
+              <button className='' onClick={handleResetTurn}>Reset Turns</button>
             </>
           }
 
         </div>
-        <div className='battle w-full h-[20vh] flex justify-around items-end my-10'>
+        <div className='battle w-full h-fit flex justify-around items-end my-10'>
           <div id="player" className='w-40 h-full'>
             <Player />
           </div>
@@ -177,8 +219,12 @@ function UI() {
               <Enemy />
           </div>
         </div>
-        <div id='action-bar' className='w-full h-[40vh] mt-10 flex justify-center'>
+        <div id='action-bar' className='w-full h-[40vh] mt-10 flex justify-between'>
+          {/* <div>{drawPile.length}</div> */}
+          <Energy/>
           <CurrentHand/>
+          <EndTurn handleNextTurn={handleNextTurn}/>
+          {/* <div>{discardPile.length}</div> */}
         </div>
 
       </div>

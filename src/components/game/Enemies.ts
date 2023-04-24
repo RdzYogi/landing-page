@@ -45,7 +45,7 @@ export const Enemies : EnemyData =  {
     currentHealth: 20,
     maxHealth: 20,
     attack: { min: 10, max: 15},
-    defense: { min: 0, max: 0},
+    defense: { min: 6, max: 6},
     img: goblin2,
     special: [],
     tier: 1
@@ -89,14 +89,14 @@ export const Enemies : EnemyData =  {
     currentHealth: 60,
     maxHealth: 60,
     attack: { min: 15, max: 25},
-    defense: { min: 0, max: 0},
+    defense: { min: 6, max: 6},
     img: leech,
     special: ["poison2"],
     tier: 2
   },
   'demon':{
     name: "Demon",
-    currentHealth: 250,
+    currentHealth: 150,
     maxHealth: 250,
     attack: { min: 20, max: 30},
     defense: { min: 20, max: 30},
@@ -106,7 +106,7 @@ export const Enemies : EnemyData =  {
   },
   'iceSpirit':{
     name: "Ice Spirit",
-    currentHealth: 200,
+    currentHealth: 100,
     maxHealth: 200,
     attack: { min: 20, max: 30},
     defense: { min: 20, max: 30},
@@ -116,7 +116,7 @@ export const Enemies : EnemyData =  {
   },
   'waterSpirit':{
     name: "Water Spirit",
-    currentHealth: 200,
+    currentHealth: 100,
     maxHealth: 200,
     attack: { min: 20, max: 30},
     defense: { min: 20, max: 30},
