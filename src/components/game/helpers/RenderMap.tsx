@@ -5,7 +5,7 @@ import { resetMap, updateMap } from '../../redux/slices/mapSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDungeon, faSkullCrossbones, faTent } from '@fortawesome/free-solid-svg-icons';
 import {} from '@fortawesome/free-regular-svg-icons';
-import { drawCards, generateDrawPile, resetWarriorDecks, setGameState } from '../../redux/slices/playerSlice';
+import { drawCards, generateDrawPile, resetTurn, resetWarriorDecks, setGameState } from '../../redux/slices/playerSlice';
 
 
 const deviationForMapNodes = 30
@@ -116,6 +116,7 @@ function RenderMap() {
     const position = target.dataset.position
     // console.log(position)
     dispatch(updateMap(position!))
+    dispatch(resetTurn())
     dispatch(setGameState("combat"))
     dispatch(resetWarriorDecks())
     dispatch(generateDrawPile())

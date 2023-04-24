@@ -33,7 +33,7 @@ function Card({card, handlePlayCard, index, reRender}: {card: any, handlePlayCar
   return (
     <div
         onClick={handleClick}
-        data-index={index}
+        data-name={card.name.toLowerCase()}
         className={'w-48 h-72 cursor-pointer -mx-10 bg-contain bg-center relative ' + discardAnimationClass}
         style={{backgroundImage: `url(${card.img})`}}>
       <h1 className='relative top-[5%] left-[50%] w-fit pointer-events-none'

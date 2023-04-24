@@ -6,7 +6,7 @@ import enemyPicker from './helpers/enemyPicker'
 import Enemy from './Enemy'
 import Map from './Map'
 import { useDispatch, useSelector } from 'react-redux'
-import { healthChange, incrementTurn, resetPlayer, resetTurn, setGameState, setPlayerClass, updateCardsInHand } from '../redux/slices/playerSlice'
+import { drawCards, healthChange, incrementTurn, playCard, resetPlayer, resetTurn, resetWarriorDecks, setGameState, setPlayerClass, updateCardsInHand } from '../redux/slices/playerSlice'
 import { resetMap } from '../redux/slices/mapSlice'
 import { enemyHealthChange, setCurrentEnemy } from '../redux/slices/enemySlice'
 import { current } from '@reduxjs/toolkit'
@@ -21,6 +21,7 @@ function UI() {
   const enemyCurrentHealth = useSelector((state: any) => state.enemy.currentEnemy.currentHealth)
   const drawPile = useSelector((state: any) => state.player.warriorDrawPile)
   const discardPile = useSelector((state: any) => state.player.warriorDiscardPile)
+  const warriorCurrentHand = useSelector((state: any) => state.player.warriorCardsInHand)
   const dispatch = useDispatch()
 
   // const [player, setPlayer] = useState("")
@@ -70,6 +71,7 @@ function UI() {
       case "warriorPortrait":
         dispatch(setPlayerClass("warrior"))
         dispatch(setGameState("minimap"))
+        dispatch(resetWarriorDecks())
         break;
       case "wizardPortrait":
         dispatch(setPlayerClass("wizard"))
@@ -128,7 +130,11 @@ function UI() {
 
   const handleNextTurn = () => {
     // dispatch(updateCardsInHand(4))
+    warriorCurrentHand.forEach((card: any) => {
+      dispatch(playCard(card))
+    })
     dispatch(incrementTurn())
+    dispatch(drawCards())
   }
 
   const handleResetTurn = () => {

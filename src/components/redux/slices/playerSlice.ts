@@ -9,7 +9,8 @@ const readWarriorCurrentDeck = () => {
 
 const readWarriorDrawPile = () => {
   const drawPile = localStorage.getItem("warriorDrawPile")
-  return drawPile !== null ? JSON.parse(drawPile) : randomizeDrawPile(warriorStartingDeck)
+  // console.log(drawPile?.length)
+  return ((drawPile !== null) && drawPile.length !==2) ? JSON.parse(drawPile) : randomizeDrawPile(warriorStartingDeck)
 }
 const randomizeDrawPile = (drawPile: string[]) => {
   for (let i = drawPile.length - 1; i > 0; i--) {
@@ -150,7 +151,9 @@ export const playerSlice = createSlice({
       localStorage.setItem("warriorDrawPile", JSON.stringify(drawPile))
     },
     drawCards: (state) => {
-      const drawPile = state.warriorDrawPile
+      let drawPile = state.warriorDrawPile
+      const warriorCurrentDeck = state.warriorCurrentDeck
+      if (drawPile.length === 0) { drawPile = randomizeDrawPile(warriorCurrentDeck) }
       const cardsInHand = []
       const numberOfCardsInHand = state.numberOfCardsInHand
       // console.log("trigger")
@@ -179,7 +182,7 @@ export const playerSlice = createSlice({
       discardPile.push(action.payload)
       state.warriorCardsInHand = cardsInHand
       state.warriorDiscardPile = discardPile
-      localStorage.setItem("warriorCardsInHand", JSON.stringify(cardsInHand))
+      localStorage.setItem("warriorDrawPile", JSON.stringify(cardsInHand))
       localStorage.setItem("warriorDiscardPile", JSON.stringify(discardPile))
     },
     generateDrawPile: (state) => {
