@@ -44,7 +44,7 @@ function Card({card, total, index}: {card: any, total: number, index: number}) {
   return (
     <div
         onClick={handleClick}
-        className={'w-48 h-72 cursor-pointer -mx-10 bg-contain bg-center relative transition-all duration-300 ease-out transform hover:scale-125 hover:-translate-y-8 z-50 hover:rotate-0 hover:mx-12 ' + transformClass}
+        className={'w-48 h-72 cursor-pointer -mx-10 bg-contain bg-center relative transform '}
         style={{backgroundImage: `url(${card.img})`}}>
       <h1 className='relative top-[5%] left-[50%] w-fit pointer-events-none'
           style={{transform: 'translateX(-55%)'}}>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import cardPicker from './helpers/cardPicker'
 import Card from './Card';
+import calculateCardTransform from './helpers/calculateCardTransform';
 type CardType = {
   name: string;
   description: string[];
@@ -25,7 +26,7 @@ function CurrentHand() {
   // Logic for deck sliding animation
   useEffect(() => {
     if(hand){
-      const selectedCards = cardPicker(warriorDeck, cardsInHand, playerType) as CardType[]
+      const selectedCards = cardPicker(warriorDeck, 4, playerType) as CardType[]
       setHand(selectedCards)
     }
     setTransformClass("scale-0 translate-x-[90vh]")
@@ -46,7 +47,7 @@ function CurrentHand() {
   return (
     <div className={'flex transition-all duration-300 ease-out items-center self-center ' + transformClass }>
       {hand.map((card: CardType, index) => {
-        return <div key={card.name + index} className={''}><Card card={card} total={hand.length} index={index}/></div>
+        return <div key={card.name + index} className={'transition-all duration-300 ease-out hover:scale-125 hover:-translate-y-8 z-50 hover:rotate-0 hover:mx-20 '+calculateCardTransform(hand.length,index)}><Card card={card} total={hand.length} index={index}/></div>
       })
       }
     </div>
