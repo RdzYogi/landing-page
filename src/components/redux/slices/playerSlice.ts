@@ -1,9 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+const warriorStartingDeck = ["strike","strike","strike","strike","strike", "block", "block", "block", "block","block","rage","peace"]
+
 const readWarriorCurrentDeck = () => {
-  const warriorStartingDeck = ["strike","strike","strike","strike","strike", "block", "block", "block", "block","block","rage","peace"]
   const currentDeck = localStorage.getItem("warriorCurrentDeck")
   return currentDeck !== null ? JSON.parse(currentDeck) : warriorStartingDeck
+}
+
+const readWarriorDrawPile = () => {
+  const drawPile = localStorage.getItem("warriorDrawPile")
+  return drawPile !== null ? JSON.parse(drawPile) : warriorStartingDeck
+}
+
+const readWarriorDiscardPile = () => {
+  const discardPile = localStorage.getItem("warriorDiscardPile")
+  return discardPile !== null ? JSON.parse(discardPile) : []
 }
 
 const initialState = {
@@ -14,10 +25,11 @@ const initialState = {
   currentMana: Number(localStorage.getItem("currentMana")) || 3,
   block: Number(localStorage.getItem("block")) || 0,
   gameState: localStorage.getItem("gameState") || "playerSelect",
-  warriorStartingDeck: ["strike","strike","strike","strike","strike", "block", "block", "block", "block","block","rage","peace"],
   warriorCurrentDeck: readWarriorCurrentDeck(),
   // Max number of cards < 8 (7 is the max number of cards in hand)
   numberOfCardsInHand: Number(localStorage.getItem("numberOfCardsInHand")) || 5,
+  warriorDrawPile: readWarriorDrawPile(),
+  warriorDiscardPile: readWarriorDiscardPile(),
   turn: Number(localStorage.getItem("turn")) || 0,
 }
 
@@ -106,6 +118,48 @@ export const playerSlice = createSlice({
       state.numberOfCardsInHand = action.payload
       localStorage.setItem("numberOfCardsInHand", action.payload.toString())
     },
+    resetWarriorDecks: (state) => {
+      state.warriorCurrentDeck = warriorStartingDeck
+      state.warriorDrawPile = warriorStartingDeck
+      state.warriorDiscardPile = []
+      localStorage.setItem("warriorCurrentDeck", JSON.stringify(warriorStartingDeck))
+      localStorage.setItem("warriorDrawPile", JSON.stringify(warriorStartingDeck))
+      localStorage.setItem("warriorDiscardPile", JSON.stringify([]))
+    },
+    addToWarriorDeck: (state, action) => {
+      const currentDeck = state.warriorCurrentDeck
+      const drawPile = state.warriorDrawPile
+      currentDeck.push(action.payload)
+      drawPile.push(action.payload)
+      state.warriorCurrentDeck = currentDeck
+      state.warriorDrawPile = drawPile
+      localStorage.setItem("warriorCurrentDeck", JSON.stringify(currentDeck))
+      localStorage.setItem("warriorDrawPile", JSON.stringify(drawPile))
+    },
+    updatePiles: (state, action) => {
+      const drawPile = state.warriorDrawPile
+      const discardPile = state.warriorDiscardPile
+      const indexOfCard = drawPile.indexOf(action.payload)
+      drawPile.splice(indexOfCard, 1)
+      discardPile.push(action.payload)
+      state.warriorDrawPile = drawPile
+      state.warriorDiscardPile = discardPile
+      localStorage.setItem("warriorDrawPile", JSON.stringify(drawPile))
+      localStorage.setItem("warriorDiscardPile", JSON.stringify(discardPile))
+    },
+    generateDrawPile: (state) => {
+      const currentDeck = state.warriorCurrentDeck
+      const drawPile = currentDeck
+      // Shuffle the current deck
+      for (let i = drawPile.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [drawPile[i], drawPile[j]] = [drawPile[j], drawPile[i]];
+      }
+      state.warriorDrawPile = drawPile
+      localStorage.setItem("warriorDrawPile", JSON.stringify(drawPile))
+      state.warriorDiscardPile = []
+      localStorage.setItem("warriorDiscardPile", JSON.stringify([]))
+    },
   },
 })
 
@@ -116,6 +170,10 @@ export const {setPlayerClass,
               incrementTurn,
               resetTurn,
               updateCardsInHand,
+              resetWarriorDecks,
+              addToWarriorDeck,
+              updatePiles,
+              generateDrawPile
             } = playerSlice.actions
 
 export default playerSlice.reducer
