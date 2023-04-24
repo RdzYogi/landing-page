@@ -10,7 +10,7 @@ function Energy() {
     setValueToDisplay(`${currentMana}/${maxMana}`)
   }, [currentMana, maxMana])
   return (
-    <div className='relative h-fit'>
+    <div className='relative h-fit self-end'>
       <img src={warriorEnergy} alt="warrior energy" className='w-24 '/>
       <p className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/3 text-2xl'>{valueToDisplay}</p>
     </div>

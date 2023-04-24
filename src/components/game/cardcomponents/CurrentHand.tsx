@@ -67,7 +67,7 @@ function CurrentHand() {
    }
 
   return (
-    <div className={'flex transition-all duration-300 ease-out items-center self-center ' + transformClass }>
+    <div className={'flex transition-all duration-300 ease-out self-center ' + transformClass }>
       {cardsToRender}
     </div>
   )
