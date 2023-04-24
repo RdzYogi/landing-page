@@ -120,6 +120,15 @@ export const playerSlice = createSlice({
         localStorage.setItem("currentHealth", state.currentHealth += action.payload)
       }
     },
+    updatePlayerBlock: (state, action) => {
+      const block = state.block + action.payload
+      state.block = block
+      localStorage.setItem("block", block.toString())
+    },
+    resetPlayerBlock: (state) => {
+      state.block = 0
+      localStorage.setItem("block", "0")
+    },
     incrementTurn: (state) => {
       state.turn += 1
       localStorage.setItem("turn", (state.turn + 1).toString())
@@ -208,6 +217,8 @@ export const {setPlayerClass,
               setGameState,
               resetPlayer,
               healthChange,
+              updatePlayerBlock,
+              resetPlayerBlock,
               incrementTurn,
               resetTurn,
               updateMana,

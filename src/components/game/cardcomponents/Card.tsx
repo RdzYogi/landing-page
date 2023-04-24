@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { enemyHealthChange } from '../../redux/slices/enemySlice';
-import { updateMana } from '../../redux/slices/playerSlice';
+import { updateMana, updatePlayerBlock } from '../../redux/slices/playerSlice';
 
 type CardType = {
   name: string;
@@ -43,6 +43,12 @@ function Card({card, handlePlayCard, index, reRender}: {card: CardType, handlePl
         dispatch(enemyHealthChange(-card.numberValues[0]))
         dispatch(updateMana(-card.cost))
         break;
+
+      case "Skill":
+        dispatch(updatePlayerBlock(card.numberValues[0]))
+        dispatch(updateMana(-card.cost))
+        break;
+
 
       default:
         break;

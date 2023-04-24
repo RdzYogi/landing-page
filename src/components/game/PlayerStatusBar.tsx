@@ -7,8 +7,8 @@ function PlayerStatusBar() {
   return (
     <div className='flex'>
       <div className='relative'>
-        <img src={blockImg} alt="block" className='w-6 mb-1'/>
-        <p className='text-xs absolute top-[20%] left-[35%] w-fit'>{playerBlock}</p>
+        <img src={blockImg} alt="block" className='w-8'/>
+        <p className='text-xs absolute inset-0 flex items-center justify-center'>{playerBlock}</p>
       </div>
     </div>
   )
