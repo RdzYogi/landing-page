@@ -111,13 +111,29 @@ export const playerSlice = createSlice({
         state.currentHealth = state.maxHealth
         localStorage.setItem("currentHealth", state.maxHealth.toString())
         return
-      } else if (state.currentHealth + action.payload < 0) {
-        state.currentHealth = 0
-        localStorage.setItem("currentHealth", "0")
-        return
+      } else if(state.block === 0){
+        if (state.currentHealth + action.payload < 0) {
+          state.currentHealth = 0
+          localStorage.setItem("currentHealth", "0")
+          return
+        } else {
+          state.currentHealth += action.payload
+          localStorage.setItem("currentHealth", state.currentHealth += action.payload)
+        }
       } else {
-        state.currentHealth += action.payload
-        localStorage.setItem("currentHealth", state.currentHealth += action.payload)
+        if (state.block + action.payload < 0) {
+          const damage = action.payload + state.block
+          state.block = 0
+          localStorage.setItem("block", "0")
+          const newHealth = state.currentHealth + damage
+          state.currentHealth = newHealth
+          localStorage.setItem("currentHealth", (newHealth).toString())
+          return
+        } else {
+          const newBlock = state.block + action.payload
+          state.block = newBlock
+          localStorage.setItem("block", newBlock.toString())
+        }
       }
     },
     updatePlayerBlock: (state, action) => {

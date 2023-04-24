@@ -8,7 +8,7 @@ import Map from './Map'
 import { useDispatch, useSelector } from 'react-redux'
 import { drawCards, generateDrawPile, healthChange, incrementTurn, playCard, resetMana, resetPlayer, resetPlayerBlock, resetTurn, resetWarriorDecks, setGameState, setPlayerClass, updateCardsInHand } from '../redux/slices/playerSlice'
 import { resetMap } from '../redux/slices/mapSlice'
-import { enemyHealthChange, setCurrentEnemy, setNextEnemyAction } from '../redux/slices/enemySlice'
+import { enemyHealthChange, resetEnemyBlock, setCurrentEnemy, setEnemyBlock, setNextEnemyAction } from '../redux/slices/enemySlice'
 import CurrentHand from './cardcomponents/CurrentHand'
 import Energy from './Energy'
 import EndTurn from './EndTurn'
@@ -23,6 +23,9 @@ function UI() {
   const drawPile = useSelector((state: any) => state.player.warriorDrawPile)
   const discardPile = useSelector((state: any) => state.player.warriorDiscardPile)
   const warriorCurrentHand = useSelector((state: any) => state.player.warriorCardsInHand)
+  const enemyNextAction = useSelector((state: any) => state.enemy.nextEnemyAction)
+  const enemyDamage = useSelector((state: any) => state.enemy.currentEnemy.attack.min)
+  const enemyBlock = useSelector((state: any) => state.enemy.currentEnemy.defense.min)
   const dispatch = useDispatch()
 
   // const [player, setPlayer] = useState("")
@@ -64,6 +67,13 @@ function UI() {
     dispatch(setGameState("playerSelect"))
     dispatch(resetMap())
     dispatch(resetPlayer())
+    const newEnemy = enemyPicker(playerPosition)
+    dispatch(setCurrentEnemy(newEnemy))
+    dispatch(resetEnemyBlock())
+    dispatch(resetTurn())
+    dispatch(resetMana())
+    dispatch(resetPlayerBlock())
+    dispatch(setNextEnemyAction())
   }
 
   const pickPlayer = (e:any) => {
@@ -73,6 +83,7 @@ function UI() {
         dispatch(setPlayerClass("warrior"))
         dispatch(setGameState("minimap"))
         dispatch(resetWarriorDecks())
+
         break;
       case "wizardPortrait":
         dispatch(setPlayerClass("wizard"))
@@ -134,7 +145,20 @@ function UI() {
   }
 
   const handleNextTurn = () => {
-    // dispatch(updateCardsInHand(4))
+    switch (enemyNextAction) {
+      case "attack":
+        dispatch(healthChange(-enemyDamage))
+        dispatch(resetEnemyBlock())
+        break;
+      case "defend":
+        dispatch(setEnemyBlock(enemyBlock))
+        break;
+
+      default:
+        dispatch(resetEnemyBlock())
+        break;
+    }
+
     warriorCurrentHand.forEach((card: any) => {
       dispatch(playCard(card))
     })
@@ -146,7 +170,6 @@ function UI() {
   }
 
   const handleResetTurn = () => {
-    // dispatch(updateCardsInHand(4))
     dispatch(resetTurn())
     dispatch(resetMana())
     dispatch(resetPlayerBlock())

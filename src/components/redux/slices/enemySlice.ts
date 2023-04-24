@@ -24,6 +24,8 @@ export const enemySlice = createSlice({
     setCurrentEnemy: (state, action) => {
       state.currentEnemy = action.payload
       localStorage.setItem("currentEnemy", JSON.stringify(action.payload))
+      state.enemyBlock = 0
+      localStorage.setItem("enemyBlock", "0")
     },
     setNextEnemyAction: (state) => {
       const enemyAction = calculateNextEnemyAction(state.currentEnemy.special)
@@ -34,6 +36,10 @@ export const enemySlice = createSlice({
       state.enemyBlock = action.payload
       localStorage.setItem("enemyBlock", JSON.stringify(action.payload))
     },
+    resetEnemyBlock: (state) => {
+      state.enemyBlock = 0
+      localStorage.setItem("enemyBlock", "0")
+    },
     enemyHealthChange: (state, action) => {
       const enemy = state.currentEnemy
       // console.log(enemy.currentHealth += action.payload)
@@ -42,20 +48,47 @@ export const enemySlice = createSlice({
         state.currentEnemy = enemy
         localStorage.setItem("currentEnemy", JSON.stringify(enemy))
         return
-      } else if (enemy.currentHealth + action.payload < 0) {
-        enemy.currentHealth = 0
-        state.currentEnemy = enemy
-        localStorage.setItem("currentEnemy", JSON.stringify(enemy))
-        return
+      } else if (state.enemyBlock === 0) {
+        if (enemy.currentHealth + action.payload < 0) {
+          enemy.currentHealth = 0
+          state.currentEnemy = enemy
+          localStorage.setItem("currentEnemy", JSON.stringify(enemy))
+          return
+        } else {
+          enemy.currentHealth += action.payload
+          state.currentEnemy = enemy
+          localStorage.setItem("currentEnemy", JSON.stringify(enemy))
+        }
       } else {
-        enemy.currentHealth += action.payload
-        state.currentEnemy = enemy
-        localStorage.setItem("currentEnemy", JSON.stringify(enemy))
+        if (action.payload + state.enemyBlock > 0){
+          const newBlock = state.enemyBlock + action.payload
+          state.enemyBlock = newBlock
+          localStorage.setItem("enemyBlock", JSON.stringify(newBlock))
+        } else {
+          const damage = action.payload + state.enemyBlock
+          state.enemyBlock = 0
+          localStorage.setItem("enemyBlock", "0")
+          if (enemy.currentHealth + damage < 0) {
+            enemy.currentHealth = 0
+            state.currentEnemy = enemy
+            localStorage.setItem("currentEnemy", JSON.stringify(enemy))
+            return
+          } else {
+            const newHealth = enemy.currentHealth + damage
+            enemy.currentHealth = newHealth
+            state.currentEnemy = enemy
+            localStorage.setItem("currentEnemy", JSON.stringify(enemy))
+          }
+        }
       }
     },
   },
 })
 
-export const { setCurrentEnemy, setNextEnemyAction, setEnemyBlock, enemyHealthChange } = enemySlice.actions
+export const { setCurrentEnemy,
+  setNextEnemyAction,
+  setEnemyBlock,
+  resetEnemyBlock,
+  enemyHealthChange } = enemySlice.actions
 
 export default enemySlice.reducer
