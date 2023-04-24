@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import cardPicker from './helpers/cardPicker'
 import Card from './Card';
 import calculateCardTransform from './helpers/calculateCardTransform';
+import { drawCards } from '../../redux/slices/playerSlice';
+import { warriorCards } from './helpers/warriorCards';
 type CardType = {
   name: string;
   description: string[];
@@ -13,10 +15,12 @@ type CardType = {
 }
 
 function CurrentHand() {
+  const dispatch = useDispatch()
   const playerType = useSelector((state: any) => state.player.playerClass)
-  const warriorDeck = useSelector((state: any) => state.player.warriorCurrentDeck)
-  const cardsInHand = useSelector((state: any) => state.player.numberOfCardsInHand)
+  // const warriorDeck = useSelector((state: any) => state.player.warriorCurrentDeck)
+  // const cardsInHand = useSelector((state: any) => state.player.numberOfCardsInHand)
   const turn = useSelector((state: any) => state.player.turn)
+  const currentHand = useSelector((state: any) => state.player.warriorCardsInHand)
   // console.log(warriorDeck, cardsInHand, playerType)
   const [hand, setHand] = useState([] as CardType[])
   const [cardsToRender, setCardsToRender] = useState([] as JSX.Element[])
@@ -28,10 +32,14 @@ function CurrentHand() {
   // Logic for deck sliding animation
   useEffect(() => {
     setTransformClass("scale-0 translate-x-[50vw]")
+    console.log("first update")
     setTimeout(() => {
       if(hand){
-        const selectedCards = cardPicker(warriorDeck, cardsInHand, playerType) as CardType[]
-        setHand(selectedCards)
+        // dispatch(drawCards())
+        setHand([])
+        currentHand.forEach((card: keyof typeof warriorCards) => {
+          setHand(prev=>[...prev, warriorCards[card]])
+        })
       }
     }, 300);
     setTimeout(() => {
@@ -41,22 +49,22 @@ function CurrentHand() {
       setTransformClass("")
     }, 900);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [turn])
+  }, [turn,currentHand])
 
   useEffect(() => {
-    // console.log("trigger ")
-    setCardsToRender(hand.map((card: CardType, index) => {
-      return <div key={card.name + index} data-index={index} className={'transition-all duration-300 ease-out hover:scale-125 hover:-translate-y-8 z-50 hover:rotate-0 hover:mx-20 '+ calculateCardTransform(hand.length,index)}><Card card={card} handlePlayCard={handlePlayCard} index={index} reRender={reRender}/></div>
-    }))
-    setReRender(!reRender)
-  }, [hand])
+    // setTimeout(() => {
+      // console.log(hand)
+      // console.log("object",currentHand)
+      setCardsToRender(hand.map((card: CardType, index) => {
+        return <div key={card.name + index} data-index={index} className={'transition-all duration-300 ease-out hover:scale-125 hover:-translate-y-8 z-50 hover:rotate-0 hover:mx-20 '+ calculateCardTransform(hand.length,index)}><Card card={card} handlePlayCard={handlePlayCard} index={index} reRender={reRender}/></div>
+      }))
+      setReRender(!reRender)
+    // }, 300);
+  }, [hand,currentHand])
 
   const handlePlayCard = (e:any, index:number) => {
-    // console.log(e.target)
-    // if(Number(e.target.dataset.index) === index) e.target.style.scale = 0
 
     setTimeout(() => {
-      // e.target.style.scale=1
       console.log(hand.filter((card, i) => (i !== index)))
       const newHand = hand.filter((card, i) => (i !== index))
       console.log(hand,newHand,index)

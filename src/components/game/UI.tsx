@@ -19,6 +19,8 @@ function UI() {
   const gameState = useSelector((state: any) => state.player.gameState)
   const playerCurrentHealth = useSelector((state: any) => state.player.currentHealth)
   const enemyCurrentHealth = useSelector((state: any) => state.enemy.currentEnemy.currentHealth)
+  const drawPile = useSelector((state: any) => state.player.warriorDrawPile)
+  const discardPile = useSelector((state: any) => state.player.warriorDiscardPile)
   const dispatch = useDispatch()
 
   // const [player, setPlayer] = useState("")
@@ -177,8 +179,10 @@ function UI() {
               <Enemy />
           </div>
         </div>
-        <div id='action-bar' className='w-full h-[40vh] mt-10 flex justify-center'>
+        <div id='action-bar' className='w-full h-[40vh] mt-10 flex justify-between'>
+          <div>{drawPile.length}</div>
           <CurrentHand/>
+          <div>{discardPile.length}</div>
         </div>
 
       </div>

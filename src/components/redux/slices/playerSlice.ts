@@ -9,12 +9,24 @@ const readWarriorCurrentDeck = () => {
 
 const readWarriorDrawPile = () => {
   const drawPile = localStorage.getItem("warriorDrawPile")
-  return drawPile !== null ? JSON.parse(drawPile) : warriorStartingDeck
+  return drawPile !== null ? JSON.parse(drawPile) : randomizeDrawPile(warriorStartingDeck)
+}
+const randomizeDrawPile = (drawPile: string[]) => {
+  for (let i = drawPile.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [drawPile[i], drawPile[j]] = [drawPile[j], drawPile[i]];
+  }
+  return drawPile
 }
 
 const readWarriorDiscardPile = () => {
   const discardPile = localStorage.getItem("warriorDiscardPile")
   return discardPile !== null ? JSON.parse(discardPile) : []
+}
+
+const readWarriorCardsInHand = () => {
+  const cardsInHand = localStorage.getItem("warriorCardsInHand")
+  return cardsInHand !== null ? JSON.parse(cardsInHand) : []
 }
 
 const initialState = {
@@ -28,6 +40,7 @@ const initialState = {
   warriorCurrentDeck: readWarriorCurrentDeck(),
   // Max number of cards < 8 (7 is the max number of cards in hand)
   numberOfCardsInHand: Number(localStorage.getItem("numberOfCardsInHand")) || 5,
+  warriorCardsInHand: readWarriorCardsInHand(),
   warriorDrawPile: readWarriorDrawPile(),
   warriorDiscardPile: readWarriorDiscardPile(),
   turn: Number(localStorage.getItem("turn")) || 0,
@@ -136,25 +149,42 @@ export const playerSlice = createSlice({
       localStorage.setItem("warriorCurrentDeck", JSON.stringify(currentDeck))
       localStorage.setItem("warriorDrawPile", JSON.stringify(drawPile))
     },
-    updatePiles: (state, action) => {
+    drawCards: (state) => {
       const drawPile = state.warriorDrawPile
-      const discardPile = state.warriorDiscardPile
-      const indexOfCard = drawPile.indexOf(action.payload)
-      drawPile.splice(indexOfCard, 1)
-      discardPile.push(action.payload)
+      const cardsInHand = []
+      const numberOfCardsInHand = state.numberOfCardsInHand
+      // console.log("trigger")
+      const cardsToDraw = numberOfCardsInHand
+      for (let i = 0; i < cardsToDraw; i++) {
+        if (drawPile.length === 0) {
+          drawPile.push(...randomizeDrawPile(state.warriorDiscardPile))
+          state.warriorDiscardPile = []
+          localStorage.setItem("warriorDiscardPile", JSON.stringify([]))
+        }
+        const card = drawPile.pop()
+        cardsInHand.push(card)
+        // console.log(card)
+      }
       state.warriorDrawPile = drawPile
-      state.warriorDiscardPile = discardPile
+      state.warriorCardsInHand = cardsInHand
+      // console.log(cardsInHand)
       localStorage.setItem("warriorDrawPile", JSON.stringify(drawPile))
+      localStorage.setItem("warriorCardsInHand", JSON.stringify(cardsInHand))
+    },
+    playCard: (state, action) => {
+      const cardsInHand = state.warriorCardsInHand
+      const cardIndex = cardsInHand.indexOf(action.payload)
+      const discardPile = state.warriorDiscardPile
+      cardsInHand.splice(cardIndex, 1)
+      discardPile.push(action.payload)
+      state.warriorCardsInHand = cardsInHand
+      state.warriorDiscardPile = discardPile
+      localStorage.setItem("warriorCardsInHand", JSON.stringify(cardsInHand))
       localStorage.setItem("warriorDiscardPile", JSON.stringify(discardPile))
     },
     generateDrawPile: (state) => {
       const currentDeck = state.warriorCurrentDeck
-      const drawPile = currentDeck
-      // Shuffle the current deck
-      for (let i = drawPile.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [drawPile[i], drawPile[j]] = [drawPile[j], drawPile[i]];
-      }
+      const drawPile = randomizeDrawPile(currentDeck)
       state.warriorDrawPile = drawPile
       localStorage.setItem("warriorDrawPile", JSON.stringify(drawPile))
       state.warriorDiscardPile = []
@@ -172,7 +202,8 @@ export const {setPlayerClass,
               updateCardsInHand,
               resetWarriorDecks,
               addToWarriorDeck,
-              updatePiles,
+              drawCards,
+              playCard,
               generateDrawPile
             } = playerSlice.actions
 
