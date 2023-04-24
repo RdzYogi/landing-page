@@ -3,7 +3,7 @@ import UI from '../game/UI'
 
 
 function Game() {
-  const visible = false
+  const visible = true
   const [Ui , setUi] = React.useState(<div></div>)
   useEffect(() => {
     if(Ui){

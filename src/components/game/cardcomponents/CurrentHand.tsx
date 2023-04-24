@@ -19,17 +19,22 @@ function CurrentHand() {
   // console.log(warriorDeck, cardsInHand, playerType)
   const [hand, setHand] = useState([] as CardType[])
   const [transformClass, setTransformClass] = useState("")
-  const [individualTransformClass, setIndividualTransformClass] = useState("")
+  // const [individualTransformClass, setIndividualTransformClass] = useState("")
 
+
+  // Logic for deck sliding animation
   useEffect(() => {
     if(hand){
       const selectedCards = cardPicker(warriorDeck, cardsInHand, playerType) as CardType[]
       setHand(selectedCards)
     }
-    setTransformClass("scale-0 -translate-x-[100vh]")
+    setTransformClass("scale-0 translate-x-[90vh]")
+    setTimeout(() => {
+      setTransformClass("scale-0 -translate-x-[100vh]")
+    }, 300);
     setTimeout(() => {
       setTransformClass("")
-    }, 300);
+    }, 600);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [turn])
 
