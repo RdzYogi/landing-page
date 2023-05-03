@@ -1,4 +1,3 @@
-import calculatePaths from "./calculatePaths";
 import drawPathFromTo from "./drawPathFromTo";
 
 // const chanceForSecondPath = 0.6
