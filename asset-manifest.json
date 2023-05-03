@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.d01e47bb.css",
-    "main.js": "/static/js/main.499f99bd.js",
+    "main.js": "/static/js/main.27551167.js",
     "static/media/tvTalkMain.png": "/static/media/tvTalkMain.4510fd817873eadd21f8.png",
     "static/media/pimpMain.png": "/static/media/pimpMain.31f51770c5067520a525.png",
     "static/media/filmotecaHero.png": "/static/media/filmotecaHero.a30aaf8af39ed76cd777.png",
@@ -32,10 +32,10 @@
     "static/media/tvTalk.jpg": "/static/media/tvTalk.10f8eaa5f54f06c8b27b.jpg",
     "index.html": "/index.html",
     "main.d01e47bb.css.map": "/static/css/main.d01e47bb.css.map",
-    "main.499f99bd.js.map": "/static/js/main.499f99bd.js.map"
+    "main.27551167.js.map": "/static/js/main.27551167.js.map"
   },
   "entrypoints": [
     "static/css/main.d01e47bb.css",
-    "static/js/main.499f99bd.js"
+    "static/js/main.27551167.js"
   ]
 }
