@@ -222,7 +222,7 @@ function UI() {
           }
 
         </div>
-        <div className='battle w-full h-fit flex justify-around items-top my-10'>
+        <div className='battle w-full h-[25vh] flex justify-around items-top my-10'>
           <div id="player" className='w-40 h-full'>
             <Player />
           </div>
