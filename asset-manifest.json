@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.d01e47bb.css",
-    "main.js": "/static/js/main.27551167.js",
+    "main.css": "/static/css/main.5d970e7d.css",
+    "main.js": "/static/js/main.25328e45.js",
     "static/media/tvTalkMain.png": "/static/media/tvTalkMain.4510fd817873eadd21f8.png",
     "static/media/pimpMain.png": "/static/media/pimpMain.31f51770c5067520a525.png",
     "static/media/filmotecaHero.png": "/static/media/filmotecaHero.a30aaf8af39ed76cd777.png",
@@ -17,6 +17,8 @@
     "static/media/wolf1.png": "/static/media/wolf1.f537ce2d7cc2ea193d0d.png",
     "static/media/orc1.png": "/static/media/orc1.2e9dd5b6de036edb5524.png",
     "static/media/waterSpirit.png": "/static/media/waterSpirit.750f95e2649c50c0c62d.png",
+    "static/media/PeaceThumb.png": "/static/media/PeaceThumb.82499965dfc53188bcc0.png",
+    "static/media/RageThumb.png": "/static/media/RageThumb.18517645cf0611957d06.png",
     "static/media/goblin2.png": "/static/media/goblin2.9ffbb4d46dc9711b47b7.png",
     "static/media/undead.png": "/static/media/undead.7c98136261741e50c9f7.png",
     "static/media/goblin1.png": "/static/media/goblin1.23ce0ee056b49b12231d.png",
@@ -31,11 +33,11 @@
     "static/media/EnemyIntentSpecial.png": "/static/media/EnemyIntentSpecial.4da8ad7f1661289155fa.png",
     "static/media/tvTalk.jpg": "/static/media/tvTalk.10f8eaa5f54f06c8b27b.jpg",
     "index.html": "/index.html",
-    "main.d01e47bb.css.map": "/static/css/main.d01e47bb.css.map",
-    "main.27551167.js.map": "/static/js/main.27551167.js.map"
+    "main.5d970e7d.css.map": "/static/css/main.5d970e7d.css.map",
+    "main.25328e45.js.map": "/static/js/main.25328e45.js.map"
   },
   "entrypoints": [
-    "static/css/main.d01e47bb.css",
-    "static/js/main.27551167.js"
+    "static/css/main.5d970e7d.css",
+    "static/js/main.25328e45.js"
   ]
 }
