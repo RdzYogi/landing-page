@@ -30,6 +30,10 @@ const readWarriorCardsInHand = () => {
   return cardsInHand !== null ? JSON.parse(cardsInHand) : []
 }
 
+const readWarriorStance = () => {
+  const warriorStance = localStorage.getItem("warriorStance")
+  return warriorStance !== null ? JSON.parse(warriorStance) : "none"
+}
 const initialState = {
   playerClass: localStorage.getItem("playerClass") || "",
   maxHealth: Number(localStorage.getItem("maxHealth")) || 0,
@@ -45,6 +49,7 @@ const initialState = {
   warriorDrawPile: readWarriorDrawPile(),
   warriorDiscardPile: readWarriorDiscardPile(),
   turn: Number(localStorage.getItem("turn")) || 0,
+  warriorStance: readWarriorStance(),
 }
 
 export const playerSlice = createSlice({
