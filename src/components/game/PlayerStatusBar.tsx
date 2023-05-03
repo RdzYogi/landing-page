@@ -31,8 +31,8 @@ function PlayerStatusBar() {
         <img src={blockImg} alt="block" className='w-8'/>
         <p className='text-xs absolute inset-0 flex items-center justify-center'>{playerBlock}</p>
       </div>
-      <div className='relative'>
-        <img src={stanceImg} alt="stance" className={`w-8 ${stanceVisible ? "" : "hidden"}`}/>
+      <div className='flex items-center justify-center'>
+        <img src={stanceImg} alt="stance" className={`w-6 ${stanceVisible ? "" : "hidden"}`}/>
       </div>
     </div>
   )
