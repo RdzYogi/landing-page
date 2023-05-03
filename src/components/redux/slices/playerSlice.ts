@@ -27,12 +27,21 @@ const readWarriorDiscardPile = () => {
 
 const readWarriorCardsInHand = () => {
   const cardsInHand = localStorage.getItem("warriorCardsInHand")
-  return cardsInHand !== null ? JSON.parse(cardsInHand) : []
+  const result = [] as string[]
+  if (cardsInHand !== null) {
+    const parsedCardsInHand = JSON.parse(cardsInHand)
+    parsedCardsInHand.forEach((card: string) => {
+      if (card !== null) {
+        result.push(card)
+      }
+    })
+  }
+  return result
 }
 
 const readWarriorStance = () => {
   const warriorStance = localStorage.getItem("warriorStance")
-  return warriorStance !== null ? JSON.parse(warriorStance) : "none"
+  return warriorStance !== null ? warriorStance : "none"
 }
 const initialState = {
   playerClass: localStorage.getItem("playerClass") || "",

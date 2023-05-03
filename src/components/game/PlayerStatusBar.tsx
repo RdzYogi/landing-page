@@ -27,12 +27,12 @@ function PlayerStatusBar() {
   }, [warriorStance])
   return (
     <div className='flex'>
-      <div className='relative'>
+      <div className={'relative ' + (Number(playerBlock) === 0 ? "hidden": "")}>
         <img src={blockImg} alt="block" className='w-8'/>
         <p className='text-xs absolute inset-0 flex items-center justify-center'>{playerBlock}</p>
       </div>
-      <div className='flex items-center justify-center'>
-        <img src={stanceImg} alt="stance" className={`w-6 ${stanceVisible ? "" : "hidden"}`}/>
+      <div className={'flex items-center justify-center ' + (stanceVisible ? "" : "hidden")}>
+        <img src={stanceImg} alt="stance" className={`w-6`}/>
       </div>
     </div>
   )

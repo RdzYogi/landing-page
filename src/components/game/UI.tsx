@@ -222,12 +222,12 @@ function UI() {
           }
 
         </div>
-        <div className='battle w-full h-fit flex justify-around items-end my-10'>
+        <div className='battle w-full h-fit flex justify-around items-top my-10'>
           <div id="player" className='w-40 h-full'>
             <Player />
           </div>
           <div id="enemy" className='w-40 h-full'>
-              <Enemy />
+            <Enemy />
           </div>
         </div>
         <div id='action-bar' className='w-full h-[40vh] mt-10 flex justify-between'>
