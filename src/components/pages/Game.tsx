@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import UI from '../game/UI'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCodeStatus } from '../redux/slices/devSlice'
 
 const code = "AlphaTest1884"
 
@@ -7,6 +9,8 @@ function Game() {
   const [visible , setVisible] = useState(false)
   const [Ui , setUi] = useState(<div></div>)
   const [buttonState, setButtonState] = useState(false)
+  const dispatch = useDispatch()
+  const codeStatus = useSelector((state: any) => state.dev.codeStatus)
 
   useEffect(() => {
     if(Ui){
@@ -15,6 +19,12 @@ function Game() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  useEffect(() => {
+    if(codeStatus === "passed"){
+      setVisible(true)
+    }
+  }, [codeStatus])
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if(e.target.value === code){
       setButtonState(true)
@@ -24,6 +34,7 @@ function Game() {
   }
   const handleClick = () => {
     setVisible(true)
+    dispatch(setCodeStatus("passed"))
   }
   return (
       <div className='text-white z-20 w-full md:w-[90%] m-auto flex flex-col items-center h-fit medieval'>
