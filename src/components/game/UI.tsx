@@ -176,7 +176,7 @@ function UI() {
     dispatch(resetPlayerBlock())
   }
   return (
-    <div>
+    <div className='w-full'>
       <button onClick={newGame}>Abandon Run</button>
       <div id="menu" className='hidden h-[60vh] w-full '>
         <h1 className='text-center pt-10'>Pick Your Class</h1>
@@ -197,7 +197,7 @@ function UI() {
         <Map />
       </div>
       <div id="mainGame" className='hidden'>
-        <div id="info-bar" className='w-full h-10  '>
+        <div id="info-bar" className='w-full h-10'>
           {DEV_MODE &&
             <>
               <button onClick={handleWinBattle}>Win Battle</button>
