@@ -54,6 +54,7 @@ function Card({card, handlePlayCard, index, reRender}: {card: CardType, handlePl
         setStanceValue(1)
         break;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[stance])
   const currentMana = useSelector((state: any) => state.player.currentMana)
   const dispatch = useDispatch()
