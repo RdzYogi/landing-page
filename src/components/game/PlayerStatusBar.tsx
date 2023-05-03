@@ -4,6 +4,7 @@ import blockImg from '../../assets/game/buffs/BlockThumb.png'
 
 function PlayerStatusBar() {
   const playerBlock = useSelector((state: any) => state.player.block)
+  const warriorStance = useSelector((state: any) => state.player.warriorStance)
   return (
     <div className='flex'>
       <div className='relative'>

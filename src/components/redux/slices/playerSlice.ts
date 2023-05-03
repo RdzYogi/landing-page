@@ -71,6 +71,7 @@ export const playerSlice = createSlice({
           localStorage.setItem("maxMana", "3")
           localStorage.setItem("currentMana", "3")
           localStorage.setItem("block", "0")
+          localStorage.setItem("warriorStance", "none")
           break;
 
         case "wizard":
@@ -231,6 +232,24 @@ export const playerSlice = createSlice({
       state.warriorDiscardPile = []
       localStorage.setItem("warriorDiscardPile", JSON.stringify([]))
     },
+    setWarriorStance: (state, action) => {
+      switch (action.payload) {
+        case "peace":
+          state.warriorStance = "peace"
+          localStorage.setItem("warriorStance", "peace")
+          break;
+
+        case "rage":
+          state.warriorStance = "rage"
+          localStorage.setItem("warriorStance", "rage")
+          break;
+
+        default:
+          state.warriorStance = "none"
+          localStorage.setItem("warriorStance", "none")
+          break;
+      }
+    },
   },
 })
 
@@ -249,7 +268,8 @@ export const {setPlayerClass,
               addToWarriorDeck,
               drawCards,
               playCard,
-              generateDrawPile
+              generateDrawPile,
+              setWarriorStance,
             } = playerSlice.actions
 
 export default playerSlice.reducer

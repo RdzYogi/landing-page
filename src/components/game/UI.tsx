@@ -6,7 +6,7 @@ import enemyPicker from './helpers/enemyPicker'
 import Enemy from './Enemy'
 import Map from './Map'
 import { useDispatch, useSelector } from 'react-redux'
-import { drawCards, generateDrawPile, healthChange, incrementTurn, playCard, resetMana, resetPlayer, resetPlayerBlock, resetTurn, resetWarriorDecks, setGameState, setPlayerClass } from '../redux/slices/playerSlice'
+import { drawCards, generateDrawPile, healthChange, incrementTurn, playCard, resetMana, resetPlayer, resetPlayerBlock, resetTurn, resetWarriorDecks, setGameState, setPlayerClass, setWarriorStance } from '../redux/slices/playerSlice'
 import { resetMap } from '../redux/slices/mapSlice'
 import { enemyHealthChange, resetEnemyBlock, setCurrentEnemy, setEnemyBlock, setNextEnemyAction } from '../redux/slices/enemySlice'
 import CurrentHand from './cardcomponents/CurrentHand'
@@ -74,6 +74,7 @@ function UI() {
     dispatch(resetMana())
     dispatch(resetPlayerBlock())
     dispatch(setNextEnemyAction())
+    dispatch(setWarriorStance("none"))
   }
 
   const pickPlayer = (e:any) => {
@@ -129,6 +130,7 @@ function UI() {
     })
     dispatch(generateDrawPile())
     dispatch(drawCards())
+    dispatch(setWarriorStance("none"))
   }
 
   const handleTakeDamage = () => {
