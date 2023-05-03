@@ -1,23 +1,41 @@
 {
   "files": {
-    "main.css": "/static/css/main.dbfea2df.css",
-    "main.js": "/static/js/main.548f6531.js",
-    "static/js/787.6606bfd5.chunk.js": "/static/js/787.6606bfd5.chunk.js",
+    "main.css": "/static/css/main.d01e47bb.css",
+    "main.js": "/static/js/main.499f99bd.js",
     "static/media/tvTalkMain.png": "/static/media/tvTalkMain.4510fd817873eadd21f8.png",
     "static/media/pimpMain.png": "/static/media/pimpMain.31f51770c5067520a525.png",
     "static/media/filmotecaHero.png": "/static/media/filmotecaHero.a30aaf8af39ed76cd777.png",
     "static/media/background.png": "/static/media/background.cb90052dd991fb8fa15d.png",
+    "static/media/warriorRageNoText.png": "/static/media/warriorRageNoText.ca64a5fc0da14577c5d1.png",
+    "static/media/warriorBlockNoText.png": "/static/media/warriorBlockNoText.f3f4d7dceb6d33cd3e43.png",
+    "static/media/warriorPeaceNoText.png": "/static/media/warriorPeaceNoText.0dc5d519fd6aef17cc4c.png",
+    "static/media/warriorStrikeNoText.png": "/static/media/warriorStrikeNoText.839366bdfa137822e04f.png",
+    "static/media/demon1.png": "/static/media/demon1.82a12cb2631b2ac583b8.png",
+    "static/media/portrait.png": "/static/media/portrait.88d7fa47a967e54f4652.png",
+    "static/media/dragon.png": "/static/media/dragon.241692c77f4193c6149f.png",
+    "static/media/iceSpirit.png": "/static/media/iceSpirit.a5bed7da2d909f13b519.png",
+    "static/media/wolf1.png": "/static/media/wolf1.f537ce2d7cc2ea193d0d.png",
+    "static/media/orc1.png": "/static/media/orc1.2e9dd5b6de036edb5524.png",
+    "static/media/waterSpirit.png": "/static/media/waterSpirit.750f95e2649c50c0c62d.png",
+    "static/media/goblin2.png": "/static/media/goblin2.9ffbb4d46dc9711b47b7.png",
+    "static/media/undead.png": "/static/media/undead.7c98136261741e50c9f7.png",
+    "static/media/goblin1.png": "/static/media/goblin1.23ce0ee056b49b12231d.png",
+    "static/media/leech.png": "/static/media/leech.6b7aa5082713a3c0f23d.png",
     "static/media/Profile.png": "/static/media/Profile.474705fbe3a319bd0dd4.png",
+    "static/media/BlockThumb.png": "/static/media/BlockThumb.ecf16f36ebd1b65d0ca8.png",
+    "static/media/WarriorEnergy.png": "/static/media/WarriorEnergy.3ffa5e613c53e06cca25.png",
     "static/media/pimp.jpg": "/static/media/pimp.9dc1fcfed187118ee5c0.jpg",
+    "static/media/warriorEndTurn.png": "/static/media/warriorEndTurn.d2980595e3d3bea0b642.png",
     "static/media/filmoteca.png": "/static/media/filmoteca.cfbf185e10362b5c0c32.png",
+    "static/media/EnemyIntentDefence.png": "/static/media/EnemyIntentDefence.360a45438263a50baa8f.png",
+    "static/media/EnemyIntentSpecial.png": "/static/media/EnemyIntentSpecial.4da8ad7f1661289155fa.png",
     "static/media/tvTalk.jpg": "/static/media/tvTalk.10f8eaa5f54f06c8b27b.jpg",
     "index.html": "/index.html",
-    "main.dbfea2df.css.map": "/static/css/main.dbfea2df.css.map",
-    "main.548f6531.js.map": "/static/js/main.548f6531.js.map",
-    "787.6606bfd5.chunk.js.map": "/static/js/787.6606bfd5.chunk.js.map"
+    "main.d01e47bb.css.map": "/static/css/main.d01e47bb.css.map",
+    "main.499f99bd.js.map": "/static/js/main.499f99bd.js.map"
   },
   "entrypoints": [
-    "static/css/main.dbfea2df.css",
-    "static/js/main.548f6531.js"
+    "static/css/main.d01e47bb.css",
+    "static/js/main.499f99bd.js"
   ]
 }
