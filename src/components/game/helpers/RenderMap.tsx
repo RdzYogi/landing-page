@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import drawPaths from './drawPaths'
-import { resetMap, updateMap } from '../../redux/slices/mapSlice'
+import { updateMap } from '../../redux/slices/mapSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDungeon, faSkullCrossbones, faTent } from '@fortawesome/free-solid-svg-icons';
 import {} from '@fortawesome/free-regular-svg-icons';

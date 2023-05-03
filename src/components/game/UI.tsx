@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import warriorPortrait from '../../assets/game/warrior/portrait.png'
 import wizardPortrait from '../../assets/game/wizard/portrait.png'
 import Player from './Player'
@@ -6,7 +6,7 @@ import enemyPicker from './helpers/enemyPicker'
 import Enemy from './Enemy'
 import Map from './Map'
 import { useDispatch, useSelector } from 'react-redux'
-import { drawCards, generateDrawPile, healthChange, incrementTurn, playCard, resetMana, resetPlayer, resetPlayerBlock, resetTurn, resetWarriorDecks, setGameState, setPlayerClass, updateCardsInHand } from '../redux/slices/playerSlice'
+import { drawCards, generateDrawPile, healthChange, incrementTurn, playCard, resetMana, resetPlayer, resetPlayerBlock, resetTurn, resetWarriorDecks, setGameState, setPlayerClass, setWarriorStance } from '../redux/slices/playerSlice'
 import { resetMap } from '../redux/slices/mapSlice'
 import { enemyHealthChange, resetEnemyBlock, setCurrentEnemy, setEnemyBlock, setNextEnemyAction } from '../redux/slices/enemySlice'
 import CurrentHand from './cardcomponents/CurrentHand'
@@ -20,8 +20,8 @@ function UI() {
   const gameState = useSelector((state: any) => state.player.gameState)
   const playerCurrentHealth = useSelector((state: any) => state.player.currentHealth)
   const enemyCurrentHealth = useSelector((state: any) => state.enemy.currentEnemy.currentHealth)
-  const drawPile = useSelector((state: any) => state.player.warriorDrawPile)
-  const discardPile = useSelector((state: any) => state.player.warriorDiscardPile)
+  // const drawPile = useSelector((state: any) => state.player.warriorDrawPile)
+  // const discardPile = useSelector((state: any) => state.player.warriorDiscardPile)
   const warriorCurrentHand = useSelector((state: any) => state.player.warriorCardsInHand)
   const enemyNextAction = useSelector((state: any) => state.enemy.nextEnemyAction)
   const enemyDamage = useSelector((state: any) => state.enemy.currentEnemy.attack.min)
@@ -74,6 +74,7 @@ function UI() {
     dispatch(resetMana())
     dispatch(resetPlayerBlock())
     dispatch(setNextEnemyAction())
+    dispatch(setWarriorStance("none"))
   }
 
   const pickPlayer = (e:any) => {
@@ -124,8 +125,12 @@ function UI() {
     dispatch(setGameState("minimap"))
     dispatch(setNextEnemyAction())
     dispatch(resetMana())
+    warriorCurrentHand.forEach((card: any) => {
+      dispatch(playCard(card))
+    })
     dispatch(generateDrawPile())
     dispatch(drawCards())
+    dispatch(setWarriorStance("none"))
   }
 
   const handleTakeDamage = () => {
@@ -165,10 +170,6 @@ function UI() {
         dispatch(resetEnemyBlock())
         break;
     }
-
-    warriorCurrentHand.forEach((card: any) => {
-      dispatch(playCard(card))
-    })
     dispatch(resetMana())
     dispatch(incrementTurn())
     dispatch(drawCards())
@@ -177,6 +178,10 @@ function UI() {
   }
 
   const handleResetTurn = () => {
+    warriorCurrentHand.forEach((card: any) => {
+      dispatch(playCard(card))
+    })
+    dispatch(drawCards())
     dispatch(resetTurn())
     dispatch(resetMana())
     dispatch(resetPlayerBlock())
@@ -217,12 +222,12 @@ function UI() {
           }
 
         </div>
-        <div className='battle w-full h-fit flex justify-around items-end my-10'>
+        <div className='battle w-full h-fit flex justify-around items-top my-10'>
           <div id="player" className='w-40 h-full'>
             <Player />
           </div>
           <div id="enemy" className='w-40 h-full'>
-              <Enemy />
+            <Enemy />
           </div>
         </div>
         <div id='action-bar' className='w-full h-[40vh] mt-10 flex justify-between'>

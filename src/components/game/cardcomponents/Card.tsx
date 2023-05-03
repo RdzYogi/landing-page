@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { enemyHealthChange } from '../../redux/slices/enemySlice';
-import { updateMana, updatePlayerBlock } from '../../redux/slices/playerSlice';
+import { setWarriorStance, updateMana, updatePlayerBlock } from '../../redux/slices/playerSlice';
 
 type CardType = {
   name: string;
@@ -14,23 +14,68 @@ type CardType = {
 
 function Card({card, handlePlayCard, index, reRender}: {card: CardType, handlePlayCard: any, index: number, reRender: boolean}) {
 
+  const stance = useSelector((state: any) => state.player.warriorStance)
+  const [stanceClass, setStanceClass] = useState("")
+  const [stanceValue, setStanceValue] = useState(1)
+  useEffect(() => {
+    switch (stance) {
+      case "peace":
+        switch (card.type) {
+          case "Attack":
+            setStanceClass("text-red-500")
+            setStanceValue(1/2)
+            break;
+          case "Skill":
+            setStanceClass("text-green-500")
+            setStanceValue(2)
+            break;
+
+          default:
+            break;
+        }
+        break;
+      case "rage":
+        switch (card.type) {
+          case "Attack":
+            setStanceClass("text-green-500")
+            setStanceValue(2)
+            break;
+          case "Skill":
+            setStanceClass("text-red-500")
+            setStanceValue(1/2)
+            break;
+
+          default:
+            break;
+        }
+        break;
+      default:
+        setStanceClass("")
+        setStanceValue(1)
+        break;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[stance])
   const currentMana = useSelector((state: any) => state.player.currentMana)
   const dispatch = useDispatch()
 
-  let description = ""
+  let description = []
   // let discardAnimationClass = ""
   const [discardAnimationClass, setDiscardAnimationClass] = useState("")
 
   // console.log(total,index)
   if (card.numberValues.length > 0) {
     for (let i = 0; i < card.numberValues.length; i++) {
-      description += card.description[i] + " " + card.numberValues[i] + " "
+      description.push(card.description[i])
+      description.push(
+        <span className={stanceClass} key={card.name + i}> {card.numberValues[i] * stanceValue} </span>
+      )
     }
     if(card.description.length > card.numberValues.length){
-      description += card.description[card.description.length - 1]
+      description.push(card.description[card.description.length - 1])
     }
   } else {
-    description = card.description[0]
+    description = card.description
   }
   useEffect(() => {
     setDiscardAnimationClass("")
@@ -40,15 +85,29 @@ function Card({card, handlePlayCard, index, reRender}: {card: CardType, handlePl
     if(card.cost > currentMana) return
     switch (card.type) {
       case "Attack":
-        dispatch(enemyHealthChange(-card.numberValues[0]))
+        dispatch(enemyHealthChange(-card.numberValues[0]*stanceValue))
         dispatch(updateMana(-card.cost))
         break;
 
       case "Skill":
-        dispatch(updatePlayerBlock(card.numberValues[0]))
+        dispatch(updatePlayerBlock(card.numberValues[0]*stanceValue))
         dispatch(updateMana(-card.cost))
         break;
 
+      case "Stance":
+        dispatch(updateMana(-card.cost))
+        switch (card.name) {
+          case "Peace":
+            dispatch(setWarriorStance("peace"))
+            break;
+          case "Rage":
+            dispatch(setWarriorStance("rage"))
+            break;
+
+          default:
+            break;
+        }
+        break;
 
       default:
         break;

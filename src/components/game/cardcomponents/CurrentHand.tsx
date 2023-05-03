@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import cardPicker from './helpers/cardPicker'
 import Card from './Card';
 import calculateCardTransform from './helpers/calculateCardTransform';
-import { drawCards, playCard } from '../../redux/slices/playerSlice';
+import { playCard } from '../../redux/slices/playerSlice';
 import { warriorCards } from './helpers/warriorCards';
 type CardType = {
   name: string;
@@ -16,7 +15,7 @@ type CardType = {
 
 function CurrentHand() {
   const dispatch = useDispatch()
-  const playerType = useSelector((state: any) => state.player.playerClass)
+  // const playerType = useSelector((state: any) => state.player.playerClass)
   // const warriorDeck = useSelector((state: any) => state.player.warriorCurrentDeck)
   // const cardsInHand = useSelector((state: any) => state.player.numberOfCardsInHand)
   const turn = useSelector((state: any) => state.player.turn)
@@ -56,6 +55,7 @@ function CurrentHand() {
         return <div key={card.name + index} data-index={index} className={'transition-all duration-300 ease-out hover:scale-125 hover:-translate-y-8 z-50 hover:rotate-0 hover:mx-20 '+ calculateCardTransform(hand.length,index)}><Card card={card} handlePlayCard={handlePlayCard} index={index} reRender={reRender}/></div>
       }))
       setReRender(!reRender)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hand,currentHand])
 
   const handlePlayCard = (e:any, index:number) => {

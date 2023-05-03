@@ -30,6 +30,7 @@ function NextEnemyAction() {
         setNumberValue(0)
         break;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextEnemyAction])
   return (
     <div className='flex justify-center items-center'>

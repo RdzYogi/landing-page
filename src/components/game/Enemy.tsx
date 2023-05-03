@@ -32,7 +32,9 @@ function Enemy() {
     <div className='relative'>
       {enemyLoaded &&
       <>
-        <NextEnemyAction/>
+        <div className='absolute left-[50%] -translate-x-[50%] -translate-y-[100%]'>
+          <NextEnemyAction/>
+        </div>
         <img src={enemy.img} alt={enemy.name} />
         <div id="enemy-health-bar" className='w-full h-4 text-center mt-1 rounded-lg border border-gray-500'>
           <h1 id="enemy-health-number" className=' text-xs -bottom-0'>{currentHealth + "/" + maxHealth}</h1>

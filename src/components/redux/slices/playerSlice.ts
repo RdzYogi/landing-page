@@ -27,9 +27,22 @@ const readWarriorDiscardPile = () => {
 
 const readWarriorCardsInHand = () => {
   const cardsInHand = localStorage.getItem("warriorCardsInHand")
-  return cardsInHand !== null ? JSON.parse(cardsInHand) : []
+  const result = [] as string[]
+  if (cardsInHand !== null) {
+    const parsedCardsInHand = JSON.parse(cardsInHand)
+    parsedCardsInHand.forEach((card: string) => {
+      if (card !== null) {
+        result.push(card)
+      }
+    })
+  }
+  return result
 }
 
+const readWarriorStance = () => {
+  const warriorStance = localStorage.getItem("warriorStance")
+  return warriorStance !== null ? warriorStance : "none"
+}
 const initialState = {
   playerClass: localStorage.getItem("playerClass") || "",
   maxHealth: Number(localStorage.getItem("maxHealth")) || 0,
@@ -45,6 +58,7 @@ const initialState = {
   warriorDrawPile: readWarriorDrawPile(),
   warriorDiscardPile: readWarriorDiscardPile(),
   turn: Number(localStorage.getItem("turn")) || 0,
+  warriorStance: readWarriorStance(),
 }
 
 export const playerSlice = createSlice({
@@ -66,6 +80,7 @@ export const playerSlice = createSlice({
           localStorage.setItem("maxMana", "3")
           localStorage.setItem("currentMana", "3")
           localStorage.setItem("block", "0")
+          localStorage.setItem("warriorStance", "none")
           break;
 
         case "wizard":
@@ -226,6 +241,24 @@ export const playerSlice = createSlice({
       state.warriorDiscardPile = []
       localStorage.setItem("warriorDiscardPile", JSON.stringify([]))
     },
+    setWarriorStance: (state, action) => {
+      switch (action.payload) {
+        case "peace":
+          state.warriorStance = "peace"
+          localStorage.setItem("warriorStance", "peace")
+          break;
+
+        case "rage":
+          state.warriorStance = "rage"
+          localStorage.setItem("warriorStance", "rage")
+          break;
+
+        default:
+          state.warriorStance = "none"
+          localStorage.setItem("warriorStance", "none")
+          break;
+      }
+    },
   },
 })
 
@@ -244,7 +277,8 @@ export const {setPlayerClass,
               addToWarriorDeck,
               drawCards,
               playCard,
-              generateDrawPile
+              generateDrawPile,
+              setWarriorStance,
             } = playerSlice.actions
 
 export default playerSlice.reducer
