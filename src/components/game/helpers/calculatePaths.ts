@@ -25,10 +25,6 @@ function calculatePaths(nodes: string[]) {
   // Generate the paths
   const allPathsToValidNeighbors = [] as string[][]
   nodesAndValidNeighbors.forEach((route) => {
-    // const node = document.querySelector(`[data-position="${route.position}"]`) as HTMLElement
-    // const svg = node.parentElement?.querySelector('svg')
-    // if (!svg) return
-    // svg.innerHTML = ''
     route.neighbors.forEach((neighbor) => {
       // drawPathFromTo(route.position, neighbor)
       allPathsToValidNeighbors.push([route.position, neighbor])
@@ -51,7 +47,9 @@ function calculatePaths(nodes: string[]) {
     let index = allPathsToValidNeighbors.length - 1
 
     while (index >= 0) {
+      // eslint-disable-next-line no-loop-func
       const sameEndNodes = allPathsToValidNeighbors.filter((path) => path[1] === allPathsToValidNeighbors[index][1] && path[0] !== allPathsToValidNeighbors[index][0])
+      // eslint-disable-next-line no-loop-func
       const sameStartNodes = allPathsToValidNeighbors.filter((path) => path[0] === allPathsToValidNeighbors[index][0] && path[1] !== allPathsToValidNeighbors[index][1])
 
       const lengthOfPath = Math.abs(parseInt(allPathsToValidNeighbors[index][0].split('-')[0]) - parseInt(allPathsToValidNeighbors[index][1].split('-')[0]))
