@@ -1,10 +1,17 @@
-import React, { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import UI from '../game/UI'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCodeStatus } from '../redux/slices/devSlice'
 
+const code = "AlphaTest1884"
 
 function Game() {
-  const visible = false
-  const [Ui , setUi] = React.useState(<div></div>)
+  const [visible , setVisible] = useState(false)
+  const [Ui , setUi] = useState(<div></div>)
+  const [buttonState, setButtonState] = useState(false)
+  const dispatch = useDispatch()
+  const codeStatus = useSelector((state: any) => state.dev.codeStatus)
+
   useEffect(() => {
     if(Ui){
       setUi(<UI/>)
@@ -12,9 +19,38 @@ function Game() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  useEffect(() => {
+    if(codeStatus === "passed"){
+      setVisible(true)
+    }
+  }, [codeStatus])
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if(e.target.value === code){
+      setButtonState(true)
+    }else{
+      setButtonState(false)
+    }
+  }
+  const handleClick = () => {
+    setVisible(true)
+    dispatch(setCodeStatus("passed"))
+  }
   return (
-      <div className='text-white z-20 w-full md:w-[90%] m-auto relative h-fit medieval'>
-        {visible ? Ui : <p className='text-center'>Coming soon</p>}
+      <div className='text-white z-20 w-full md:w-[90%] m-auto flex flex-col items-center h-fit medieval'>
+        {visible ? Ui :
+        <>
+          <div className='w-60'>
+              <label htmlFor="subject" className="block mb-2 text-sm font-medium text-gray-300">Enter code for pre-alpha testing</label>
+              <input onChange={handleChange} type="text" id="subject" className="block p-3 w-full text-sm rounded-lg border shadow-sm focus:ring-primary-500 focus:border-primary-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500 shadow-sm-light" placeholder="Code:" required/>
+          </div>
+          <button onClick={handleClick} type="submit" className={"mt-3 py-3 px-5 text-sm font-medium border border-gray-500 hover:border-gray-300 hover:text-gray-200 text-center rounded-lg transition duration-300 ease-in-out sm:w-fit flex "
+              + (buttonState ? " " : "hidden")
+              }>
+            Play
+          </button>
+        </>
+      }
       </div>
 
   )

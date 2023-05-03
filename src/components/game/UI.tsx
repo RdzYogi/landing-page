@@ -67,7 +67,7 @@ function UI() {
     dispatch(setGameState("playerSelect"))
     dispatch(resetMap())
     dispatch(resetPlayer())
-    const newEnemy = enemyPicker(playerPosition)
+    const newEnemy = enemyPicker("0-0")
     dispatch(setCurrentEnemy(newEnemy))
     dispatch(resetEnemyBlock())
     dispatch(resetTurn())
@@ -112,10 +112,14 @@ function UI() {
   }, [playerCurrentHealth])
 
   const handleWinBattle = () => {
+    if(playerPosition.split("-")[1] === "12") {
+      newGame()
+    } else {
+      const newEnemy = enemyPicker(playerPosition)
+      dispatch(setCurrentEnemy(newEnemy))
+    }
     dispatch(resetTurn())
     dispatch(setGameState("minimap"))
-    const newEnemy = enemyPicker(playerPosition)
-    dispatch(setCurrentEnemy(newEnemy))
     dispatch(setNextEnemyAction())
     dispatch(resetMana())
     dispatch(generateDrawPile())
@@ -176,7 +180,7 @@ function UI() {
     dispatch(resetPlayerBlock())
   }
   return (
-    <div>
+    <div className='w-full'>
       <button onClick={newGame}>Abandon Run</button>
       <div id="menu" className='hidden h-[60vh] w-full '>
         <h1 className='text-center pt-10'>Pick Your Class</h1>
@@ -197,7 +201,7 @@ function UI() {
         <Map />
       </div>
       <div id="mainGame" className='hidden'>
-        <div id="info-bar" className='w-full h-10  '>
+        <div id="info-bar" className='w-full h-10'>
           {DEV_MODE &&
             <>
               <button onClick={handleWinBattle}>Win Battle</button>

@@ -230,7 +230,12 @@ function RenderMap() {
   }, [playerPosition])
 
   const handleBoss = () => {
-    dispatch(resetMap())
+    dispatch(updateMap("0-12"))
+    dispatch(resetTurn())
+    dispatch(setGameState("combat"))
+    dispatch(resetWarriorDecks())
+    dispatch(generateDrawPile())
+    dispatch(drawCards())
   }
   return (
     <div className='flex overflow-hidden'>
