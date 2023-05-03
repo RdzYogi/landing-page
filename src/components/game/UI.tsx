@@ -83,6 +83,8 @@ function UI() {
         dispatch(setPlayerClass("warrior"))
         dispatch(setGameState("minimap"))
         dispatch(resetWarriorDecks())
+        dispatch(generateDrawPile())
+        dispatch(drawCards())
 
         break;
       case "wizardPortrait":
