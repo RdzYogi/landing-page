@@ -97,7 +97,7 @@ export const Enemies : EnemyData =  {
   'demon':{
     name: "Demon",
     currentHealth: 150,
-    maxHealth: 250,
+    maxHealth: 150,
     attack: { min: 20, max: 30},
     defense: { min: 20, max: 30},
     img: demon,
@@ -107,7 +107,7 @@ export const Enemies : EnemyData =  {
   'iceSpirit':{
     name: "Ice Spirit",
     currentHealth: 100,
-    maxHealth: 200,
+    maxHealth: 100,
     attack: { min: 20, max: 30},
     defense: { min: 20, max: 30},
     img: iceSpirit,
@@ -117,7 +117,7 @@ export const Enemies : EnemyData =  {
   'waterSpirit':{
     name: "Water Spirit",
     currentHealth: 100,
-    maxHealth: 200,
+    maxHealth: 100,
     attack: { min: 20, max: 30},
     defense: { min: 20, max: 30},
     img: waterSpirit,

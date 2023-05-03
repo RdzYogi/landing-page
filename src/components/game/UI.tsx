@@ -67,7 +67,7 @@ function UI() {
     dispatch(setGameState("playerSelect"))
     dispatch(resetMap())
     dispatch(resetPlayer())
-    const newEnemy = enemyPicker(playerPosition)
+    const newEnemy = enemyPicker("0-0")
     dispatch(setCurrentEnemy(newEnemy))
     dispatch(resetEnemyBlock())
     dispatch(resetTurn())
@@ -112,10 +112,14 @@ function UI() {
   }, [playerCurrentHealth])
 
   const handleWinBattle = () => {
+    if(playerPosition.split("-")[1] === "12") {
+      newGame()
+    } else {
+      const newEnemy = enemyPicker(playerPosition)
+      dispatch(setCurrentEnemy(newEnemy))
+    }
     dispatch(resetTurn())
     dispatch(setGameState("minimap"))
-    const newEnemy = enemyPicker(playerPosition)
-    dispatch(setCurrentEnemy(newEnemy))
     dispatch(setNextEnemyAction())
     dispatch(resetMana())
     dispatch(generateDrawPile())
